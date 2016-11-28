@@ -2,7 +2,7 @@
 
 namespace Echo
 {
-    public interface ITapeWritter
+    public interface IInvocationWritter
     {
         void RecordInvocation(MethodInfo methodInfo, object returnValue, object[] arguments);
     }

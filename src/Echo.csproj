@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Core\ConsoleWritter.cs" />
     <Compile Include="Core\LoggingInterceptor.cs" />
-    <Compile Include="ITapeWritter.cs" />
+    <Compile Include="IInvocationWritter.cs" />
     <Compile Include="Recorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\RecordingInterceptor.cs" />

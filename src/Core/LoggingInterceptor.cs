@@ -4,9 +4,9 @@ namespace Echo.Core
 {
     internal class LoggingInterceptor : IInterceptor
     {
-        private readonly ITapeWritter _tapeWritter;
+        private readonly IInvocationWritter _tapeWritter;
 
-        public LoggingInterceptor(ITapeWritter tapeWritter)
+        public LoggingInterceptor(IInvocationWritter tapeWritter)
         {
             _tapeWritter = tapeWritter;
         }
