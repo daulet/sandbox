@@ -15,12 +15,11 @@ namespace Echo.UnitTests
         {
             // Arrange
             var recorder = new Recorder(invocationWritter: null);
-            var dependency = new FakeDependency();
 
             // Assert
             ExceptionAssert.Throws<NotSupportedException>(() =>
                 // Act
-                recorder.GetRecordingTarget<FakeDependency>(dependency));
+                recorder.GetRecordingTarget<FakeDependency>(target: null));
         }
 
         [TestMethod]

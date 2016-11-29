@@ -24,7 +24,6 @@ namespace Echo
                 throw new NotSupportedException();
             }
 
-            // TODO what if TTarget is not public?
             // TODO how well does this work with async?
 
             var recordingInterceptor = new RecordingInterceptor(_invocationWritter);
