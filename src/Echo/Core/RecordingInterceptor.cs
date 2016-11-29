@@ -35,6 +35,8 @@ namespace Echo.Core
             catch (Exception ex)
             {
                 _tapeWritter.RecordInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+
+                throw;
             }
         }
 

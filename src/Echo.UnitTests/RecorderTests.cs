@@ -66,14 +66,14 @@ namespace Echo.UnitTests
             var writterMock = new Mock<IInvocationWritter>();
             var recorder = new Recorder(writterMock.Object);
             var dependencyMock = new Mock<IFakeDependency>();
-            var thrownException = new Exception();
+            var thrownException = new FakeDependencyException();
             dependencyMock
                 .Setup(x => x.GetRemoteResource())
                 .Throws(thrownException);
             var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependency>(dependencyMock.Object);
 
             // Act
-            ExceptionAssert.Throws(() => dependencyUnderRecording.GetRemoteResource());
+            ExceptionAssert.Throws<FakeDependencyException>(() => dependencyUnderRecording.GetRemoteResource());
 
             // Assert
             writterMock.Verify(
@@ -85,6 +85,8 @@ namespace Echo.UnitTests
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }
+
+        // TODO add test for dependency that did return value
 
         [TestMethod]
         public async Task GetRecordingTarget_ReturnValueIsTask_InvocationWritterCalled()
@@ -106,6 +108,34 @@ namespace Echo.UnitTests
                 x => x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
+                    It.Is<object[]>(arguments => arguments.Length == 0)),
+                Times.Once);
+        }
+
+        [TestMethod]
+        public async Task GetRecordingTarget_ReturnValueIsTask_TargetThrows_InvocationWritterCalled()
+        {
+            // Arrange
+            var writterMock = new Mock<IInvocationWritter>();
+            var recorder = new Recorder(writterMock.Object);
+            var dependencyMock = new Mock<IFakeDependencyAsync>();
+            var thrownException = new FakeDependencyException();
+            dependencyMock
+                .Setup(x => x.CallRemoteResourceAsync())
+                .Throws(thrownException);
+            var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependencyAsync>(dependencyMock.Object);
+
+            // Act
+            await ExceptionAssert.ThrowsAsync<FakeDependencyException>(
+                async () => await dependencyUnderRecording.CallRemoteResourceAsync());
+
+            // Assert
+            writterMock.Verify(
+                x => x.RecordInvocation(
+                    It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
+                    It.Is<InvocationResult>(returnValue
+                        => returnValue is ExceptionInvocationResult
+                        && (returnValue as ExceptionInvocationResult).ThrownException == thrownException),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }
@@ -136,5 +166,35 @@ namespace Echo.UnitTests
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }
+
+        [TestMethod]
+        public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_TargetThrows_InvocationWritterCalled()
+        {
+            // Arrange
+            var writterMock = new Mock<IInvocationWritter>();
+            var recorder = new Recorder(writterMock.Object);
+            var dependencyMock = new Mock<IFakeDependencyAsync>();
+            var thrownException = new FakeDependencyException();
+            dependencyMock
+                .Setup(x => x.GetRemoteResourceAsync())
+                .Throws(thrownException);
+            var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependencyAsync>(dependencyMock.Object);
+
+            // Act
+            await ExceptionAssert.ThrowsAsync<FakeDependencyException>(
+                async () => await dependencyUnderRecording.GetRemoteResourceAsync());
+
+            // Assert
+            writterMock.Verify(
+                x => x.RecordInvocation(
+                    It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
+                    It.Is<InvocationResult>(returnValue
+                        => returnValue is ExceptionInvocationResult
+                        && (returnValue as ExceptionInvocationResult).ThrownException == thrownException),
+                    It.Is<object[]>(arguments => arguments.Length == 0)),
+                Times.Once);
+        }
+
+        // TODO add asserts to Act return values - currently only spying on callbacks
     }
 }

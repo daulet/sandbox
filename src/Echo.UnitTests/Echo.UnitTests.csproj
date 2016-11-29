@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Asserts\ExceptionAssert.cs" />
     <Compile Include="Fakes\FakeDependency.cs" />
+    <Compile Include="Fakes\FakeDependencyException.cs" />
     <Compile Include="Fakes\IFakeDependency.cs" />
     <Compile Include="Fakes\IFakeDependencyAsync.cs" />
     <Compile Include="Fakes\IInternalFakeDependency.cs" />
