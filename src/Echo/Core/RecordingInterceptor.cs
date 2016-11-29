@@ -19,7 +19,11 @@ namespace Echo.Core
             {
                 invocation.Proceed();
 
-                if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
+                if (typeof(void) == invocation.Method.ReturnType)
+                {
+                    _tapeWritter.RecordInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
+                }
+                else if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
                 {
                     invocation.ReturnValue = InterceptAsync(invocation, (dynamic)invocation.ReturnValue);
                 }

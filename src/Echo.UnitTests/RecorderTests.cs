@@ -37,6 +37,29 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
+        public void GetRecordingTarget_ReturnTypeIsVoid_InvocationWritterCalled()
+        {
+            // Arrange
+            var writterMock = new Mock<IInvocationWritter>();
+            var recorder = new Recorder(writterMock.Object);
+            var dependencyMock = new Mock<IFakeDependency>();
+            dependencyMock
+                .Setup(x => x.GetRemoteResource());
+            var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependency>(dependencyMock.Object);
+
+            // Act
+            dependencyUnderRecording.CallRemoteResource();
+
+            // Assert
+            writterMock.Verify(
+                x => x.RecordInvocation(
+                    It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResource")),
+                    It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
+                    It.Is<object[]>(arguments => arguments.Length == 0)),
+                Times.Once);
+        }
+
+        [TestMethod]
         public void GetRecordingTarget_DependencyThrows_InvocationWritterCalled()
         {
             // Arrange

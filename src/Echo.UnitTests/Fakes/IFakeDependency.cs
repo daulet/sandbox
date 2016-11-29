@@ -2,6 +2,8 @@
 {
     public interface IFakeDependency
     {
+        void CallRemoteResource();
+
         object GetRemoteResource();
     }
 }
