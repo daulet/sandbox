@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using Echo.Core;
+using System;
 
 namespace Echo
 {
@@ -16,8 +17,14 @@ namespace Echo
         public TTarget GetRecordingTarget<TTarget>(TTarget target)
             where TTarget : class
         {
-            // TODO test if TTarget is interface
+            // only interface intercepting and recording is supported
+            if (!typeof(TTarget).IsInterface)
+            {
+                throw new NotSupportedException();
+            }
+
             // TODO are we intercepting throws?
+            // TODO what if TTarget is not public?
             // TODO how well does this work with async?
 
             var recordingInterceptor = new RecordingInterceptor(_invocationWritter);

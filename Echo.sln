@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstantReplay", "samples\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordToFile", "samples\RecordToFile\RecordToFile.csproj", "{467EABB0-3AC5-43FE-81C0-6E20FF850CBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Echo.UnitTests", "src\Echo.UnitTests\Echo.UnitTests.csproj", "{75AFC824-E8B5-463E-8157-0DA5600B2DAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{467EABB0-3AC5-43FE-81C0-6E20FF850CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{467EABB0-3AC5-43FE-81C0-6E20FF850CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{467EABB0-3AC5-43FE-81C0-6E20FF850CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75AFC824-E8B5-463E-8157-0DA5600B2DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75AFC824-E8B5-463E-8157-0DA5600B2DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75AFC824-E8B5-463E-8157-0DA5600B2DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75AFC824-E8B5-463E-8157-0DA5600B2DAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
