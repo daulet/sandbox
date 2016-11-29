@@ -10,9 +10,9 @@ namespace Echo.Core
             Console.WriteLine($"Intercepting {methodInfo.Name} method:");
             foreach (var argument in arguments)
             {
-                Console.WriteLine($"\tArgument {argument.GetType()}: {argument}");
+                Console.WriteLine($"\tArgument {argument?.GetType()}: {argument}");
             }
-            Console.WriteLine($"\tReturn {returnValue.GetType()}: {returnValue}");
+            Console.WriteLine($"\tReturn {returnValue?.GetType()}: {returnValue}");
         }
     }
 }
