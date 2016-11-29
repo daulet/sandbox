@@ -18,19 +18,37 @@ namespace Echo.Core
             try
             {
                 invocation.Proceed();
+            }
+            catch (Exception ex)
+            {
+                _tapeWritter.RecordInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
-                if (typeof(void) == invocation.Method.ReturnType)
-                {
-                    _tapeWritter.RecordInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
-                }
-                else if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
-                {
-                    invocation.ReturnValue = InterceptAsync(invocation, (dynamic)invocation.ReturnValue);
-                }
-                else
-                {
-                    _tapeWritter.RecordInvocation(invocation.Method, new ValueInvocationResult(invocation.ReturnValue), invocation.Arguments);
-                }
+                throw;
+            }
+
+            if (typeof(void) == invocation.Method.ReturnType)
+            {
+                _tapeWritter.RecordInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
+            }
+            else if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
+            {
+                invocation.ReturnValue = InterceptAsync(invocation, (dynamic)invocation.ReturnValue);
+            }
+            else
+            {
+                _tapeWritter.RecordInvocation(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
+                    invocation.Arguments);
+            }
+
+        }
+
+        private async Task InterceptAsync(IInvocation invocation, Task task)
+        {
+            try
+            {
+                await task.ConfigureAwait(false);
+
+                _tapeWritter.RecordInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
             }
             catch (Exception ex)
             {
@@ -40,20 +58,22 @@ namespace Echo.Core
             }
         }
 
-        private async Task InterceptAsync(IInvocation invocation, Task task)
-        {
-            await task.ConfigureAwait(false);
-
-            _tapeWritter.RecordInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
-        }
-
         private async Task<T> InterceptAsync<T>(IInvocation invocation, Task<T> task)
         {
-            var result = await task.ConfigureAwait(false);
+            try
+            {
+                var result = await task.ConfigureAwait(false);
 
-            _tapeWritter.RecordInvocation(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
+                _tapeWritter.RecordInvocation(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
 
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _tapeWritter.RecordInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+
+                throw;
+            }
         }
     }
 }

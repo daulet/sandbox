@@ -122,7 +122,7 @@ namespace Echo.UnitTests
             var thrownException = new FakeDependencyException();
             dependencyMock
                 .Setup(x => x.CallRemoteResourceAsync())
-                .Throws(thrownException);
+                .Returns(Task.FromException(thrownException));
             var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependencyAsync>(dependencyMock.Object);
 
             // Act
@@ -177,7 +177,7 @@ namespace Echo.UnitTests
             var thrownException = new FakeDependencyException();
             dependencyMock
                 .Setup(x => x.GetRemoteResourceAsync())
-                .Throws(thrownException);
+                .Returns(Task.FromException<object>(thrownException));
             var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependencyAsync>(dependencyMock.Object);
 
             // Act
