@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Echo;
+using System;
 using System.Reflection;
 
 namespace Samples.RecordToFile.Storage
@@ -9,11 +10,11 @@ namespace Samples.RecordToFile.Storage
 
         public string Method { get; }
 
-        public object ReturnValue { get; }
+        public InvocationResult ReturnValue { get; }
 
         public DateTimeOffset Timestamp { get; }
 
-        public InvocationLog(DateTimeOffset timestamp, object[] arguments, MethodInfo methodInfo, object returnValue)
+        public InvocationLog(DateTimeOffset timestamp, object[] arguments, MethodInfo methodInfo, InvocationResult returnValue)
         {
             Arguments = arguments;
             Method = methodInfo.Name;

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InvocationResult.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
     <Compile Include="Core\ConsoleWritter.cs" />
     <Compile Include="Core\RecordingInterceptor.cs" />

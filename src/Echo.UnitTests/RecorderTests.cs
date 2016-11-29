@@ -12,7 +12,7 @@ namespace Echo.UnitTests
     public class RecorderTests
     {
         [TestMethod]
-        public void GetRecordingTarget_TTargetIsNotInterface_Throws()
+        public void GetRecordingTarget_TTargetIsNotInterface_ThrowsNotSupportedException()
         {
             // Arrange
             var recorder = new Recorder(invocationWritter: null);
@@ -24,7 +24,7 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public void GetRecordingTarget_TTargetIsNotPublicInterface_Throws()
+        public void GetRecordingTarget_TTargetIsNotPublicInterface_ThrowsNotSupportedException()
         {
             // Arrange
             var recorder = new Recorder(invocationWritter: null);
@@ -43,9 +43,10 @@ namespace Echo.UnitTests
             var writterMock = new Mock<IInvocationWritter>();
             var recorder = new Recorder(writterMock.Object);
             var dependencyMock = new Mock<IFakeDependency>();
+            var thrownException = new Exception();
             dependencyMock
                 .Setup(x => x.GetRemoteResource())
-                .Throws(new Exception());
+                .Throws(thrownException);
             var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependency>(dependencyMock.Object);
 
             // Act
@@ -55,7 +56,9 @@ namespace Echo.UnitTests
             writterMock.Verify(
                 x => x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
-                    It.Is<object>(returnValue => returnValue == null),
+                    It.Is<InvocationResult>(returnValue
+                        => returnValue is ExceptionInvocationResult
+                        && (returnValue as ExceptionInvocationResult).ThrownException == thrownException),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }
@@ -79,7 +82,7 @@ namespace Echo.UnitTests
             writterMock.Verify(
                 x => x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
-                    It.Is<object>(returnValue => returnValue == null),
+                    It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }
@@ -104,7 +107,9 @@ namespace Echo.UnitTests
             writterMock.Verify(
                 x => x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
-                    It.Is<object>(returnValue => returnValue == remoteResource),
+                    It.Is<InvocationResult>(returnValue
+                        => returnValue is ValueInvocationResult
+                        && (returnValue as ValueInvocationResult).ReturnValue == remoteResource),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }

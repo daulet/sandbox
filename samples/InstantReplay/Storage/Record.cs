@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Echo;
+using System.Reflection;
 
 namespace Samples.InstantReplay.Storage
 {
@@ -8,9 +9,9 @@ namespace Samples.InstantReplay.Storage
 
         public object[] Arguments { get; }
 
-        public object ReturnValue { get; }
+        public InvocationResult ReturnValue { get; }
 
-        public Record(MethodInfo methodInfo, object returnValue, object[] arguments)
+        public Record(MethodInfo methodInfo, InvocationResult returnValue, object[] arguments)
         {
             Method = methodInfo;
             Arguments = arguments;

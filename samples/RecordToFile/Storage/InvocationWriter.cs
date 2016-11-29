@@ -15,10 +15,10 @@ namespace Samples.RecordToFile.Storage
             _streamWriter = streamWriter;
         }
 
-        public void RecordInvocation(MethodInfo methodInfo, object returnValue, object[] arguments)
+        public void RecordInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
         {
             var serializer = new JavaScriptSerializer();
-            var log = new InvocationLog(DateTimeOffset.UtcNow, arguments, methodInfo, returnValue);
+            var log = new InvocationLog(DateTimeOffset.UtcNow, arguments, methodInfo, invocationResult);
 
             _streamWriter.WriteLine(serializer.Serialize(log));
         }

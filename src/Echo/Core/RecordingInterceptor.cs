@@ -19,19 +19,18 @@ namespace Echo.Core
             {
                 invocation.Proceed();
 
-                var method = invocation.MethodInvocationTarget;
-                if (typeof(Task).IsAssignableFrom(method.ReturnType))
+                if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
                 {
                     invocation.ReturnValue = InterceptAsync(invocation, (dynamic)invocation.ReturnValue);
                 }
                 else
                 {
-                    _tapeWritter.RecordInvocation(invocation.Method, invocation.ReturnValue, invocation.Arguments);
+                    _tapeWritter.RecordInvocation(invocation.Method, new ValueInvocationResult(invocation.ReturnValue), invocation.Arguments);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _tapeWritter.RecordInvocation(invocation.Method, invocation.ReturnValue, invocation.Arguments);
+                _tapeWritter.RecordInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
             }
         }
 
@@ -39,14 +38,14 @@ namespace Echo.Core
         {
             await task.ConfigureAwait(false);
 
-            _tapeWritter.RecordInvocation(invocation.Method, null, invocation.Arguments);
+            _tapeWritter.RecordInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
         }
 
         private async Task<T> InterceptAsync<T>(IInvocation invocation, Task<T> task)
         {
             var result = await task.ConfigureAwait(false);
 
-            _tapeWritter.RecordInvocation(invocation.Method, result, invocation.Arguments);
+            _tapeWritter.RecordInvocation(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
 
             return result;
         }

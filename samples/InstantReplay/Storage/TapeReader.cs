@@ -26,7 +26,18 @@ namespace Samples.InstantReplay.Storage
                     if (InvocationUtility.IsArgumentListMatch(record.Arguments, arguments))
                     {
                         _records.Remove(record);
-                        return record.ReturnValue;
+
+                        var exceptionInvocationResult = record.ReturnValue as ExceptionInvocationResult;
+                        if (exceptionInvocationResult != null)
+                        {
+                            throw exceptionInvocationResult.ThrownException;
+                        }
+
+                        var valueInvocationResult = record.ReturnValue as ValueInvocationResult;
+                        if (valueInvocationResult != null)
+                        {
+                            return valueInvocationResult.ReturnValue;
+                        }
                     }
                 }
             }

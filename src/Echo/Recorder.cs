@@ -24,6 +24,7 @@ namespace Echo
                 throw new NotSupportedException();
             }
 
+            // TODO add support for void methods
             // TODO what if async method throws?
 
             var recordingInterceptor = new RecordingInterceptor(_invocationWritter);
