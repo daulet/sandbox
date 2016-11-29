@@ -17,13 +17,13 @@ namespace Echo
         public TTarget GetRecordingTarget<TTarget>(TTarget target)
             where TTarget : class
         {
-            // only interface intercepting and recording is supported
-            if (!typeof(TTarget).IsInterface)
+            // only public interface recording is supported
+            var targetType = typeof(TTarget);
+            if (!targetType.IsInterface || !targetType.IsPublic)
             {
                 throw new NotSupportedException();
             }
 
-            // TODO are we intercepting throws?
             // TODO what if TTarget is not public?
             // TODO how well does this work with async?
 

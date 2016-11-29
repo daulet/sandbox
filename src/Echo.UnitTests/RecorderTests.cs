@@ -24,6 +24,19 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
+        public void GetRecordingTarget_TTargetIsNotPublicInterface_Throws()
+        {
+            // Arrange
+            var recorder = new Recorder(invocationWritter: null);
+            Assert.IsFalse(typeof(IInternalFakeDependency).IsPublic, "Interface can't be public for test to be valid");
+
+            // Assert
+            ExceptionAssert.Throws<NotSupportedException>(() =>
+                // Act
+                recorder.GetRecordingTarget<IInternalFakeDependency>(target: null));
+        }
+
+        [TestMethod]
         public void GetRecordingTarget_DependencyThrows_InvocationWritterCalled()
         {
             // Arrange
