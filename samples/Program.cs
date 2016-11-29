@@ -21,7 +21,7 @@ namespace Samples
             // call external dependency
             var actualResult = interceptedPartner.Multiply(1, 2, 3);
 
-            Console.WriteLine($"Received result: {actualResult}");
+            Console.WriteLine($"Received result from real dependency: {actualResult}");
 
             Console.WriteLine("Starting a replay");
 
@@ -30,10 +30,10 @@ namespace Samples
             var player = new Player(tapeReader);
             var mockedPartner = player.GetReplayingTarget<IExternalPartner>();
 
-            // call external dependency
+            // call mocked dependency
             var mockedResult = mockedPartner.Multiply(1, 2, 3);
 
-            Console.WriteLine($"Received result: {mockedResult}");
+            Console.WriteLine($"Received result from mocked dependency: {mockedResult}");
 
             Console.ReadKey();
         }
