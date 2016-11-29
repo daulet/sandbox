@@ -24,7 +24,7 @@ namespace Echo
                 throw new NotSupportedException();
             }
 
-            // TODO how well does this work with async?
+            // TODO what if async method throws?
 
             var recordingInterceptor = new RecordingInterceptor(_invocationWritter);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,

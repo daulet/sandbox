@@ -52,11 +52,12 @@ namespace Echo.UnitTests
             ExceptionAssert.Throws(() => dependencyUnderRecording.GetRemoteResource());
 
             // Assert
-            writterMock.Verify(x =>
-                x.RecordInvocation(
+            writterMock.Verify(
+                x => x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<object>(returnValue => returnValue == null),
-                    It.Is<object[]>(arguments => arguments.Length == 0)));
+                    It.Is<object[]>(arguments => arguments.Length == 0)),
+                Times.Once);
         }
 
         [TestMethod]
@@ -75,11 +76,37 @@ namespace Echo.UnitTests
             await dependencyUnderRecording.CallRemoteResourceAsync();
 
             // Assert
-            writterMock.Verify(x =>
-                x.RecordInvocation(
+            writterMock.Verify(
+                x => x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
-                    It.Is<object>(returnValue => returnValue == Task.CompletedTask),
-                    It.Is<object[]>(arguments => arguments.Length == 0)));
+                    It.Is<object>(returnValue => returnValue == null),
+                    It.Is<object[]>(arguments => arguments.Length == 0)),
+                Times.Once);
+        }
+
+        [TestMethod]
+        public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_InvocationWritterCalled()
+        {
+            // Arrange
+            var writterMock = new Mock<IInvocationWritter>();
+            var recorder = new Recorder(writterMock.Object);
+            var dependencyMock = new Mock<IFakeDependencyAsync>();
+            var remoteResource = new object();
+            dependencyMock
+                .Setup(x => x.GetRemoteResourceAsync())
+                .ReturnsAsync(remoteResource);
+            var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependencyAsync>(dependencyMock.Object);
+
+            // Act
+            await dependencyUnderRecording.GetRemoteResourceAsync();
+
+            // Assert
+            writterMock.Verify(
+                x => x.RecordInvocation(
+                    It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
+                    It.Is<object>(returnValue => returnValue == remoteResource),
+                    It.Is<object[]>(arguments => arguments.Length == 0)),
+                Times.Once);
         }
     }
 }
