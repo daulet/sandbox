@@ -40,7 +40,7 @@ namespace Echo
 
         public override string ToString()
         {
-            return ReturnedValue?.ToString();
+            return ReturnedValue?.ToString() ?? "<null>";
         }
 
         internal ValueInvocationResult(object returnedValue)
@@ -63,7 +63,7 @@ namespace Echo
 
         public override string ToString()
         {
-            return "(void)";
+            return "<void>";
         }
 
         public static VoidInvocationResult Instance { get; } = new VoidInvocationResult();
