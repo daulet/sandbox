@@ -1,10 +1,9 @@
 ﻿namespace Echo.UnitTests.Fakes
 {
-    internal class FakeDependency : IFakeDependency
+    internal class FakeTarget : IFakeTarget
     {
         public void CallRemoteResource()
         {
-
         }
 
         public object GetRemoteResource()

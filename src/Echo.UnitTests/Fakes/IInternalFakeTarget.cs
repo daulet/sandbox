@@ -1,6 +1,6 @@
 ﻿namespace Echo.UnitTests.Fakes
 {
-    internal interface IInternalFakeDependency
+    internal interface IInternalFakeTarget
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Echo.UnitTests.Fakes
 {
-    internal class FakeDependencyException : Exception
+    internal class FakeTargetException : Exception
     {
     }
 }

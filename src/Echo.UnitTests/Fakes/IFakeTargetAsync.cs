@@ -2,7 +2,7 @@
 
 namespace Echo.UnitTests.Fakes
 {
-    public interface IFakeDependencyAsync
+    public interface IFakeTargetAsync
     {
         Task CallRemoteResourceAsync();
 

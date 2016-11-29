@@ -26,6 +26,7 @@ namespace Samples.RecordToFile
                 interceptedPartner.Concat("This is", " a proof ", "of concept...");
                 interceptedPartner.Concat("... that", " writing to a file ", "works!");
             }
+
             Console.ReadKey();
         }
     }

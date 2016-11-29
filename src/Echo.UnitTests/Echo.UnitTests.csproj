@@ -60,11 +60,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Asserts\ExceptionAssert.cs" />
-    <Compile Include="Fakes\FakeDependency.cs" />
-    <Compile Include="Fakes\FakeDependencyException.cs" />
-    <Compile Include="Fakes\IFakeDependency.cs" />
-    <Compile Include="Fakes\IFakeDependencyAsync.cs" />
-    <Compile Include="Fakes\IInternalFakeDependency.cs" />
+    <Compile Include="Fakes\FakeTarget.cs" />
+    <Compile Include="Fakes\FakeTargetException.cs" />
+    <Compile Include="Fakes\IFakeTarget.cs" />
+    <Compile Include="Fakes\IFakeTargetAsync.cs" />
+    <Compile Include="Fakes\IInternalFakeTarget.cs" />
     <Compile Include="RecorderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

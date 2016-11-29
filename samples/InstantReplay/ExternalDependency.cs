@@ -1,11 +1,11 @@
 ﻿namespace Samples.InstantReplay
 {
-    public interface IExternalPartner
+    public interface IExternalDependency
     {
         int Multiply(int a, int b, int c);
     }
 
-    public class ExternalPartner : IExternalPartner
+    public class ExternalDependency : IExternalDependency
     {
         public int Multiply(int a, int b, int c)
         {

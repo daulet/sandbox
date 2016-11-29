@@ -1,6 +1,6 @@
 ﻿namespace Echo.UnitTests.Fakes
 {
-    public interface IFakeDependency
+    public interface IFakeTarget
     {
         void CallRemoteResource();
 
