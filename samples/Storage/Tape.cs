@@ -10,5 +10,10 @@ namespace Samples.Storage
         {
             _records.Add(record);
         }
+
+        public IList<Record> GetRecords()
+        {
+            return new List<Record>(_records);
+        }
     }
 }

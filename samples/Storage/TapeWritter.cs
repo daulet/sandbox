@@ -3,9 +3,14 @@ using System.Reflection;
 
 namespace Samples.Storage
 {
-    class TapeWritter : IInvocationWritter
+    internal class TapeWritter : IInvocationWritter
     {
         private readonly Tape _tape = new Tape();
+
+        public Tape GeTape()
+        {
+            return _tape;
+        }
 
         public void RecordInvocation(MethodInfo methodInfo, object returnValue, object[] arguments)
         {

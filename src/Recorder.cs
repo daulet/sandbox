@@ -20,8 +20,8 @@ namespace Echo
             // TODO are we intercepting throws?
             // TODO how well does this work with async?
 
-            var loggingInterceptor = new LoggingInterceptor(new ConsoleWritter());
-            var recordingInterceptor = new LoggingInterceptor(_invocationWritter);
+            var loggingInterceptor = new RecordingInterceptor(new ConsoleWritter());
+            var recordingInterceptor = new RecordingInterceptor(_invocationWritter);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target, loggingInterceptor, recordingInterceptor);
         }
     }
