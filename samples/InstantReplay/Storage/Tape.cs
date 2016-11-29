@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Samples.Storage
+namespace Samples.InstantReplay.Storage
 {
     internal class Tape
     {

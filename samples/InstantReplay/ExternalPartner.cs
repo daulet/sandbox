@@ -1,4 +1,4 @@
-﻿namespace Samples
+﻿namespace Samples.InstantReplay
 {
     public interface IExternalPartner
     {

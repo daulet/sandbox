@@ -3,7 +3,7 @@ using Echo.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Samples.Storage
+namespace Samples.InstantReplay.Storage
 {
     internal class TapeReader : IInvocationReader
     {

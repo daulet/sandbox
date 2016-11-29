@@ -5,7 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Echo", "src\Echo.csproj", "{8E46FE3B-5954-41E1-8D02-FE910C00327D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "samples\Samples.csproj", "{D287953A-1C3D-48A7-8D16-5F4719F04D06}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstantReplay", "samples\InstantReplay\InstantReplay.csproj", "{D287953A-1C3D-48A7-8D16-5F4719F04D06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D287953A-1C3D-48A7-8D16-5F4719F04D06} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
 	EndGlobalSection
 EndGlobal

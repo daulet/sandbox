@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Samples.Storage
+namespace Samples.InstantReplay.Storage
 {
     internal class Record
     {

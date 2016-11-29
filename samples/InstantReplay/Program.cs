@@ -1,8 +1,8 @@
 ﻿using Echo;
-using Samples.Storage;
+using Samples.InstantReplay.Storage;
 using System;
 
-namespace Samples
+namespace Samples.InstantReplay
 {
     internal static class Program
     {
