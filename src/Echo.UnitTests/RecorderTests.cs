@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Echo.UnitTests
 {
@@ -18,8 +19,8 @@ namespace Echo.UnitTests
 
             // Assert
             ExceptionAssert.Throws<NotSupportedException>(() =>
-                // Act
-                recorder.GetRecordingTarget<FakeDependency>(target: null));
+                    // Act
+                    recorder.GetRecordingTarget<FakeDependency>(target: null));
         }
 
         [TestMethod]
@@ -31,17 +32,17 @@ namespace Echo.UnitTests
 
             // Assert
             ExceptionAssert.Throws<NotSupportedException>(() =>
-                // Act
-                recorder.GetRecordingTarget<IInternalFakeDependency>(target: null));
+                    // Act
+                    recorder.GetRecordingTarget<IInternalFakeDependency>(target: null));
         }
 
         [TestMethod]
         public void GetRecordingTarget_DependencyThrows_InvocationWritterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>(MockBehavior.Strict);
+            var writterMock = new Mock<IInvocationWritter>();
             var recorder = new Recorder(writterMock.Object);
-            var dependencyMock = new Mock<IFakeDependency>(MockBehavior.Strict);
+            var dependencyMock = new Mock<IFakeDependency>();
             dependencyMock
                 .Setup(x => x.GetRemoteResource())
                 .Throws(new Exception());
@@ -55,6 +56,29 @@ namespace Echo.UnitTests
                 x.RecordInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<object>(returnValue => returnValue == null),
+                    It.Is<object[]>(arguments => arguments.Length == 0)));
+        }
+
+        [TestMethod]
+        public async Task GetRecordingTarget_ReturnValueIsTask_InvocationWritterCalled()
+        {
+            // Arrange
+            var writterMock = new Mock<IInvocationWritter>();
+            var recorder = new Recorder(writterMock.Object);
+            var dependencyMock = new Mock<IFakeDependencyAsync>();
+            dependencyMock
+                .Setup(x => x.CallRemoteResourceAsync())
+                .Returns(Task.CompletedTask);
+            var dependencyUnderRecording = recorder.GetRecordingTarget<IFakeDependencyAsync>(dependencyMock.Object);
+
+            // Act
+            await dependencyUnderRecording.CallRemoteResourceAsync();
+
+            // Assert
+            writterMock.Verify(x =>
+                x.RecordInvocation(
+                    It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
+                    It.Is<object>(returnValue => returnValue == Task.CompletedTask),
                     It.Is<object[]>(arguments => arguments.Length == 0)));
         }
     }
