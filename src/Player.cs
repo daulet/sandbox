@@ -16,9 +16,12 @@ namespace Echo
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {
-            var loggingInterceptor = new RecordingInterceptor(new ConsoleWritter());
             var replayingInterceptor = new ReplayingInterceptor(_invocationReader);
-            return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(loggingInterceptor, replayingInterceptor);
+            return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
+#if DEBUG
+                new RecordingInterceptor(new ConsoleWritter()),
+#endif
+                replayingInterceptor);
         }
     }
 }
