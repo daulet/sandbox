@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArgumentAssessor.cs" />
+    <Compile Include="Utilities\InvocationUtility.cs" />
     <Compile Include="Core\ConsoleWritter.cs" />
     <Compile Include="Core\RecordingInterceptor.cs" />
     <Compile Include="Core\ReplayingInterceptor.cs" />
@@ -57,6 +57,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

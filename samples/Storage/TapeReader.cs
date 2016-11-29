@@ -1,4 +1,5 @@
 ﻿using Echo;
+using Echo.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -20,9 +21,9 @@ namespace Samples.Storage
         {
             foreach (var record in _records)
             {
-                if (record.Method.Equals(methodInfo))
+                if (InvocationUtility.IsMethodMatch(record.Method, methodInfo))
                 {
-                    if (ArgumentAssessor.IsMatch(record.Arguments, arguments))
+                    if (InvocationUtility.IsArgumentListMatch(record.Arguments, arguments))
                     {
                         _records.Remove(record);
                         return record.ReturnValue;
