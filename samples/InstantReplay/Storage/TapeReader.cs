@@ -36,7 +36,7 @@ namespace Samples.InstantReplay.Storage
                         var valueInvocationResult = record.ReturnValue as ValueInvocationResult;
                         if (valueInvocationResult != null)
                         {
-                            return valueInvocationResult.ReturnValue;
+                            return valueInvocationResult.ReturnedValue;
                         }
                     }
                 }

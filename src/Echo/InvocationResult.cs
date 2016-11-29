@@ -31,21 +31,21 @@ namespace Echo
 
     public sealed class ValueInvocationResult : InvocationResult
     {
-        public object ReturnValue { get; }
+        public object ReturnedValue { get; }
 
         public override Type GetResultType()
         {
-            return ReturnValue.GetType();
+            return ReturnedValue.GetType();
         }
 
         public override string ToString()
         {
-            return ReturnValue?.ToString();
+            return ReturnedValue?.ToString();
         }
 
-        internal ValueInvocationResult(object returnValue)
+        internal ValueInvocationResult(object returnedValue)
         {
-            ReturnValue = returnValue;
+            ReturnedValue = returnedValue;
         }
     }
 

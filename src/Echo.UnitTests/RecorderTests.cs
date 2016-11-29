@@ -162,7 +162,7 @@ namespace Echo.UnitTests
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ValueInvocationResult
-                        && (returnValue as ValueInvocationResult).ReturnValue == remoteResource),
+                        && (returnValue as ValueInvocationResult).ReturnedValue == remoteResource),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
                 Times.Once);
         }
