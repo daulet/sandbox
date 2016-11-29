@@ -55,7 +55,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Echo.csproj">
+    <ProjectReference Include="..\..\src\Echo\Echo.csproj">
       <Project>{8e46fe3b-5954-41e1-8d02-fe910c00327d}</Project>
       <Name>Echo</Name>
     </ProjectReference>

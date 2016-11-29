@@ -66,16 +66,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Echo.csproj">
-      <Project>{8e46fe3b-5954-41e1-8d02-fe910c00327d}</Project>
-      <Name>Echo</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Echo\Echo.csproj">
+      <Project>{8e46fe3b-5954-41e1-8d02-fe910c00327d}</Project>
+      <Name>Echo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
