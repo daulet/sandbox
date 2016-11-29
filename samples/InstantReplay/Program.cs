@@ -21,7 +21,7 @@ namespace Samples.InstantReplay
             // call external dependency
             var actualResult = interceptedPartner.Multiply(1, 2, 3);
 
-            Console.WriteLine($"Received result from real dependency: {actualResult}");
+            Console.WriteLine($"Received result from actual dependency: {actualResult}");
 
             Console.WriteLine("Starting a replay");
 
