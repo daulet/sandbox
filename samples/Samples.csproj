@@ -46,6 +46,9 @@
     <Compile Include="ExternalPartner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\Record.cs" />
+    <Compile Include="Storage\Tape.cs" />
+    <Compile Include="Storage\TapeWritter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

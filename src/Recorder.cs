@@ -6,6 +6,12 @@ namespace Echo
     public class Recorder
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
+        private readonly IInvocationWritter _invocationWritter;
+
+        public Recorder(IInvocationWritter invocationWritter)
+        {
+            _invocationWritter = invocationWritter;
+        }
 
         public TTarget GetRecordingTarget<TTarget>(TTarget target)
             where TTarget : class
@@ -15,7 +21,8 @@ namespace Echo
             // TODO how well does this work with async?
 
             var loggingInterceptor = new LoggingInterceptor(new ConsoleWritter());
-            return _generator.CreateInterfaceProxyWithTarget<TTarget>(target, loggingInterceptor);
+            var recordingInterceptor = new LoggingInterceptor(_invocationWritter);
+            return _generator.CreateInterfaceProxyWithTarget<TTarget>(target, loggingInterceptor, recordingInterceptor);
         }
     }
 }
