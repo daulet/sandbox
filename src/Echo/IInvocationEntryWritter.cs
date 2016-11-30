@@ -1,6 +1,6 @@
 ﻿namespace Echo
 {
-    public interface IInvocationLogger
+    public interface IInvocationEntryWritter
     {
         void WriteSerializedInvocation(string serializedInvocation);
     }

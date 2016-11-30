@@ -1,6 +1,6 @@
 ﻿using Echo;
-using Samples.InstantReplay.Storage;
 using System;
+using System.IO;
 
 namespace Samples.InstantReplay
 {
@@ -10,24 +10,34 @@ namespace Samples.InstantReplay
         {
             Console.WriteLine("Starting recording");
 
-            // create an actual instance of external dependency
-            var externalPartner = new ExternalDependency();
+            byte[] bytes;
 
-            // setup recording
-            var tapeWritter = new TapeWritter();
-            var recorder = new Recorder(tapeWritter);
-            var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
+            using (var stream = new MemoryStream())
+            {
+                using (var streamWriter = new StreamWriter(stream))
+                {
+                    // create an actual instance of external dependency
+                    var externalPartner = new ExternalDependency();
 
-            // call external dependency
-            var actualResult = interceptedPartner.Multiply(1, 2, 3);
+                    // setup recording
+                    var writter = new EntityWritter(streamWriter);
+                    var recorder = new Recorder(writter);
+                    var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 
-            Console.WriteLine($"Received result from actual dependency: {actualResult}");
+                    // call external dependency
+                    var actualResult = interceptedPartner.Multiply(1, 2, 3);
+
+                    Console.WriteLine($"Received result from actual dependency: {actualResult}");
+                }
+
+                bytes = stream.ToArray();
+            }
 
             Console.WriteLine("Starting a replay");
 
             // setup replaying
-            var tapeReader = new TapeReader(tapeWritter.GeTape());
-            var player = new Player(tapeReader);
+            var reader = new EntryReader(bytes);
+            var player = new Player(reader);
             var mockedPartner = player.GetReplayingTarget<IExternalDependency>();
 
             // call mocked dependency

@@ -45,10 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\InvocationReader.cs" />
+    <Compile Include="Core\NoRecordingFoundException.cs" />
+    <Compile Include="IInvocationEntryReader.cs" />
     <Compile Include="Serialization\InvocationEntry.cs" />
     <Compile Include="Core\InvocationWriter.cs" />
     <Compile Include="InvocationResult.cs" />
-    <Compile Include="IInvocationLogger.cs" />
+    <Compile Include="IInvocationEntryWritter.cs" />
+    <Compile Include="Serialization\InvocationResultType.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
     <Compile Include="Core\ConsoleWritter.cs" />
     <Compile Include="Core\RecordingInterceptor.cs" />

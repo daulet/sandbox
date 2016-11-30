@@ -8,6 +8,11 @@ namespace Echo
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
 
+        public Player(IInvocationEntryReader invocationEntryReader)
+            : this(new InvocationReader(invocationEntryReader))
+        {
+        }
+
         public Player(IInvocationReader invocationReader)
         {
             _invocationReader = invocationReader;

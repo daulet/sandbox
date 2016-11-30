@@ -9,8 +9,8 @@ namespace Echo
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationWritter _invocationWritter;
 
-        public Recorder(IInvocationLogger invocationLogger)
-            : this(new InvocationWriter(invocationLogger))
+        public Recorder(IInvocationEntryWritter invocationEntryWritter)
+            : this(new InvocationWriter(invocationEntryWritter))
         {
         }
 

@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using System;
 
 namespace Echo.Core
 {
@@ -13,8 +14,31 @@ namespace Echo.Core
 
         public void Intercept(IInvocation invocation)
         {
-            var returnValue = _invocationReader.ReadReturnValue(invocation.Method, invocation.Arguments);
-            invocation.ReturnValue = returnValue;
+            try
+            {
+                var returnValue = _invocationReader.FindReturnValue(invocation.Method, invocation.Arguments);
+                if (returnValue is ExceptionInvocationResult)
+                {
+                    throw (returnValue as ExceptionInvocationResult).ThrownException;
+                }
+                else if (returnValue is ValueInvocationResult)
+                {
+                    invocation.ReturnValue = (returnValue as ValueInvocationResult).ReturnedValue;
+                }
+                else if (returnValue is VoidInvocationResult)
+                {
+                    // no ReturnValue in this case
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            catch (NoRecordingFoundException)
+            {
+                // TODO This behaviour needs to be configurable: return null or throw
+                throw;
+            }
         }
     }
 }

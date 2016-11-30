@@ -4,6 +4,6 @@ namespace Echo
 {
     public interface IInvocationReader
     {
-        object ReadReturnValue(MethodInfo methodInfo, object[] arguments);
+        InvocationResult FindReturnValue(MethodInfo methodInfo, object[] arguments);
     }
 }

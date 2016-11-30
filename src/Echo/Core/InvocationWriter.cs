@@ -8,18 +8,18 @@ namespace Echo.Core
     internal class InvocationWriter : IInvocationWritter
     {
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer();
-        private readonly IInvocationLogger _logger;
+        private readonly IInvocationEntryWritter _writter;
 
-        internal InvocationWriter(IInvocationLogger logger)
+        internal InvocationWriter(IInvocationEntryWritter writter)
         {
-            _logger = logger;
+            _writter = writter;
         }
 
         public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
         {
             var invocationRecord = new InvocationEntry(DateTimeOffset.UtcNow, arguments, methodInfo, invocationResult);
             var serializedRecord = _serializer.Serialize(invocationRecord);
-            _logger.WriteSerializedInvocation(serializedRecord);
+            _writter.WriteSerializedInvocation(serializedRecord);
         }
     }
 }
