@@ -1,10 +1,9 @@
-﻿using Echo;
-using System;
+﻿using System;
 using System.Reflection;
 
-namespace Samples.RecordToFile.Storage
+namespace Echo.Serialization
 {
-    internal class InvocationLog
+    internal class InvocationEntry
     {
         public object[] Arguments { get; }
 
@@ -14,7 +13,7 @@ namespace Samples.RecordToFile.Storage
 
         public DateTimeOffset Timestamp { get; }
 
-        public InvocationLog(DateTimeOffset timestamp, object[] arguments, MethodInfo methodInfo, InvocationResult returnValue)
+        public InvocationEntry(DateTimeOffset timestamp, object[] arguments, MethodInfo methodInfo, InvocationResult returnValue)
         {
             Arguments = arguments;
             Method = methodInfo.Name;

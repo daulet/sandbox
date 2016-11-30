@@ -50,7 +50,7 @@ namespace Echo.UnitTests
 
             // Assert
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResource")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
@@ -75,7 +75,7 @@ namespace Echo.UnitTests
 
             // Assert
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ExceptionInvocationResult
@@ -103,7 +103,7 @@ namespace Echo.UnitTests
             // Assert
             Assert.AreEqual(expectedResource, actualResource);
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ValueInvocationResult
@@ -129,7 +129,7 @@ namespace Echo.UnitTests
 
             // Assert
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
@@ -155,7 +155,7 @@ namespace Echo.UnitTests
 
             // Assert
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ExceptionInvocationResult
@@ -183,7 +183,7 @@ namespace Echo.UnitTests
             // Assert
             Assert.AreEqual(expectedResource, actualResource);
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ValueInvocationResult
@@ -211,7 +211,7 @@ namespace Echo.UnitTests
 
             // Assert
             writterMock.Verify(
-                x => x.RecordInvocation(
+                x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ExceptionInvocationResult

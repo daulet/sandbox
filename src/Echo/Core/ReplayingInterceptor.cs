@@ -6,7 +6,7 @@ namespace Echo.Core
     {
         private readonly IInvocationReader _invocationReader;
 
-        public ReplayingInterceptor(IInvocationReader invocationReader)
+        internal ReplayingInterceptor(IInvocationReader invocationReader)
         {
             _invocationReader = invocationReader;
         }

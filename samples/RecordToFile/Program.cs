@@ -1,5 +1,4 @@
 ﻿using Echo;
-using Samples.RecordToFile.Storage;
 using System;
 using System.IO;
 
@@ -17,7 +16,7 @@ namespace Samples.RecordToFile
             // setup recording
             using (var output = new StreamWriter(@"output.echo"))
             {
-                var tapeWritter = new InvocationWriter(output);
+                var tapeWritter = new InvocationLogger(output);
                 var recorder = new Recorder(tapeWritter);
                 var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 

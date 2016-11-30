@@ -12,7 +12,7 @@ namespace Samples.InstantReplay.Storage
             return _tape;
         }
 
-        public void RecordInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+        public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
         {
             _tape.AddRecord(new Record(methodInfo, invocationResult, arguments));
         }

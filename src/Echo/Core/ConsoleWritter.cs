@@ -5,7 +5,7 @@ namespace Echo.Core
 {
     internal class ConsoleWritter : IInvocationWritter
     {
-        public void RecordInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+        public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
         {
             Console.WriteLine($"Intercepting {methodInfo.Name} method:");
             foreach (var argument in arguments)

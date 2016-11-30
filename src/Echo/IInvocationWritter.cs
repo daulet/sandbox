@@ -4,6 +4,6 @@ namespace Echo
 {
     public interface IInvocationWritter
     {
-        void RecordInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments);
+        void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments);
     }
 }
