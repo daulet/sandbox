@@ -2,7 +2,7 @@
 
 namespace Echo.Core
 {
-    internal interface IInvocationWriter
+    public interface IInvocationWriter
     {
         void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments);
     }

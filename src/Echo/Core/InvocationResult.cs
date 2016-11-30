@@ -2,11 +2,11 @@
 
 namespace Echo.Core
 {
-    internal abstract class InvocationResult
+    public abstract class InvocationResult
     {
         public abstract Type GetResultType();
 
-        public static VoidInvocationResult Void => VoidInvocationResult.Instance;
+        internal static VoidInvocationResult Void => VoidInvocationResult.Instance;
     }
 
     internal sealed class ExceptionInvocationResult : InvocationResult
