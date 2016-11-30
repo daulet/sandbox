@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace Echo.Serialization
 {
+    // TODO rename to InvocationEntity. Entry is used to refer to first invocation
     internal class InvocationEntry
     {
         // TODO test for setters in all properties

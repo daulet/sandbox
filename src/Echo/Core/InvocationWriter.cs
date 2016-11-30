@@ -7,7 +7,7 @@ namespace Echo.Core
 {
     internal class InvocationWriter : IInvocationWriter
     {
-        private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer();
+        private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly IEchoWriter _echoWriter;
 
         internal InvocationWriter(IEchoWriter echoWriter)

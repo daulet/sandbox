@@ -1,20 +1,24 @@
 ﻿using Echo;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Samples.MultiDependency
 {
     internal class EchoReader : IEchoReader
     {
-        private readonly IList<string> _records;
+        private readonly StreamReader _streamReader;
 
-        internal EchoReader(IList<string> records)
+        internal EchoReader(StreamReader streamReader)
         {
-            _records = records;
+            _streamReader = streamReader;
         }
 
         public IEnumerable<string> ReadAllInvocationEntries()
         {
-            return new List<string>(_records);
+            while (!_streamReader.EndOfStream)
+            {
+                yield return _streamReader.ReadLine();
+            }
         }
     }
 }

@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Core\InvocationReader.cs" />
     <Compile Include="Core\NoRecordingFoundException.cs" />
+    <Compile Include="EntryValues.cs" />
     <Compile Include="IEchoReader.cs" />
     <Compile Include="Serialization\InvocationEntry.cs" />
     <Compile Include="Core\InvocationWriter.cs" />

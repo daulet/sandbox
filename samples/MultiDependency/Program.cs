@@ -9,9 +9,12 @@ namespace Samples.MultiDependency
 {
     internal class Program
     {
+        private const string EchoFileName = "output.echo";
+
         private static void Main(string[] args)
         {
-            Record();
+            //Record();
+            Test();
 
             Console.ReadKey();
         }
@@ -46,7 +49,7 @@ namespace Samples.MultiDependency
                 });
 
             // write all echoes to a file
-            using (var output = new StreamWriter(@"output.echo"))
+            using (var output = new StreamWriter(EchoFileName))
             {
                 // setup recording
 
@@ -76,6 +79,32 @@ namespace Samples.MultiDependency
                     },
                     ServiceType = ServiceType.Entertainment,
                 });
+            }
+        }
+
+        private static void Test()
+        {
+            using (var streamReader = new StreamReader(EchoFileName))
+            {
+                // Arrange
+
+                // setup an echo player
+                var reader = new EchoReader(streamReader);
+                var player = new Player(reader);
+
+                // obtain external dependencies from the player
+                var billing = player.GetReplayingTarget<IBilling>();
+                var serviceProvider = player.GetReplayingTarget<IServiceProvider>();
+                var testValues = player.GetEntryValues();
+
+                // this is the the instance that is getting tested
+                // we inject external dependencies provided by the player
+                var endpointUnderTest = new Endpoint(billing, serviceProvider);
+
+                // Act
+
+                // call method you'd like to test with values provided by the player
+                endpointUnderTest.Purchase(testValues.GetValue<PurchaseRequest>());
             }
         }
     }
