@@ -1,9 +1,9 @@
 ﻿using Echo;
+using Echo.UnitTesting;
 using Moq;
 using Samples.MultiDependency.Target;
 using System;
 using System.IO;
-using IServiceProvider = Samples.MultiDependency.Target.IServiceProvider;
 
 namespace Samples.MultiDependency
 {
@@ -40,7 +40,7 @@ namespace Samples.MultiDependency
                     Result = PaymentCode.Success,
                 });
 
-            var serviceProviderMock = new Mock<IServiceProvider>();
+            var serviceProviderMock = new Mock<IProvider>();
             serviceProviderMock
                 .Setup(x => x.Provision(It.IsAny<ProvisioningRequest>()))
                 .Returns(new ProvisioningResponse()
@@ -57,7 +57,7 @@ namespace Samples.MultiDependency
                 var recorder = new Recorder(writer);
 
                 var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
-                var recordedServiceProvider = recorder.GetRecordingTarget<IServiceProvider>(serviceProviderMock.Object);
+                var recordedServiceProvider = recorder.GetRecordingTarget<IProvider>(serviceProviderMock.Object);
                 var actualEndpoint = new Endpoint(recordedBilling, recordedServiceProvider);
                 var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
 
@@ -90,11 +90,11 @@ namespace Samples.MultiDependency
 
                 // setup an echo player
                 var reader = new EchoReader(streamReader);
-                var player = new Player(reader);
+                var player = new TestPlayer(reader);
 
                 // obtain external dependencies from the player
                 var billing = player.GetReplayingTarget<IBilling>();
-                var serviceProvider = player.GetReplayingTarget<IServiceProvider>();
+                var serviceProvider = player.GetReplayingTarget<IProvider>();
                 var testValues = player.GetEntryValues();
 
                 // this is the the instance that is getting tested
@@ -105,6 +105,10 @@ namespace Samples.MultiDependency
 
                 // call method you'd like to test with values provided by the player
                 endpointUnderTest.Purchase(testValues.GetValue<PurchaseRequest>());
+
+                // Assert
+
+                player.VerifyAll();
             }
         }
     }

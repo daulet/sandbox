@@ -1,6 +1,6 @@
 ﻿namespace Samples.MultiDependency.Target
 {
-    public interface IServiceProvider
+    public interface IProvider
     {
         ProvisioningResponse Provision(ProvisioningRequest request);
     }

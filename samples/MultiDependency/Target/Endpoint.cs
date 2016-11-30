@@ -3,12 +3,12 @@
     internal class Endpoint : IEndpoint
     {
         private readonly IBilling _billing;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IProvider _provider;
 
-        public Endpoint(IBilling billing, IServiceProvider serviceProvider)
+        public Endpoint(IBilling billing, IProvider provider)
         {
             _billing = billing;
-            _serviceProvider = serviceProvider;
+            _provider = provider;
         }
 
         public PurchaseResponse Purchase(PurchaseRequest request)
@@ -31,7 +31,7 @@
 
             try
             {
-                _serviceProvider.Provision(new ProvisioningRequest()
+                _provider.Provision(new ProvisioningRequest()
                 {
                     Customer = request.Customer,
                     Service = request.ServiceType,

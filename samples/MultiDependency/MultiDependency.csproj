@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="EchoReader.cs" />
     <Compile Include="EchoWriter.cs" />
-    <Compile Include="Target\IServiceProvider.cs" />
+    <Compile Include="Target\IProvider.cs" />
     <Compile Include="Target\PaymentInstrument.cs" />
     <Compile Include="Target\Endpoint.cs" />
     <Compile Include="Target\IBilling.cs" />

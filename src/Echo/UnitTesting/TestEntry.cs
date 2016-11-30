@@ -1,11 +1,11 @@
-﻿namespace Echo
+﻿namespace Echo.UnitTesting
 {
-    public class EntryValues
+    public class TestEntry
     {
         private readonly object[] _arguments;
         private int _currentArgumentIndex;
 
-        internal EntryValues(object[] arguments)
+        internal TestEntry(object[] arguments)
         {
             _arguments = arguments;
             _currentArgumentIndex = 0;

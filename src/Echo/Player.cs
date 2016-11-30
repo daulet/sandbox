@@ -18,12 +18,6 @@ namespace Echo
             _invocationReader = invocationReader;
         }
 
-        public EntryValues GetEntryValues()
-        {
-            var arguments = _invocationReader.FindEntryArguments();
-            return new EntryValues(arguments);
-        }
-
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {

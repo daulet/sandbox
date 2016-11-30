@@ -47,13 +47,14 @@
   <ItemGroup>
     <Compile Include="Core\InvocationReader.cs" />
     <Compile Include="Core\NoRecordingFoundException.cs" />
-    <Compile Include="EntryValues.cs" />
+    <Compile Include="UnitTesting\TestEntry.cs" />
     <Compile Include="IEchoReader.cs" />
     <Compile Include="Serialization\InvocationEntry.cs" />
     <Compile Include="Core\InvocationWriter.cs" />
     <Compile Include="Core\InvocationResult.cs" />
     <Compile Include="IEchoWriter.cs" />
     <Compile Include="Serialization\InvocationResultType.cs" />
+    <Compile Include="UnitTesting\TestPlayer.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
     <Compile Include="Core\ConsoleWriter.cs" />
     <Compile Include="Core\RecordingInterceptor.cs" />

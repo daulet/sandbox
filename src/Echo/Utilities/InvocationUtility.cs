@@ -33,7 +33,8 @@ namespace Echo.Utilities
             {
                 return argument == otherArgument;
             }
-            return argument.Equals(otherArgument);
+            // TODO find a way to differentiate multiple calls to the same method - they'll obviously have matching list of argument types
+            return argument.GetType() == otherArgument.GetType();
         }
 
         public static bool IsMethodMatch(MethodInfo method, MethodInfo anotherMethod)
