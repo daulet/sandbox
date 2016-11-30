@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Echo.Core;
+using System;
 using System.Reflection;
 
 namespace Echo.Serialization

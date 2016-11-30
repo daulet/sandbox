@@ -16,8 +16,8 @@ namespace Samples.RecordToFile
             // setup recording
             using (var output = new StreamWriter(@"output.echo"))
             {
-                var tapeWritter = new InvocationWritter(output);
-                var recorder = new Recorder(tapeWritter);
+                var writer = new EchoWriter(output);
+                var recorder = new Recorder(writer);
                 var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 
                 // call external dependency

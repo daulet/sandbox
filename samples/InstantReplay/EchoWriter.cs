@@ -1,13 +1,13 @@
 ﻿using Echo;
 using System.IO;
 
-namespace Samples.RecordToFile
+namespace Samples.InstantReplay
 {
-    internal class InvocationWritter : IInvocationEntryWritter
+    internal class EchoWriter : IEchoWriter
     {
         private readonly StreamWriter _streamWriter;
 
-        public InvocationWritter(StreamWriter streamWriter)
+        internal EchoWriter(StreamWriter streamWriter)
         {
             _streamWriter = streamWriter;
         }

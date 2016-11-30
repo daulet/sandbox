@@ -43,8 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntryReader.cs" />
-    <Compile Include="EntryWritter.cs" />
+    <Compile Include="EchoReader.cs" />
+    <Compile Include="EchoWriter.cs" />
     <Compile Include="ExternalDependency.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

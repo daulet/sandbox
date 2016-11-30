@@ -8,12 +8,12 @@ namespace Echo
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
 
-        public Player(IInvocationEntryReader invocationEntryReader)
-            : this(new InvocationReader(invocationEntryReader))
+        public Player(IEchoReader echoReader)
+            : this(new InvocationReader(echoReader))
         {
         }
 
-        public Player(IInvocationReader invocationReader)
+        internal Player(IInvocationReader invocationReader)
         {
             _invocationReader = invocationReader;
         }
@@ -24,7 +24,7 @@ namespace Echo
             var replayingInterceptor = new ReplayingInterceptor(_invocationReader);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
 #if DEBUG
-                new RecordingInterceptor(new ConsoleWritter()),
+                new RecordingInterceptor(new ConsoleWriter()),
 #endif
                 replayingInterceptor);
         }

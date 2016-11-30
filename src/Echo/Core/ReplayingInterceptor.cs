@@ -16,7 +16,7 @@ namespace Echo.Core
         {
             try
             {
-                var returnValue = _invocationReader.FindReturnValue(invocation.Method, invocation.Arguments);
+                var returnValue = _invocationReader.FindInvocationResult(invocation.Method, invocation.Arguments);
                 if (returnValue is ExceptionInvocationResult)
                 {
                     throw (returnValue as ExceptionInvocationResult).ThrownException;

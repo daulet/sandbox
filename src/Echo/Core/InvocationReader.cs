@@ -11,16 +11,16 @@ namespace Echo.Core
     internal class InvocationReader : IInvocationReader
     {
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer();
-        private readonly IInvocationEntryReader _reader;
+        private readonly IEchoReader _echoReader;
 
-        internal InvocationReader(IInvocationEntryReader reader)
+        internal InvocationReader(IEchoReader echoReader)
         {
-            _reader = reader;
+            _echoReader = echoReader;
         }
 
-        public InvocationResult FindReturnValue(MethodInfo methodInfo, object[] arguments)
+        public InvocationResult FindInvocationResult(MethodInfo methodInfo, object[] arguments)
         {
-            var serializedEntries = _reader.ReadAllInvocationEntries();
+            var serializedEntries = _echoReader.ReadAllInvocationEntries();
             var entries = new HashSet<InvocationEntry>(
                 serializedEntries.Select(x => _serializer.Deserialize<InvocationEntry>(x)));
 

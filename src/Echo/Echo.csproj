@@ -47,18 +47,18 @@
   <ItemGroup>
     <Compile Include="Core\InvocationReader.cs" />
     <Compile Include="Core\NoRecordingFoundException.cs" />
-    <Compile Include="IInvocationEntryReader.cs" />
+    <Compile Include="IEchoReader.cs" />
     <Compile Include="Serialization\InvocationEntry.cs" />
     <Compile Include="Core\InvocationWriter.cs" />
-    <Compile Include="InvocationResult.cs" />
-    <Compile Include="IInvocationEntryWritter.cs" />
+    <Compile Include="Core\InvocationResult.cs" />
+    <Compile Include="IEchoWriter.cs" />
     <Compile Include="Serialization\InvocationResultType.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
-    <Compile Include="Core\ConsoleWritter.cs" />
+    <Compile Include="Core\ConsoleWriter.cs" />
     <Compile Include="Core\RecordingInterceptor.cs" />
     <Compile Include="Core\ReplayingInterceptor.cs" />
-    <Compile Include="IInvocationReader.cs" />
-    <Compile Include="IInvocationWritter.cs" />
+    <Compile Include="Core\IInvocationReader.cs" />
+    <Compile Include="Core\IInvocationWriter.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Recorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

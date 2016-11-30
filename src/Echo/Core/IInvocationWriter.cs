@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 
-namespace Echo
+namespace Echo.Core
 {
-    public interface IInvocationWritter
+    internal interface IInvocationWriter
     {
         void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments);
     }

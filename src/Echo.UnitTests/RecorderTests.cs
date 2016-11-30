@@ -1,4 +1,5 @@
-﻿using Echo.UnitTests.Asserts;
+﻿using Echo.Core;
+using Echo.UnitTests.Asserts;
 using Echo.UnitTests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -15,7 +16,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_TTargetIsNotInterface_ThrowsNotSupportedException()
         {
             // Arrange
-            var recorder = new Recorder(invocationWritter: null);
+            var recorder = new Recorder(invocationWriter: null);
 
             // Assert
             ExceptionAssert.Throws<NotSupportedException>(() =>
@@ -27,7 +28,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_TTargetIsNotPublicInterface_ThrowsNotSupportedException()
         {
             // Arrange
-            var recorder = new Recorder(invocationWritter: null);
+            var recorder = new Recorder(invocationWriter: null);
             Assert.IsFalse(typeof(IInternalFakeTarget).IsPublic, "Interface can't be public for test to be valid");
 
             // Assert
@@ -37,11 +38,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public void GetRecordingTarget_ReturnTypeIsVoid_InvocationWritterCalled()
+        public void GetRecordingTarget_ReturnTypeIsVoid_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTarget>();
             var targetUnderRecording = recorder.GetRecordingTarget<IFakeTarget>(targetMock.Object);
 
@@ -49,7 +50,7 @@ namespace Echo.UnitTests
             targetUnderRecording.CallRemoteResource();
 
             // Assert
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResource")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
@@ -58,11 +59,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public void GetRecordingTarget_TargetThrows_InvocationWritterCalled()
+        public void GetRecordingTarget_TargetThrows_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTarget>();
             var expectedException = new FakeTargetException();
             targetMock
@@ -74,7 +75,7 @@ namespace Echo.UnitTests
             ExceptionAssert.Throws<FakeTargetException>(() => targetUnderRecording.GetRemoteResource());
 
             // Assert
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<InvocationResult>(returnValue
@@ -85,11 +86,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public void GetRecordingTarget_ReturnsValue_InvocationWritterCalled()
+        public void GetRecordingTarget_ReturnsValue_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTarget>();
             var expectedResource = new object();
             targetMock
@@ -102,7 +103,7 @@ namespace Echo.UnitTests
 
             // Assert
             Assert.AreEqual(expectedResource, actualResource);
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<InvocationResult>(returnValue
@@ -113,11 +114,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public async Task GetRecordingTarget_ReturnValueIsTask_InvocationWritterCalled()
+        public async Task GetRecordingTarget_ReturnValueIsTask_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             targetMock
                 .Setup(x => x.CallRemoteResourceAsync())
@@ -128,7 +129,7 @@ namespace Echo.UnitTests
             await targetUnderRecording.CallRemoteResourceAsync();
 
             // Assert
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
@@ -137,11 +138,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public async Task GetRecordingTarget_ReturnValueIsTask_TargetThrows_InvocationWritterCalled()
+        public async Task GetRecordingTarget_ReturnValueIsTask_TargetThrows_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             var expectedException = new FakeTargetException();
             targetMock
@@ -154,7 +155,7 @@ namespace Echo.UnitTests
                 async () => await targetUnderRecording.CallRemoteResourceAsync());
 
             // Assert
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
@@ -165,11 +166,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_InvocationWritterCalled()
+        public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             var expectedResource = new object();
             targetMock
@@ -182,7 +183,7 @@ namespace Echo.UnitTests
 
             // Assert
             Assert.AreEqual(expectedResource, actualResource);
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
@@ -193,11 +194,11 @@ namespace Echo.UnitTests
         }
 
         [TestMethod]
-        public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_TargetThrows_InvocationWritterCalled()
+        public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_TargetThrows_InvocationWriterCalled()
         {
             // Arrange
-            var writterMock = new Mock<IInvocationWritter>();
-            var recorder = new Recorder(writterMock.Object);
+            var writerMock = new Mock<IInvocationWriter>();
+            var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             var expectedException = new FakeTargetException();
             targetMock
@@ -210,7 +211,7 @@ namespace Echo.UnitTests
                 async () => await targetUnderRecording.GetRemoteResourceAsync());
 
             // Assert
-            writterMock.Verify(
+            writerMock.Verify(
                 x => x.WriteInvocation(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue

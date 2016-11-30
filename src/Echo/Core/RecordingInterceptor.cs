@@ -6,11 +6,11 @@ namespace Echo.Core
 {
     internal class RecordingInterceptor : IInterceptor
     {
-        private readonly IInvocationWritter _tapeWritter;
+        private readonly IInvocationWriter _invocationWriter;
 
-        internal RecordingInterceptor(IInvocationWritter tapeWritter)
+        internal RecordingInterceptor(IInvocationWriter invocationWriter)
         {
-            _tapeWritter = tapeWritter;
+            _invocationWriter = invocationWriter;
         }
 
         public void Intercept(IInvocation invocation)
@@ -21,14 +21,14 @@ namespace Echo.Core
             }
             catch (Exception ex)
             {
-                _tapeWritter.WriteInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+                _invocationWriter.WriteInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
                 throw;
             }
 
             if (typeof(void) == invocation.Method.ReturnType)
             {
-                _tapeWritter.WriteInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
+                _invocationWriter.WriteInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
             }
             else if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
             {
@@ -36,7 +36,7 @@ namespace Echo.Core
             }
             else
             {
-                _tapeWritter.WriteInvocation(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
+                _invocationWriter.WriteInvocation(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
                     invocation.Arguments);
             }
 
@@ -48,11 +48,11 @@ namespace Echo.Core
             {
                 await task.ConfigureAwait(false);
 
-                _tapeWritter.WriteInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
+                _invocationWriter.WriteInvocation(invocation.Method, InvocationResult.Void, invocation.Arguments);
             }
             catch (Exception ex)
             {
-                _tapeWritter.WriteInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+                _invocationWriter.WriteInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
                 throw;
             }
@@ -64,13 +64,13 @@ namespace Echo.Core
             {
                 var result = await task.ConfigureAwait(false);
 
-                _tapeWritter.WriteInvocation(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
+                _invocationWriter.WriteInvocation(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
 
                 return result;
             }
             catch (Exception ex)
             {
-                _tapeWritter.WriteInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+                _invocationWriter.WriteInvocation(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
                 throw;
             }

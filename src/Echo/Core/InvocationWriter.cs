@@ -5,21 +5,21 @@ using System.Web.Script.Serialization;
 
 namespace Echo.Core
 {
-    internal class InvocationWriter : IInvocationWritter
+    internal class InvocationWriter : IInvocationWriter
     {
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer();
-        private readonly IInvocationEntryWritter _writter;
+        private readonly IEchoWriter _echoWriter;
 
-        internal InvocationWriter(IInvocationEntryWritter writter)
+        internal InvocationWriter(IEchoWriter echoWriter)
         {
-            _writter = writter;
+            _echoWriter = echoWriter;
         }
 
         public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
         {
             var invocationRecord = new InvocationEntry(DateTimeOffset.UtcNow, arguments, methodInfo, invocationResult);
             var serializedRecord = _serializer.Serialize(invocationRecord);
-            _writter.WriteSerializedInvocation(serializedRecord);
+            _echoWriter.WriteSerializedInvocation(serializedRecord);
         }
     }
 }

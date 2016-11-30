@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Echo.Core
 {
-    internal class ConsoleWritter : IInvocationWritter
+    internal class ConsoleWriter : IInvocationWriter
     {
         public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
         {

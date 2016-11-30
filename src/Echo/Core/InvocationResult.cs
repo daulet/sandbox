@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace Echo
+namespace Echo.Core
 {
-    public abstract class InvocationResult
+    internal abstract class InvocationResult
     {
         public abstract Type GetResultType();
 
         public static VoidInvocationResult Void => VoidInvocationResult.Instance;
     }
 
-    public sealed class ExceptionInvocationResult : InvocationResult
+    internal sealed class ExceptionInvocationResult : InvocationResult
     {
         public Exception ThrownException { get; }
 
@@ -29,7 +29,7 @@ namespace Echo
         }
     }
 
-    public sealed class ValueInvocationResult : InvocationResult
+    internal sealed class ValueInvocationResult : InvocationResult
     {
         public object ReturnedValue { get; }
 
@@ -49,7 +49,7 @@ namespace Echo
         }
     }
 
-    public sealed class VoidInvocationResult : InvocationResult
+    internal sealed class VoidInvocationResult : InvocationResult
     {
         private VoidInvocationResult()
         {

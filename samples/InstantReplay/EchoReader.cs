@@ -4,11 +4,11 @@ using System.IO;
 
 namespace Samples.InstantReplay
 {
-    internal class EntryReader : IInvocationEntryReader
+    internal class EchoReader : IEchoReader
     {
         private readonly byte[] _bytes;
 
-        internal EntryReader(byte[] bytes)
+        internal EchoReader(byte[] bytes)
         {
             _bytes = bytes;
         }

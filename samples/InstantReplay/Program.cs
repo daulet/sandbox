@@ -20,8 +20,8 @@ namespace Samples.InstantReplay
                     var externalPartner = new ExternalDependency();
 
                     // setup recording
-                    var writter = new EntityWritter(streamWriter);
-                    var recorder = new Recorder(writter);
+                    var writer = new EchoWriter(streamWriter);
+                    var recorder = new Recorder(writer);
                     var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 
                     // call external dependency
@@ -36,7 +36,7 @@ namespace Samples.InstantReplay
             Console.WriteLine("Starting a replay");
 
             // setup replaying
-            var reader = new EntryReader(bytes);
+            var reader = new EchoReader(bytes);
             var player = new Player(reader);
             var mockedPartner = player.GetReplayingTarget<IExternalDependency>();
 

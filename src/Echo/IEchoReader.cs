@@ -2,7 +2,7 @@
 
 namespace Echo
 {
-    public interface IInvocationEntryReader
+    public interface IEchoReader
     {
         IEnumerable<string> ReadAllInvocationEntries();
     }
