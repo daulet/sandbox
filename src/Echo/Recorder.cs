@@ -29,10 +29,10 @@ namespace Echo
                 throw new NotSupportedException();
             }
 
-            var recordingInterceptor = new RecordingInterceptor(_invocationWriter);
+            var recordingInterceptor = new RecordingInterceptor<TTarget>(_invocationWriter);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
 #if DEBUG
-                new RecordingInterceptor(new ConsoleWriter()),
+                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
 #endif
                 recordingInterceptor);
         }

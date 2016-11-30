@@ -1,5 +1,6 @@
 ﻿using Echo.Core;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Echo.Serialization
@@ -16,6 +17,8 @@ namespace Echo.Serialization
 
         public object ReturnValue { get; set; }
 
+        public string Target { get; set; }
+
         public DateTimeOffset Timestamp { get; set; }
 
         // TODO test for parameterless constructor
@@ -23,11 +26,12 @@ namespace Echo.Serialization
         {
         }
 
-        public InvocationEntry(DateTimeOffset timestamp, object[] arguments, MethodInfo methodInfo, InvocationResult invocationResult)
+        public InvocationEntry(Type targetType, MethodInfo methodInfo, object[] arguments, InvocationResult invocationResult, DateTimeOffset timestamp)
         {
             Arguments = arguments;
             InvocationResult = invocationResult;
             Method = methodInfo.Name;
+            TargetType = targetType;
             Timestamp = timestamp;
         }
 
@@ -84,6 +88,32 @@ namespace Echo.Serialization
             }
         }
         private InvocationResult _invocationResult;
+
+        internal Type TargetType
+        {
+            get
+            {
+                if (_targetType == null)
+                {
+                    var matchingType = Type.GetType(Target);
+                    if (matchingType == null)
+                    {
+                        throw new KeyNotFoundException();
+                    }
+                    else
+                    {
+                        _targetType = matchingType;
+                    }
+                }
+                return _targetType;
+            }
+            set
+            {
+                _targetType = value;
+                Target = _targetType.AssemblyQualifiedName;
+            }
+        }
+        private Type _targetType;
 
         #endregion
     }

@@ -3,7 +3,8 @@ using System;
 
 namespace Echo.Core
 {
-    internal class ReplayingInterceptor : IInterceptor
+    internal class ReplayingInterceptor<TTarget> : IInterceptor
+        where TTarget : class
     {
         private readonly IInvocationReader _invocationReader;
 
@@ -16,7 +17,7 @@ namespace Echo.Core
         {
             try
             {
-                var returnValue = _invocationReader.FindInvocationResult(invocation.Method, invocation.Arguments);
+                var returnValue = _invocationReader.FindInvocationResult<TTarget>(invocation.Method, invocation.Arguments);
                 if (returnValue is ExceptionInvocationResult)
                 {
                     throw (returnValue as ExceptionInvocationResult).ThrownException;

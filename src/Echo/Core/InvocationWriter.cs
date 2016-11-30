@@ -15,9 +15,10 @@ namespace Echo.Core
             _echoWriter = echoWriter;
         }
 
-        public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+        public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+            where TTarget : class
         {
-            var invocationRecord = new InvocationEntry(DateTimeOffset.UtcNow, arguments, methodInfo, invocationResult);
+            var invocationRecord = new InvocationEntry(typeof(TTarget), methodInfo, arguments, invocationResult, DateTimeOffset.UtcNow);
             var serializedRecord = _serializer.Serialize(invocationRecord);
             _echoWriter.WriteSerializedInvocation(serializedRecord);
         }

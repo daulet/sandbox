@@ -4,6 +4,7 @@ namespace Echo.Core
 {
     public interface IInvocationWriter
     {
-        void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments);
+        void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+            where TTarget : class;
     }
 }

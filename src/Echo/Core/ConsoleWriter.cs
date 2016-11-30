@@ -5,9 +5,10 @@ namespace Echo.Core
 {
     internal class ConsoleWriter : IInvocationWriter
     {
-        public void WriteInvocation(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+        public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
+            where TTarget : class
         {
-            Console.WriteLine($"Intercepting {methodInfo.Name} method:");
+            Console.WriteLine($"Intercepting {typeof(TTarget).Name}.{methodInfo.Name} method:");
             foreach (var argument in arguments)
             {
                 Console.WriteLine($"\tArgument {argument?.GetType()}: {argument}");

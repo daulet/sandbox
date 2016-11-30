@@ -21,10 +21,10 @@ namespace Echo
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {
-            var replayingInterceptor = new ReplayingInterceptor(_invocationReader);
+            var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
 #if DEBUG
-                new RecordingInterceptor(new ConsoleWriter()),
+                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
 #endif
                 replayingInterceptor);
         }

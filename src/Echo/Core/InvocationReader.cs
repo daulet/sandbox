@@ -18,7 +18,8 @@ namespace Echo.Core
             _echoReader = echoReader;
         }
 
-        public InvocationResult FindInvocationResult(MethodInfo methodInfo, object[] arguments)
+        public InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
+            where TTarget : class
         {
             var serializedEntries = _echoReader.ReadAllInvocationEntries();
             var entries = new HashSet<InvocationEntry>(

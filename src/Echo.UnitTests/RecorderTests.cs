@@ -51,7 +51,7 @@ namespace Echo.UnitTests
 
             // Assert
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTarget>(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResource")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
@@ -76,7 +76,7 @@ namespace Echo.UnitTests
 
             // Assert
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTarget>(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ExceptionInvocationResult
@@ -104,7 +104,7 @@ namespace Echo.UnitTests
             // Assert
             Assert.AreEqual(expectedResource, actualResource);
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTarget>(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResource")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ValueInvocationResult
@@ -130,7 +130,7 @@ namespace Echo.UnitTests
 
             // Assert
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTargetAsync>(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue => returnValue == InvocationResult.Void),
                     It.Is<object[]>(arguments => arguments.Length == 0)),
@@ -156,7 +156,7 @@ namespace Echo.UnitTests
 
             // Assert
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTargetAsync>(
                     It.Is<MethodInfo>(method => method.Name.Equals("CallRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ExceptionInvocationResult
@@ -184,7 +184,7 @@ namespace Echo.UnitTests
             // Assert
             Assert.AreEqual(expectedResource, actualResource);
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTargetAsync>(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ValueInvocationResult
@@ -212,7 +212,7 @@ namespace Echo.UnitTests
 
             // Assert
             writerMock.Verify(
-                x => x.WriteInvocation(
+                x => x.WriteInvocation<IFakeTargetAsync>(
                     It.Is<MethodInfo>(method => method.Name.Equals("GetRemoteResourceAsync")),
                     It.Is<InvocationResult>(returnValue
                         => returnValue is ExceptionInvocationResult

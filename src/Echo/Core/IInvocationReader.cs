@@ -4,6 +4,7 @@ namespace Echo.Core
 {
     internal interface IInvocationReader
     {
-        InvocationResult FindInvocationResult(MethodInfo methodInfo, object[] arguments);
+        InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
+            where TTarget : class;
     }
 }
