@@ -1,30 +1,20 @@
 ﻿using Echo;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Samples.InstantReplay
 {
     internal class EchoReader : IEchoReader
     {
-        private readonly byte[] _bytes;
+        private readonly IList<string> _records;
 
-        internal EchoReader(byte[] bytes)
+        internal EchoReader(IList<string> records)
         {
-            _bytes = bytes;
+            _records = records;
         }
 
         public IEnumerable<string> ReadAllInvocationEntries()
         {
-            using (var stream = new MemoryStream(_bytes))
-            {
-                using (var streamReader = new StreamReader(stream))
-                {
-                    while (!streamReader.EndOfStream)
-                    {
-                        yield return streamReader.ReadLine();
-                    }
-                }
-            }
+            return new List<string>(_records);
         }
     }
 }

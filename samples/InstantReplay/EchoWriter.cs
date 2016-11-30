@@ -1,20 +1,20 @@
 ﻿using Echo;
-using System.IO;
+using System.Collections.Generic;
 
 namespace Samples.InstantReplay
 {
     internal class EchoWriter : IEchoWriter
     {
-        private readonly StreamWriter _streamWriter;
+        private readonly IList<string> _records;
 
-        internal EchoWriter(StreamWriter streamWriter)
+        internal EchoWriter(IList<string> records)
         {
-            _streamWriter = streamWriter;
+            _records = records;
         }
 
         public void WriteSerializedInvocation(string serializedInvocation)
         {
-            _streamWriter.WriteLine(serializedInvocation);
+            _records.Add(serializedInvocation);
         }
     }
 }
