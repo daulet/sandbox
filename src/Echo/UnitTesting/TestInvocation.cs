@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Echo.Core;
+using System;
 using System.Reflection;
 
 namespace Echo.UnitTesting
@@ -9,12 +10,15 @@ namespace Echo.UnitTesting
 
         public MethodInfo Method { get; }
 
+        public InvocationResult Result { get; }
+
         public Type TargetType { get; }
 
-        public TestInvocation(object[] arguments, MethodInfo method, Type targetType)
+        public TestInvocation(object[] arguments, MethodInfo method, InvocationResult result, Type targetType)
         {
             Arguments = arguments;
             Method = method;
+            Result = result;
             TargetType = targetType;
         }
     }

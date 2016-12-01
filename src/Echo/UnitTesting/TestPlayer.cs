@@ -12,7 +12,7 @@ namespace Echo.UnitTesting
         public TestPlayer(IEchoReader echoReader)
         {
             _invocationReader = new InvocationDeserializer(echoReader);
-            _validatingListener = new ValidatingListener();
+            _validatingListener = new ValidatingListener(_invocationReader);
         }
 
         public TTarget GetReplayingTarget<TTarget>()
