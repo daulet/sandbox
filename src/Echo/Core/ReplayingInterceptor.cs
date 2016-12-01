@@ -39,6 +39,7 @@ namespace Echo.Core
             catch (NoEchoFoundException)
             {
                 // TODO This behaviour needs to be configurable: return null or throw
+                // TODO does null work for value types?
                 throw;
             }
         }

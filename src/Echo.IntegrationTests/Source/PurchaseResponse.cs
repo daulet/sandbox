@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Samples.MultiDependency.Target
+namespace Echo.IntegrationTests.Source
 {
     public class PurchaseResponse
     {

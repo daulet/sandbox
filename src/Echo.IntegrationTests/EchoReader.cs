@@ -1,8 +1,7 @@
-﻿using Echo;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
-namespace Samples.MultiDependency
+namespace Echo.IntegrationTests
 {
     internal class EchoReader : IEchoReader
     {

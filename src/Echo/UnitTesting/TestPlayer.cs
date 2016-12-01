@@ -7,37 +7,59 @@ namespace Echo.UnitTesting
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
-        private readonly IValidationReader _validationReader;
+        private readonly ValidatingListener _validatingListener;
 
         public TestPlayer(IEchoReader echoReader)
         {
-            var reader = new ValidationReader(echoReader);
-            _invocationReader = reader;
-            _validationReader = reader;
+            _invocationReader = new InvocationReader(echoReader);
+            _validatingListener = new ValidatingListener();
         }
 
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {
             var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
+            var passthroughInterceptor = new RecordingInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
 #if DEBUG
                 new RecordingInterceptor<TTarget>(new ConsoleWriter()),
 #endif
+                passthroughInterceptor,
                 replayingInterceptor);
         }
 
         public TestEntry GetTestEntry()
         {
-            var arguments = _validationReader.FindEntryArguments();
+            var arguments = _invocationReader.FindEntryArguments();
             return new TestEntry(arguments);
         }
 
+        public TTarget GetTestEntryTarget<TTarget>(TTarget target)
+            where TTarget : class
+        {
+            var passthroughInterceptor = new RecordingInterceptor<TTarget>(_validatingListener);
+            return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
+#if DEBUG
+                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
+#endif
+                passthroughInterceptor);
+        }
+
+        #region Validation
+
         public void VerifyAll()
         {
-            // TODO validation should be implemented as interceptor, not as part of a reader
             // verify all targets were hit in prerecorded order, with the same values
-            _validationReader.VerifyAll();
+            _validatingListener.VerifyAll();
+        }
+
+        /// <summary>
+        /// Verify that all mocked dependencies are hit.
+        /// The same as <see cref="VerifyAll"/> but doesn't verify entry point
+        /// </summary>
+        public void VerifyMocks()
+        {
+
         }
 
         public void VerifyOrder()
@@ -49,5 +71,7 @@ namespace Echo.UnitTesting
         {
             // verify all targets were hit
         }
+
+        #endregion
     }
 }

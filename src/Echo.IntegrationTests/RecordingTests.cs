@@ -1,33 +1,27 @@
-﻿using Echo;
-using Echo.UnitTesting;
+﻿using Echo.IntegrationTests.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Samples.MultiDependency.Target;
 using System;
 using System.IO;
+using System.Reflection;
 
-namespace Samples.MultiDependency
+namespace Echo.IntegrationTests
 {
-    internal class Program
+    [TestClass]
+    public class RecordingTests
     {
-        private const string EchoFileName = "output.echo";
-
-        private static void Main(string[] args)
+        //[TestMethod]
+        // TODO disabled for now - will fail deterministically due to differences in timestamp
+        public void Purchase_RecordOutput1_MatchesEmbeddedResource()
         {
-            //Record();
-            Test();
-            // TODO add intentionally broken implementations, and replay echoes on them
+            var echoFileName = "Echo.IntegrationTests.Echoes.output1.echo";
 
-            Console.ReadKey();
-        }
-
-        private static void Record()
-        {
             // Arrange
 
             var billingMock = new Mock<IBilling>();
             billingMock
                 .Setup(x => x.GetQuote(It.Is<QuoteRequest>(
-                    quoteRequest => quoteRequest.Service == ServiceType.Entertainment)
+                        quoteRequest => quoteRequest.Service == ServiceType.Entertainment)
                 ))
                 .Returns(new QuoteResponse()
                 {
@@ -50,7 +44,7 @@ namespace Samples.MultiDependency
                 });
 
             // write all echoes to a file
-            using (var output = new StreamWriter(EchoFileName))
+            using (var output = new StreamWriter(echoFileName))
             {
                 // setup recording
 
@@ -81,36 +75,25 @@ namespace Samples.MultiDependency
                     ServiceType = ServiceType.Entertainment,
                 });
             }
-        }
 
-        private static void Test()
-        {
-            using (var streamReader = new StreamReader(EchoFileName))
+            // Assert
+
+            string expectedEcho;
+            using (var expectedStreamReader = new StreamReader(echoFileName))
             {
-                // Arrange
-
-                // setup an echo player
-                var reader = new EchoReader(streamReader);
-                var player = new TestPlayer(reader);
-
-                // obtain external dependencies from the player
-                var billing = player.GetReplayingTarget<IBilling>();
-                var serviceProvider = player.GetReplayingTarget<IProvider>();
-                var testEntry = player.GetTestEntry();
-
-                // this is the the instance that is getting tested
-                // we inject external dependencies provided by the player
-                var endpointUnderTest = new Endpoint(billing, serviceProvider);
-
-                // Act
-
-                // call method you'd like to test with values provided by the player
-                endpointUnderTest.Purchase(testEntry.GetValue<PurchaseRequest>());
-
-                // Assert
-
-                player.VerifyAll();
+                expectedEcho = expectedStreamReader.ReadToEnd();
             }
+
+            string actualEcho;
+            using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(echoFileName))
+            {
+                using (var actualStreamReader = new StreamReader(resourceStream))
+                {
+                    actualEcho = actualStreamReader.ReadToEnd();
+                }
+            }
+
+            Assert.AreEqual(expectedEcho, actualEcho);
         }
     }
 }

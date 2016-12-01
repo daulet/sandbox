@@ -1,4 +1,4 @@
-﻿namespace Samples.MultiDependency.Target
+﻿namespace Echo.IntegrationTests.Source
 {
     internal class Endpoint : IEndpoint
     {

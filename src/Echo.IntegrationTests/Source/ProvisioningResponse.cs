@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Samples.MultiDependency.Target
+namespace Echo.IntegrationTests.Source
 {
     public class ProvisioningResponse
     {

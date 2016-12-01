@@ -1,7 +1,6 @@
-﻿using Echo;
-using System.IO;
+﻿using System.IO;
 
-namespace Samples.MultiDependency
+namespace Echo.IntegrationTests
 {
     internal class EchoWriter : IEchoWriter
     {

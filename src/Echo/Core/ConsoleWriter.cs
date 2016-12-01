@@ -3,6 +3,7 @@ using System.Reflection;
 
 namespace Echo.Core
 {
+    // TODO share instances
     internal class ConsoleWriter : IInvocationWriter
     {
         // TODO improve logging of custom types => right now only printing type names

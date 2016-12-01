@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace Echo.Core
 {
+    // TODO rename to Passthrough Interceptor
     internal class RecordingInterceptor<TTarget> : IInterceptor
         where TTarget : class
     {

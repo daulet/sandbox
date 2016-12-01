@@ -10,6 +10,7 @@ namespace Echo.Core
 {
     internal class InvocationReader : IInvocationReader
     {
+        // TODO share serializer instance
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly IEchoReader _echoReader;
 
@@ -18,18 +19,13 @@ namespace Echo.Core
             _echoReader = echoReader;
         }
 
-        public virtual InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
-            where TTarget : class
+        public object[] FindEntryArguments()
         {
-            var invocationRecord = FindInvocationRecord<TTarget>(methodInfo, arguments);
-            if (invocationRecord == null)
-            {
-                throw new NoEchoFoundException();
-            }
-            return invocationRecord.InvocationResult;
+            // TODO for now just assume that last echo is the entry point
+            return Echoes.Last().Arguments;
         }
 
-        protected InvocationEntry FindInvocationRecord<TTarget>(MethodInfo methodInfo, object[] arguments)
+        public InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
             where TTarget : class
         {
             foreach (var entry in Echoes)
@@ -38,14 +34,14 @@ namespace Echo.Core
                 {
                     if (InvocationUtility.IsArgumentListMatch(entry.Arguments, arguments))
                     {
-                        return entry;
+                        return entry.InvocationResult;
                     }
                 }
             }
-            return null;
+            throw new NoEchoFoundException();
         }
 
-        protected IList<InvocationEntry> Echoes
+        private IEnumerable<InvocationEntry> Echoes
         {
             get
             {
