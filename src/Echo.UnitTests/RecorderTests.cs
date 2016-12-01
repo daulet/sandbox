@@ -41,7 +41,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_ReturnTypeIsVoid_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTarget>();
             var targetUnderRecording = recorder.GetRecordingTarget<IFakeTarget>(targetMock.Object);
@@ -62,7 +62,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_TargetThrows_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTarget>();
             var expectedException = new FakeTargetException();
@@ -89,7 +89,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_ReturnsValue_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTarget>();
             var expectedResource = new object();
@@ -117,7 +117,7 @@ namespace Echo.UnitTests
         public async Task GetRecordingTarget_ReturnValueIsTask_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             targetMock
@@ -141,7 +141,7 @@ namespace Echo.UnitTests
         public async Task GetRecordingTarget_ReturnValueIsTask_TargetThrows_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             var expectedException = new FakeTargetException();
@@ -169,7 +169,7 @@ namespace Echo.UnitTests
         public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             var expectedResource = new object();
@@ -197,7 +197,7 @@ namespace Echo.UnitTests
         public async Task GetRecordingTarget_ReturnValueIsTaskWithResult_TargetThrows_InvocationWriterCalled()
         {
             // Arrange
-            var writerMock = new Mock<IInvocationWriter>();
+            var writerMock = new Mock<IInvocationListener>();
             var recorder = new Recorder(writerMock.Object);
             var targetMock = new Mock<IFakeTargetAsync>();
             var expectedException = new FakeTargetException();

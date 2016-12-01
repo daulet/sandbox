@@ -2,8 +2,7 @@
 
 namespace Echo.Core
 {
-    // TODO rename InvocationListener
-    public interface IInvocationWriter
+    public interface IInvocationListener
     {
         void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
             where TTarget : class;

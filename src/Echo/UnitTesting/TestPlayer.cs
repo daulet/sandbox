@@ -11,7 +11,7 @@ namespace Echo.UnitTesting
 
         public TestPlayer(IEchoReader echoReader)
         {
-            _invocationReader = new InvocationReader(echoReader);
+            _invocationReader = new InvocationDeserializer(echoReader);
             _validatingListener = new ValidatingListener();
         }
 
@@ -19,10 +19,10 @@ namespace Echo.UnitTesting
             where TTarget : class
         {
             var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
-            var passthroughInterceptor = new RecordingInterceptor<TTarget>(_validatingListener);
+            var passthroughInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
 #if DEBUG
-                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
+                new ListeningInterceptor<TTarget>(new DebugListener()),
 #endif
                 passthroughInterceptor,
                 replayingInterceptor);
@@ -37,10 +37,10 @@ namespace Echo.UnitTesting
         public TTarget GetTestEntryTarget<TTarget>(TTarget target)
             where TTarget : class
         {
-            var passthroughInterceptor = new RecordingInterceptor<TTarget>(_validatingListener);
+            var passthroughInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
 #if DEBUG
-                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
+                new ListeningInterceptor<TTarget>(new DebugListener()),
 #endif
                 passthroughInterceptor);
         }

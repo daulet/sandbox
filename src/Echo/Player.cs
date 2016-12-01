@@ -11,7 +11,7 @@ namespace Echo
         private readonly IInvocationReader _invocationReader;
 
         public Player(IEchoReader echoReader)
-            : this(new InvocationReader(echoReader))
+            : this(new InvocationDeserializer(echoReader))
         {
         }
 
@@ -26,7 +26,7 @@ namespace Echo
             var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
 #if DEBUG
-                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
+                new ListeningInterceptor<TTarget>(new DebugListener()),
 #endif
                 replayingInterceptor);
         }

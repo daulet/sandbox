@@ -5,12 +5,12 @@ using System.Web.Script.Serialization;
 
 namespace Echo.Core
 {
-    internal class InvocationWriter : IInvocationWriter
+    internal class InvocationSerializer : IInvocationListener
     {
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly IEchoWriter _echoWriter;
 
-        internal InvocationWriter(IEchoWriter echoWriter)
+        internal InvocationSerializer(IEchoWriter echoWriter)
         {
             _echoWriter = echoWriter;
         }

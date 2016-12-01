@@ -4,7 +4,7 @@ using System.Reflection;
 namespace Echo.Core
 {
     // TODO share instances
-    internal class ConsoleWriter : IInvocationWriter
+    internal class DebugListener : IInvocationListener
     {
         // TODO improve logging of custom types => right now only printing type names
         public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)

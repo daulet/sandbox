@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 
 namespace Echo.Core
 {
-    // TODO rename to Passthrough Interceptor
-    internal class RecordingInterceptor<TTarget> : IInterceptor
+    internal class ListeningInterceptor<TTarget> : IInterceptor
         where TTarget : class
     {
-        private readonly IInvocationWriter _invocationWriter;
+        private readonly IInvocationListener _invocationWriter;
 
-        internal RecordingInterceptor(IInvocationWriter invocationWriter)
+        internal ListeningInterceptor(IInvocationListener invocationWriter)
         {
             _invocationWriter = invocationWriter;
         }

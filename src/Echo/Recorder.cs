@@ -7,14 +7,14 @@ namespace Echo
     public class Recorder
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
-        private readonly IInvocationWriter _invocationWriter;
+        private readonly IInvocationListener _invocationWriter;
 
         public Recorder(IEchoWriter echoWriter)
-            : this(new InvocationWriter(echoWriter))
+            : this(new InvocationSerializer(echoWriter))
         {
         }
 
-        internal Recorder(IInvocationWriter invocationWriter)
+        internal Recorder(IInvocationListener invocationWriter)
         {
             _invocationWriter = invocationWriter;
         }
@@ -29,10 +29,10 @@ namespace Echo
                 throw new NotSupportedException();
             }
 
-            var recordingInterceptor = new RecordingInterceptor<TTarget>(_invocationWriter);
+            var recordingInterceptor = new ListeningInterceptor<TTarget>(_invocationWriter);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
 #if DEBUG
-                new RecordingInterceptor<TTarget>(new ConsoleWriter()),
+                new ListeningInterceptor<TTarget>(new DebugListener()),
 #endif
                 recordingInterceptor);
         }

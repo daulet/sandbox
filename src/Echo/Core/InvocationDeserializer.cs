@@ -8,13 +8,13 @@ using System.Web.Script.Serialization;
 
 namespace Echo.Core
 {
-    internal class InvocationReader : IInvocationReader
+    internal class InvocationDeserializer : IInvocationReader
     {
         // TODO share serializer instance
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly IEchoReader _echoReader;
 
-        internal InvocationReader(IEchoReader echoReader)
+        internal InvocationDeserializer(IEchoReader echoReader)
         {
             _echoReader = echoReader;
         }

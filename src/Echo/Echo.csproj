@@ -45,12 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\InvocationReader.cs" />
+    <Compile Include="Core\InvocationDeserializer.cs" />
     <Compile Include="Core\NoEchoFoundException.cs" />
     <Compile Include="UnitTesting\TestEntry.cs" />
     <Compile Include="IEchoReader.cs" />
     <Compile Include="Serialization\InvocationEntry.cs" />
-    <Compile Include="Core\InvocationWriter.cs" />
+    <Compile Include="Core\InvocationSerializer.cs" />
     <Compile Include="Core\InvocationResult.cs" />
     <Compile Include="IEchoWriter.cs" />
     <Compile Include="Serialization\InvocationResultType.cs" />
@@ -59,11 +59,11 @@
     <Compile Include="UnitTesting\ValidationFailedException.cs" />
     <Compile Include="UnitTesting\ValidatingListener.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
-    <Compile Include="Core\ConsoleWriter.cs" />
-    <Compile Include="Core\RecordingInterceptor.cs" />
+    <Compile Include="Core\DebugListener.cs" />
+    <Compile Include="Core\ListeningInterceptor.cs" />
     <Compile Include="Core\ReplayingInterceptor.cs" />
     <Compile Include="Core\IInvocationReader.cs" />
-    <Compile Include="Core\IInvocationWriter.cs" />
+    <Compile Include="Core\IInvocationListener.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Recorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

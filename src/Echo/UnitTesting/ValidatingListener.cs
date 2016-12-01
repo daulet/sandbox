@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Echo.UnitTesting
 {
-    internal class ValidatingListener : IInvocationWriter
+    internal class ValidatingListener : IInvocationListener
     {
         private readonly HashSet<TestInvocation> _extraVisits;
         private readonly HashSet<TestInvocation> _notMatchedVisits;
