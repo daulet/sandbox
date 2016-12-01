@@ -54,7 +54,7 @@
     <Compile Include="Core\InvocationResult.cs" />
     <Compile Include="IEchoWriter.cs" />
     <Compile Include="Serialization\InvocationResultType.cs" />
-    <Compile Include="UnitTesting\TestInvocation.cs" />
+    <Compile Include="Core\Invocation.cs" />
     <Compile Include="UnitTesting\TestPlayer.cs" />
     <Compile Include="UnitTesting\ValidationFailedException.cs" />
     <Compile Include="UnitTesting\ValidatingListener.cs" />
