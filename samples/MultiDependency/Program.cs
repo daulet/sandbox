@@ -15,6 +15,7 @@ namespace Samples.MultiDependency
         {
             //Record();
             Test();
+            // TODO add intentionally broken implementations, and replay echoes on them
 
             Console.ReadKey();
         }

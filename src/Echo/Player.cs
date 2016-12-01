@@ -3,6 +3,8 @@ using Echo.Core;
 
 namespace Echo
 {
+    // TODO add IFLuent to minimize intellisense
+    // TODO add tests
     public class Player
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();

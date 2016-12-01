@@ -5,6 +5,7 @@ namespace Echo.Core
 {
     internal class ConsoleWriter : IInvocationWriter
     {
+        // TODO improve logging of custom types => right now only printing type names
         public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
             where TTarget : class
         {

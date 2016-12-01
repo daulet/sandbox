@@ -35,6 +35,7 @@ namespace Echo.UnitTesting
 
         public void VerifyAll()
         {
+            // TODO validation should be implemented as interceptor, not as part of a reader
             // verify all targets were hit in prerecorded order, with the same values
             _validationReader.VerifyAll();
         }
