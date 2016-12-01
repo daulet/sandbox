@@ -19,12 +19,12 @@ namespace Echo.UnitTesting
             where TTarget : class
         {
             var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
-            var passthroughInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
+            var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
 #if DEBUG
                 new ListeningInterceptor<TTarget>(new DebugListener()),
 #endif
-                passthroughInterceptor,
+                validatingInterceptor,
                 replayingInterceptor);
         }
 
@@ -37,12 +37,12 @@ namespace Echo.UnitTesting
         public TTarget GetTestEntryTarget<TTarget>(TTarget target)
             where TTarget : class
         {
-            var passthroughInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
+            var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
 #if DEBUG
                 new ListeningInterceptor<TTarget>(new DebugListener()),
 #endif
-                passthroughInterceptor);
+                validatingInterceptor);
         }
 
         #region Validation

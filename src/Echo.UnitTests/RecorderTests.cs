@@ -16,7 +16,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_TTargetIsNotInterface_ThrowsNotSupportedException()
         {
             // Arrange
-            var recorder = new Recorder(invocationWriter: null);
+            var recorder = new Recorder(invocationListener: null);
 
             // Assert
             ExceptionAssert.Throws<NotSupportedException>(() =>
@@ -28,7 +28,7 @@ namespace Echo.UnitTests
         public void GetRecordingTarget_TTargetIsNotPublicInterface_ThrowsNotSupportedException()
         {
             // Arrange
-            var recorder = new Recorder(invocationWriter: null);
+            var recorder = new Recorder(invocationListener: null);
             Assert.IsFalse(typeof(IInternalFakeTarget).IsPublic, "Interface can't be public for test to be valid");
 
             // Assert

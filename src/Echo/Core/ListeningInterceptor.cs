@@ -7,11 +7,11 @@ namespace Echo.Core
     internal class ListeningInterceptor<TTarget> : IInterceptor
         where TTarget : class
     {
-        private readonly IInvocationListener _invocationWriter;
+        private readonly IInvocationListener _invocationListener;
 
-        internal ListeningInterceptor(IInvocationListener invocationWriter)
+        internal ListeningInterceptor(IInvocationListener invocationListener)
         {
-            _invocationWriter = invocationWriter;
+            _invocationListener = invocationListener;
         }
 
         public void Intercept(IInvocation invocation)
@@ -22,14 +22,14 @@ namespace Echo.Core
             }
             catch (Exception ex)
             {
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
                 throw;
             }
 
             if (typeof(void) == invocation.Method.ReturnType)
             {
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, InvocationResult.Void, invocation.Arguments);
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, InvocationResult.Void, invocation.Arguments);
             }
             else if (typeof(Task).IsAssignableFrom(invocation.Method.ReturnType))
             {
@@ -37,7 +37,7 @@ namespace Echo.Core
             }
             else
             {
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
                     invocation.Arguments);
             }
 
@@ -49,11 +49,11 @@ namespace Echo.Core
             {
                 await task.ConfigureAwait(false);
 
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, InvocationResult.Void, invocation.Arguments);
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, InvocationResult.Void, invocation.Arguments);
             }
             catch (Exception ex)
             {
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
                 throw;
             }
@@ -65,13 +65,13 @@ namespace Echo.Core
             {
                 var result = await task.ConfigureAwait(false);
 
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(result), invocation.Arguments);
 
                 return result;
             }
             catch (Exception ex)
             {
-                _invocationWriter.WriteInvocation<TTarget>(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ExceptionInvocationResult(ex), invocation.Arguments);
 
                 throw;
             }
