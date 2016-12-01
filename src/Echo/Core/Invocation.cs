@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace Echo.Core
 {
@@ -7,13 +6,13 @@ namespace Echo.Core
     {
         public object[] Arguments { get; }
 
-        public MethodInfo Method { get; }
+        public string Method { get; }
 
         public InvocationResult Result { get; }
 
         public Type Target { get; }
 
-        public Invocation(object[] arguments, MethodInfo method, InvocationResult result, Type target)
+        public Invocation(object[] arguments, string method, InvocationResult result, Type target)
         {
             Arguments = arguments;
             Method = method;

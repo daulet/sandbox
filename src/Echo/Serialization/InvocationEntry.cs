@@ -90,7 +90,7 @@ namespace Echo.Serialization
         }
         private InvocationResult _invocationResult;
 
-        private Type TargetType
+        internal Type TargetType
         {
             get
             {

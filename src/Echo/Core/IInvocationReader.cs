@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace Echo.Core
 {
@@ -6,7 +6,6 @@ namespace Echo.Core
     {
         object[] FindEntryArguments();
 
-        InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
-            where TTarget : class;
+        IEnumerable<Invocation> GetAllInvocations();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Castle.DynamicProxy;
+using Echo.Utilities;
 using System;
+using System.Reflection;
 
 namespace Echo.Core
 {
@@ -18,7 +20,7 @@ namespace Echo.Core
         {
             try
             {
-                var returnValue = _invocationReader.FindInvocationResult<TTarget>(invocation.Method, invocation.Arguments);
+                var returnValue = FindInvocationResult(invocation.Method, invocation.Arguments);
                 if (returnValue is ExceptionInvocationResult)
                 {
                     throw (returnValue as ExceptionInvocationResult).ThrownException;
@@ -42,6 +44,26 @@ namespace Echo.Core
                 // TODO does null work for value types?
                 throw;
             }
+        }
+
+        private InvocationResult FindInvocationResult(MethodInfo methodInfo, object[] arguments)
+        {
+            var recordedInvocations = _invocationReader.GetAllInvocations();
+            foreach (var invocation in recordedInvocations)
+            {
+                // TODO test case when method signatures match on different interfaces
+                if (invocation.Target == typeof(TTarget))
+                {
+                    if (string.Equals(invocation.Method, methodInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (InvocationUtility.IsArgumentListMatch(invocation.Arguments, arguments))
+                        {
+                            return invocation.Result;
+                        }
+                    }
+                }
+            }
+            throw new NoEchoFoundException();
         }
     }
 }

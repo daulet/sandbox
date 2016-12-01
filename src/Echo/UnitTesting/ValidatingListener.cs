@@ -24,7 +24,7 @@ namespace Echo.UnitTesting
         public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
             where TTarget : class
         {
-            _visitedInvocations.Add(new Invocation(arguments, methodInfo, invocationResult, typeof(TTarget)));
+            _visitedInvocations.Add(new Invocation(arguments, methodInfo.Name, invocationResult, typeof(TTarget)));
         }
 
         public void VerifyAll()

@@ -1,9 +1,6 @@
 ﻿using Echo.Serialization;
-using Echo.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web.Script.Serialization;
 
 namespace Echo.Core
@@ -25,20 +22,12 @@ namespace Echo.Core
             return Echoes.Last().Arguments;
         }
 
-        public InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
-            where TTarget : class
+        public IEnumerable<Invocation> GetAllInvocations()
         {
             foreach (var entry in Echoes)
             {
-                if (string.Equals(entry.Method, methodInfo.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (InvocationUtility.IsArgumentListMatch(entry.Arguments, arguments))
-                    {
-                        return entry.InvocationResult;
-                    }
-                }
+                yield return new Invocation(entry.Arguments, entry.Method, entry.InvocationResult, entry.TargetType);
             }
-            throw new NoEchoFoundException();
         }
 
         private IEnumerable<InvocationEntry> Echoes
