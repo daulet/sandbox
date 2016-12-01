@@ -95,7 +95,7 @@ namespace Samples.MultiDependency
                 // obtain external dependencies from the player
                 var billing = player.GetReplayingTarget<IBilling>();
                 var serviceProvider = player.GetReplayingTarget<IProvider>();
-                var testValues = player.GetEntryValues();
+                var testEntry = player.GetTestEntry();
 
                 // this is the the instance that is getting tested
                 // we inject external dependencies provided by the player
@@ -104,7 +104,7 @@ namespace Samples.MultiDependency
                 // Act
 
                 // call method you'd like to test with values provided by the player
-                endpointUnderTest.Purchase(testValues.GetValue<PurchaseRequest>());
+                endpointUnderTest.Purchase(testEntry.GetValue<PurchaseRequest>());
 
                 // Assert
 

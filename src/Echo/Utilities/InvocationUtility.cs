@@ -34,6 +34,7 @@ namespace Echo.Utilities
                 return argument == otherArgument;
             }
             // TODO find a way to differentiate multiple calls to the same method - they'll obviously have matching list of argument types
+            // perhaps compare them in serialized version
             return argument.GetType() == otherArgument.GetType();
         }
 

@@ -64,7 +64,7 @@ namespace Echo.Serialization
                 }
                 return _invocationResult;
             }
-            set
+            private set
             {
                 _invocationResult = value;
 
@@ -90,7 +90,7 @@ namespace Echo.Serialization
         }
         private InvocationResult _invocationResult;
 
-        internal Type TargetType
+        private Type TargetType
         {
             get
             {

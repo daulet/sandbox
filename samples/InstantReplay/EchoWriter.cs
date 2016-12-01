@@ -12,9 +12,9 @@ namespace Samples.InstantReplay
             _records = records;
         }
 
-        public void WriteSerializedInvocation(string serializedInvocation)
+        public void WriteEcho(string echo)
         {
-            _records.Add(serializedInvocation);
+            _records.Add(echo);
         }
     }
 }

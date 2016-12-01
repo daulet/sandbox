@@ -7,16 +7,13 @@ namespace Echo.UnitTesting
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
+        private readonly IValidationReader _validationReader;
 
         public TestPlayer(IEchoReader echoReader)
         {
-            _invocationReader = new InvocationReader(echoReader);
-        }
-
-        public TestEntry GetEntryValues()
-        {
-            var arguments = _invocationReader.FindEntryArguments();
-            return new TestEntry(arguments);
+            var reader = new ValidationReader(echoReader);
+            _invocationReader = reader;
+            _validationReader = reader;
         }
 
         public TTarget GetReplayingTarget<TTarget>()
@@ -30,9 +27,16 @@ namespace Echo.UnitTesting
                 replayingInterceptor);
         }
 
+        public TestEntry GetTestEntry()
+        {
+            var arguments = _validationReader.FindEntryArguments();
+            return new TestEntry(arguments);
+        }
+
         public void VerifyAll()
         {
             // verify all targets were hit in prerecorded order, with the same values
+            _validationReader.VerifyAll();
         }
 
         public void VerifyOrder()

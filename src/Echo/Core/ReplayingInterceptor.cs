@@ -13,6 +13,7 @@ namespace Echo.Core
             _invocationReader = invocationReader;
         }
 
+        // TODO doesn't handle async results
         public void Intercept(IInvocation invocation)
         {
             try
@@ -35,7 +36,7 @@ namespace Echo.Core
                     throw new NotSupportedException();
                 }
             }
-            catch (NoRecordingFoundException)
+            catch (NoEchoFoundException)
             {
                 // TODO This behaviour needs to be configurable: return null or throw
                 throw;

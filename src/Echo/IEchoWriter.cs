@@ -2,6 +2,6 @@
 {
     public interface IEchoWriter
     {
-        void WriteSerializedInvocation(string serializedInvocation);
+        void WriteEcho(string echo);
     }
 }

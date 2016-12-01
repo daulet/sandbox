@@ -20,7 +20,7 @@ namespace Echo.Core
         {
             var invocationRecord = new InvocationEntry(typeof(TTarget), methodInfo, arguments, invocationResult, DateTimeOffset.UtcNow);
             var serializedRecord = _serializer.Serialize(invocationRecord);
-            _echoWriter.WriteSerializedInvocation(serializedRecord);
+            _echoWriter.WriteEcho(serializedRecord);
         }
     }
 }

@@ -12,9 +12,9 @@ namespace Samples.MultiDependency
             _streamWriter = streamWriter;
         }
 
-        public void WriteSerializedInvocation(string serializedInvocation)
+        public void WriteEcho(string echo)
         {
-            _streamWriter.WriteLine(serializedInvocation);
+            _streamWriter.WriteLine(echo);
         }
     }
 }

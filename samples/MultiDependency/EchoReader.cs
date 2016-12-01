@@ -13,7 +13,7 @@ namespace Samples.MultiDependency
             _streamReader = streamReader;
         }
 
-        public IEnumerable<string> ReadAllInvocationEntries()
+        public IEnumerable<string> ReadAllEchoes()
         {
             while (!_streamReader.EndOfStream)
             {

@@ -12,7 +12,7 @@ namespace Samples.InstantReplay
             _records = records;
         }
 
-        public IEnumerable<string> ReadAllInvocationEntries()
+        public IEnumerable<string> ReadAllEchoes()
         {
             return new List<string>(_records);
         }

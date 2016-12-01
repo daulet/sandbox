@@ -18,40 +18,40 @@ namespace Echo.Core
             _echoReader = echoReader;
         }
 
-        public object[] FindEntryArguments()
-        {
-            // TODO for now just assume that last echo is the entry point
-            return Echoes.Last().Arguments;
-        }
-
-        public InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
+        public virtual InvocationResult FindInvocationResult<TTarget>(MethodInfo methodInfo, object[] arguments)
             where TTarget : class
         {
-            var echoesCopy = new HashSet<InvocationEntry>(Echoes);
+            var invocationRecord = FindInvocationRecord<TTarget>(methodInfo, arguments);
+            if (invocationRecord == null)
+            {
+                throw new NoEchoFoundException();
+            }
+            return invocationRecord.InvocationResult;
+        }
 
-            foreach (var entry in echoesCopy)
+        protected InvocationEntry FindInvocationRecord<TTarget>(MethodInfo methodInfo, object[] arguments)
+            where TTarget : class
+        {
+            foreach (var entry in Echoes)
             {
                 if (string.Equals(entry.Method, methodInfo.Name, StringComparison.OrdinalIgnoreCase))
                 {
                     if (InvocationUtility.IsArgumentListMatch(entry.Arguments, arguments))
                     {
-                        // TODO can't remove while enumerating
-                        echoesCopy.Remove(entry);
-
-                        return entry.InvocationResult;
+                        return entry;
                     }
                 }
             }
-            throw new NoRecordingFoundException();
+            return null;
         }
 
-        private IList<InvocationEntry> Echoes
+        protected IList<InvocationEntry> Echoes
         {
             get
             {
                 if (_echoes == null)
                 {
-                    var serializedEntries = _echoReader.ReadAllInvocationEntries();
+                    var serializedEntries = _echoReader.ReadAllEchoes();
                     // TODO should fail more graciously if deserialization fails
                     _echoes = new List<InvocationEntry>(
                         serializedEntries.Select(x => _serializer.Deserialize<InvocationEntry>(x)));
