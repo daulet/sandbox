@@ -3,7 +3,7 @@ using Echo.Core;
 
 namespace Echo.UnitTesting
 {
-    public class TestPlayer : IFluentInterface
+    public class TestPlayer
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;

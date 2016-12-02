@@ -2,7 +2,7 @@
 
 namespace Echo
 {
-    public interface IEchoReader : IFluentInterface
+    public interface IEchoReader
     {
         IEnumerable<string> ReadAllEchoes();
     }

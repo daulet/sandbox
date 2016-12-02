@@ -1,6 +1,6 @@
 ﻿namespace Echo
 {
-    public interface IEchoWriter : IFluentInterface
+    public interface IEchoWriter
     {
         void WriteEcho(string echo);
     }

@@ -3,9 +3,10 @@ using Echo.Core;
 
 namespace Echo
 {
+    // TODO add IFluentInterface
     // TODO add tests
     // TODO can we generate code based on echo?
-    public class Player : IFluentInterface
+    public class Player
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
