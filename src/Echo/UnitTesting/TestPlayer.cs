@@ -59,17 +59,17 @@ namespace Echo.UnitTesting
         /// </summary>
         public void VerifyMocks()
         {
-
+            // TODO implement
         }
 
         public void VerifyOrder()
         {
-            // verify all targets were hit in prerecorded order
+            // TODO verify all targets were hit in prerecorded order
         }
 
         public void VerifyInvocations()
         {
-            // verify all targets were hit
+            // TODO verify all targets were hit
         }
 
         #endregion

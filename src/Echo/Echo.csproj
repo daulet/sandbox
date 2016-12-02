@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\InvocationDeserializer.cs" />
+    <Compile Include="Core\InvocationInputEqualityComparer.cs" />
     <Compile Include="Core\NoEchoFoundException.cs" />
     <Compile Include="UnitTesting\TestEntry.cs" />
     <Compile Include="IEchoReader.cs" />
@@ -56,7 +57,7 @@
     <Compile Include="Serialization\InvocationResultType.cs" />
     <Compile Include="Core\Invocation.cs" />
     <Compile Include="UnitTesting\TestPlayer.cs" />
-    <Compile Include="UnitTesting\ValidationFailedException.cs" />
+    <Compile Include="UnitTesting\EchoVerificationException.cs" />
     <Compile Include="UnitTesting\ValidatingListener.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
     <Compile Include="Core\DebugListener.cs" />
