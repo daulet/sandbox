@@ -4,7 +4,7 @@ using System;
 
 namespace Echo
 {
-    public class Recorder
+    public class Recorder : IFluentInterface
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationListener _invocationListener;

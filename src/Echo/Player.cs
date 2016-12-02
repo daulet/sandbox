@@ -3,9 +3,9 @@ using Echo.Core;
 
 namespace Echo
 {
-    // TODO add IFLuent to minimize intellisense
     // TODO add tests
-    public class Player
+    // TODO can we generate code based on echo?
+    public class Player : IFluentInterface
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;

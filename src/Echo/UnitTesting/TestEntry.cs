@@ -1,6 +1,6 @@
 ﻿namespace Echo.UnitTesting
 {
-    public class TestEntry
+    public class TestEntry : IFluentInterface
     {
         private readonly object[] _arguments;
         private int _currentArgumentIndex;
