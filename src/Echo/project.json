@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "Castle.Core": "3.3.3",
+    "IFluentInterface": "2.0.3"
+  },
+  "frameworks": {
+    "net452": { }
+  },
+  "runtimes": {
+    "win": {}
+  }
+}
