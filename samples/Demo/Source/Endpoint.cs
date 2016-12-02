@@ -15,8 +15,8 @@
          * Things to demonstrate:
          * 
          * Don't call IProvider
-         * Overcharge
          * Dupliacte charge call
+         * Overcharge
          * No refund
          * 
          */
