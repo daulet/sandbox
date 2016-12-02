@@ -11,6 +11,15 @@
             _provider = provider;
         }
 
+        /*
+         * Things to demonstrate:
+         * 
+         * Don't call IProvider
+         * Overcharge
+         * Dupliacte charge call
+         * No refund
+         * 
+         */
         public PurchaseResponse Purchase(PurchaseRequest request)
         {
             var quoteResponse = _billing.GetQuote(new QuoteRequest()

@@ -10,7 +10,7 @@ namespace Samples.Demo.UnitTests
     public class EndpointTests
     {
         [TestMethod]
-        public void Purchase_HappyCase_ReturnsResponse()
+        public void Purchase_DependenciesSucceed_PurchaseSucceeds()
         {
             using (var resourceStream =
                 Assembly.GetExecutingAssembly().GetManifestResourceStream("Samples.Demo.UnitTests.Echoes.HappyCase.echo"))

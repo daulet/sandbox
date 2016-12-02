@@ -40,7 +40,6 @@ namespace Echo.Core
                 _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
                     invocation.Arguments);
             }
-
         }
 
         private async Task InterceptAsync(IInvocation invocation, Task task)

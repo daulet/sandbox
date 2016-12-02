@@ -14,13 +14,18 @@ namespace Samples.Demo
 
             using (var output = new StreamWriter("HappyCase.echo"))
             {
-                Record_HappyCase(output);
+                Record_DependenciesSucceed_PurchaseSucceeds(output);
+            }
+
+            using (var output = new StreamWriter("ProvisioningFails.echo"))
+            {
+                Record_ProvisioningFails_RefundIsMade(output);
             }
 
             Console.ReadKey();
         }
 
-        private static void Record_HappyCase(StreamWriter streamWriter)
+        private static void Record_DependenciesSucceed_PurchaseSucceeds(StreamWriter streamWriter)
         {
             // Arrange
 
@@ -48,6 +53,54 @@ namespace Samples.Demo
                 {
                     ProvisionedServices = new[] { ServiceType.Entertainment, ServiceType.Laundry, },
                 });
+
+            var purchaseRequest = new PurchaseRequest()
+            {
+                Customer = new User()
+                {
+                    FullName = "John Smith",
+                    Identifier = Guid.NewGuid(),
+                },
+                Payment = new CreditCardPaymentInstrument()
+                {
+                    CardExpirationDate = DateTime.UtcNow.AddYears(1),
+                    CardNumber = long.MaxValue,
+                    CardOwner = "John Smith SR",
+                    CardProvider = CreditCardProvider.Visa,
+                },
+                ServiceType = ServiceType.Entertainment,
+            };
+
+            // Act
+
+            Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+        }
+
+        private static void Record_ProvisioningFails_RefundIsMade(StreamWriter streamWriter)
+        {
+            // Arrange
+
+            var billingMock = new Mock<IBilling>();
+            billingMock
+                .Setup(x => x.GetQuote(It.Is<QuoteRequest>(
+                        quoteRequest => quoteRequest.Service == ServiceType.Entertainment)
+                ))
+                .Returns(new QuoteResponse()
+                {
+                    Price = 10.50,
+                });
+
+            billingMock
+                .Setup(x => x.Charge(It.IsAny<PaymentRequest>()))
+                .Returns(new PaymentResponse()
+                {
+                    Result = PaymentCode.Success,
+                });
+
+            var serviceProviderMock = new Mock<IProvider>();
+            serviceProviderMock
+                .Setup(x => x.Provision(It.IsAny<ProvisioningRequest>()))
+                .Throws(new ProvisioningFailureException());
 
             var purchaseRequest = new PurchaseRequest()
             {
