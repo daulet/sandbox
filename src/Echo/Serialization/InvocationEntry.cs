@@ -47,7 +47,9 @@ namespace Echo.Serialization
                     switch (ResultType)
                     {
                         case InvocationResultType.Exception:
-                            _invocationResult = new ExceptionInvocationResult(ReturnValue as Exception);
+                            var exceptionType = Type.GetType(ReturnValue as string);
+                            var exceptionInstance = Activator.CreateInstance(exceptionType);
+                            _invocationResult = new ExceptionInvocationResult(exceptionInstance as Exception);
                             break;
 
                         case InvocationResultType.Value:
@@ -71,7 +73,9 @@ namespace Echo.Serialization
                 if (value is ExceptionInvocationResult)
                 {
                     ResultType = InvocationResultType.Exception;
-                    ReturnValue = (value as ExceptionInvocationResult).ThrownException;
+                    // in case of exception just serialize its type
+                    // TODO serialize all public custom properties of exception in case user cares about them
+                    ReturnValue = (value as ExceptionInvocationResult).ThrownException.GetType().AssemblyQualifiedName;
                 }
                 else if (value is ValueInvocationResult)
                 {

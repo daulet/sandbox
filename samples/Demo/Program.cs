@@ -121,7 +121,14 @@ namespace Samples.Demo
 
             // Act
 
-            Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+            try
+            {
+                Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+            }
+            catch (PurchaseFailureException)
+            {
+                // the Purchase is expected to fail since IProvider failed
+            }
         }
 
         private static void Record(StreamWriter streamWriter, IBilling billing, IProvider provider, PurchaseRequest purchaseRequest)

@@ -8,6 +8,9 @@ namespace Samples.Demo.Source
 
     public class PurchaseFailureException : Exception
     {
+        public PurchaseFailureException()
+        { }
+
         public PurchaseFailureException(string message)
             : base(message)
         { }

@@ -64,7 +64,9 @@
       <Name>Demo</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Echoes\ProvisioningFails.echo" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Echoes\HappyCase.echo" />
   </ItemGroup>
