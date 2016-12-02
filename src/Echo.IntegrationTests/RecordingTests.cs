@@ -12,6 +12,7 @@ namespace Echo.IntegrationTests
     {
         //[TestMethod]
         // TODO disabled for now - will fail deterministically due to differences in timestamp
+        // TODO rename serviceProviderMock to providerMock - same applies to Demo project
         public void Purchase_RecordOutput1_MatchesEmbeddedResource()
         {
             var echoFileName = "Echo.IntegrationTests.Echoes.output1.echo";
