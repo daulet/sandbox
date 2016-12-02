@@ -1,6 +1,10 @@
 ﻿using Castle.DynamicProxy;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Echo.Core
 {
@@ -37,7 +41,21 @@ namespace Echo.Core
             }
             else
             {
-                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(invocation.ReturnValue),
+                object returnValue = invocation.ReturnValue;
+                if (invocation.Method.ReturnType != invocation.ReturnValue.GetType() && invocation.ReturnValue.GetType() == typeof(JObject))
+                {
+                    //var deserializeObjectMethods =
+                    //    typeof(JToken)
+                    //        .GetMethods(BindingFlags.Public).Where(x => x.Name == "ToObject" && x.IsGenericMethod).Where(method => method.GetParameters().Length == 0).First(m => m.GetParameters().First().ParameterType == typeof(string));
+
+                    var deserializeObjectMethods =
+                        typeof(JObject).GetMethods().Where(x => x.Name == "ToObject" && x.IsGenericMethod).First(method => method.GetParameters().Length == 0);
+
+                    var genericDeserializerMethod = deserializeObjectMethods.MakeGenericMethod(invocation.Method.ReturnType);
+                     returnValue = genericDeserializerMethod.Invoke(invocation.ReturnValue, null);
+                }
+
+                _invocationListener.WriteInvocation<TTarget>(invocation.Method, new ValueInvocationResult(returnValue),
                     invocation.Arguments);
             }
 

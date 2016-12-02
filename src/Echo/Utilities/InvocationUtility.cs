@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Echo.Utilities
 {
@@ -34,7 +35,9 @@ namespace Echo.Utilities
                 return argument == otherArgument;
             }
             // TODO find a way to differentiate multiple calls to the same method - they'll obviously have matching list of argument types
-            // perhaps compare them in serialized version
+            // perhaps compare them in serialized version. You were right :)
+            otherArgument = JsonConvert.SerializeObject(otherArgument);
+            argument = JsonConvert.SerializeObject(argument);
             return argument.GetType() == otherArgument.GetType();
         }
 

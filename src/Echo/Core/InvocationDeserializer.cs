@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Echo.Core
 {
     internal class InvocationDeserializer : IInvocationReader
     {
         // TODO share serializer instance
-        private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly IEchoReader _echoReader;
 
         internal InvocationDeserializer(IEchoReader echoReader)
@@ -39,7 +39,7 @@ namespace Echo.Core
                     var serializedEntries = _echoReader.ReadAllEchoes();
                     // TODO should fail more graciously if deserialization fails
                     _echoes = new List<InvocationEntry>(
-                        serializedEntries.Select(x => _serializer.Deserialize<InvocationEntry>(x)));
+                        serializedEntries.Select(JsonConvert.DeserializeObject<InvocationEntry>));
                 }
                 return _echoes;
             }
