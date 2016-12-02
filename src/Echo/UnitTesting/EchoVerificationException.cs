@@ -1,7 +1,9 @@
 ﻿using Echo.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Echo.UnitTesting
 {
@@ -17,30 +19,61 @@ namespace Echo.UnitTesting
             _notVisitedInvocations = notVisitedInvocations;
         }
 
-        public override string ToString()
+        public override string Message
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.AppendLine("Extra method calls:");
-            if (_notMatchedInvocations.Count > 0)
+            get
             {
-                foreach (var notMatchedInvocation in _notMatchedInvocations)
+                if (_message == null)
                 {
-                    stringBuilder.AppendLine(InvocationForLogging(notMatchedInvocation));
-                }
-            }
+                    var serializer = new JavaScriptSerializer();
+                    var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine("Methods that were not called:");
-            if (_notVisitedInvocations.Count > 0)
-            {
-                foreach (var notVisitedInvocation in _notVisitedInvocations)
-                {
-                    stringBuilder.AppendLine(InvocationForLogging(notVisitedInvocation));
-                }
-            }
+                    var notMatchedInvocations = _notMatchedInvocations.ToList();
+                    var notVisitedInvocations = _notVisitedInvocations.ToList();
 
-            return stringBuilder.ToString();
+                    foreach (var notMatchedInvocation in notMatchedInvocations.ToList())
+                    {
+                        var matchingVisit = notVisitedInvocations.Find(x =>
+                            x.Target == notMatchedInvocation.Target &&
+                            x.Method == notMatchedInvocation.Method);
+
+                        // TODO match by method name
+
+                        if (matchingVisit != null)
+                        {
+                            stringBuilder.AppendLine(InvocationForLogging(matchingVisit));
+                            stringBuilder.AppendLine($"Expected: {serializer.Serialize(matchingVisit.Arguments)}; " +
+                                                     $"Actual: {serializer.Serialize(notMatchedInvocation.Arguments)}");
+
+                            notMatchedInvocations.Remove(notMatchedInvocation);
+                            notVisitedInvocations.Remove(matchingVisit);
+                        }
+                    }
+
+                    if (notMatchedInvocations.Count > 0)
+                    {
+                        stringBuilder.AppendLine("Extra method calls:");
+                        foreach (var notMatchedInvocation in notMatchedInvocations)
+                        {
+                            stringBuilder.AppendLine(InvocationForLogging(notMatchedInvocation));
+                        }
+                    }
+
+                    if (notVisitedInvocations.Count > 0)
+                    {
+                        stringBuilder.AppendLine("Methods that were not called:");
+                        foreach (var notVisitedInvocation in notVisitedInvocations)
+                        {
+                            stringBuilder.AppendLine(InvocationForLogging(notVisitedInvocation));
+                        }
+                    }
+
+                    _message = stringBuilder.ToString();
+                }
+                return _message;
+            }
         }
+        private string _message;
 
         private static string InvocationForLogging(Invocation invocation)
         {

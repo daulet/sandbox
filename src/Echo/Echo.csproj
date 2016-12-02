@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\InvocationArgument.cs" />
     <Compile Include="Core\InvocationDeserializer.cs" />
     <Compile Include="Core\InvocationInputEqualityComparer.cs" />
     <Compile Include="Core\NoEchoFoundException.cs" />

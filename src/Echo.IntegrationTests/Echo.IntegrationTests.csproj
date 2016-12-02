@@ -62,6 +62,7 @@
     <Compile Include="EchoWriter.cs" />
     <Compile Include="RecordingTests.cs" />
     <Compile Include="Source\Endpoint.cs" />
+    <Compile Include="Source\Endpoint_ChargesExtra.cs" />
     <Compile Include="Source\IBilling.cs" />
     <Compile Include="Source\IEndpoint.cs" />
     <Compile Include="Source\IProvider.cs" />

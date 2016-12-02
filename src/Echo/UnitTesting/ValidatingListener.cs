@@ -37,12 +37,12 @@ namespace Echo.UnitTesting
                 .Except(visitedInvocations, inputComparator)
                 .ToList();
 
-            if (notVisitedInvocations.Any() ||
-                notMatchedInvocations.Any())
+            if (notMatchedInvocations.Any() ||
+                notVisitedInvocations.Any())
             {
                 throw new EchoVerificationException(
                     notMatchedInvocations: notMatchedInvocations,
-                    notVisitedInvocations: notMatchedInvocations);
+                    notVisitedInvocations: notVisitedInvocations);
             }
         }
 

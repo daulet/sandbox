@@ -49,8 +49,15 @@ namespace Echo.UnitTesting
 
         public void VerifyAll()
         {
-            // verify all targets were hit in prerecorded order, with the same values
-            _validatingListener.VerifyAll();
+            try
+            {
+                // verify all targets were hit in prerecorded order, with the same values
+                _validatingListener.VerifyAll();
+            }
+            catch (EchoVerificationException ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

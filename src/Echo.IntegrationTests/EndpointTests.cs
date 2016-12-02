@@ -14,7 +14,10 @@ namespace Echo.IntegrationTests
         [TestMethod]
         public void Purchase_OriginalSource_Pass()
         {
-            using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Echo.IntegrationTests.Echoes.output1.echo"))
+            using (
+                var resourceStream =
+                    Assembly.GetExecutingAssembly()
+                        .GetManifestResourceStream("Echo.IntegrationTests.Echoes.output1.echo"))
             {
                 using (var streamReader = new StreamReader(resourceStream))
                 {
@@ -54,31 +57,53 @@ namespace Echo.IntegrationTests
             player.VerifyAll();
         }
 
-        private void VerifyMocks_OriginalSource(StreamReader streamReader)
+        [TestMethod]
+        public void Purchase_EndpointChargesExtra_FailsValidation()
         {
-            // Arrange
+            using (
+                var resourceStream =
+                    Assembly.GetExecutingAssembly()
+                        .GetManifestResourceStream("Echo.IntegrationTests.Echoes.output1.echo"))
+            {
+                using (var streamReader = new StreamReader(resourceStream))
+                {
+                    // Arrange
 
-            // setup an echo player
-            var reader = new EchoReader(streamReader);
-            var player = new TestPlayer(reader);
+                    // setup an echo player
+                    var reader = new EchoReader(streamReader);
+                    var player = new TestPlayer(reader);
 
-            // obtain external dependencies from the player
-            var billing = player.GetReplayingTarget<IBilling>();
-            var serviceProvider = player.GetReplayingTarget<IProvider>();
-            var testEntry = player.GetTestEntry();
+                    // obtain external dependencies from the player
+                    var billing = player.GetReplayingTarget<IBilling>();
+                    var serviceProvider = player.GetReplayingTarget<IProvider>();
+                    var testEntry = player.GetTestEntry();
 
-            // this is the the instance that is getting tested
-            // we inject external dependencies provided by the player
-            var endpointUnderTest = new Endpoint(billing, serviceProvider);
+                    // this is the the instance that is getting tested
+                    // we inject external dependencies provided by the player
+                    var endpointUnderTest = new Endpoint_ChargesExtra(billing, serviceProvider);
 
-            // Act
+                    // this is an instance wrapped around test subject
+                    // so we can intercept and verify return value of Purchase() call
+                    var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
 
-            // call method you'd like to test with values provided by the player
-            endpointUnderTest.Purchase(testEntry.GetValue<PurchaseRequest>());
+                    // Act
 
-            // Assert
+                    // call method you'd like to test with values provided by the player
+                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
 
-            player.VerifyAll();
+                    // Assert
+
+                    try
+                    {
+                        player.VerifyAll();
+                        Assert.Fail("TestPlayer is expected to catch a bug in Endpoint_ChargesExtra");
+                    }
+                    catch (EchoVerificationException ex)
+                    {
+                        Assert.IsTrue(true, ex.Message);
+                    }
+                }
+            }
         }
     }
 }

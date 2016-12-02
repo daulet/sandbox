@@ -93,6 +93,7 @@ namespace Echo.IntegrationTests
                 }
             }
 
+            // TODO compare all but timestamps
             Assert.AreEqual(expectedEcho, actualEcho);
         }
     }
