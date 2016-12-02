@@ -17,6 +17,11 @@ namespace Samples.Demo
                 Record_DependenciesSucceed_PurchaseSucceeds(output);
             }
 
+            using (var output = new StreamWriter("BillingFails.echo"))
+            {
+                Record_BillingFails_ProvisioningIsNotCalled(output);
+            }
+
             using (var output = new StreamWriter("ProvisioningFails.echo"))
             {
                 Record_ProvisioningFails_RefundIsMade(output);
@@ -74,6 +79,58 @@ namespace Samples.Demo
             // Act
 
             Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+        }
+
+        private static void Record_BillingFails_ProvisioningIsNotCalled(StreamWriter streamWriter)
+        {
+            // Arrange
+
+            var billingMock = new Mock<IBilling>();
+            billingMock
+                .Setup(x => x.GetQuote(It.Is<QuoteRequest>(
+                        quoteRequest => quoteRequest.Service == ServiceType.Entertainment)
+                ))
+                .Returns(new QuoteResponse()
+                {
+                    Price = 10.50,
+                });
+
+            billingMock
+                .Setup(x => x.Charge(It.IsAny<PaymentRequest>()))
+                .Returns(new PaymentResponse()
+                {
+                    Result = PaymentCode.Declined,
+                });
+
+            var serviceProviderMock = new Mock<IProvider>(MockBehavior.Strict);
+
+            var purchaseRequest = new PurchaseRequest()
+            {
+                Customer = new User()
+                {
+                    FullName = "John Smith",
+                    Identifier = Guid.NewGuid(),
+                },
+                Payment = new CreditCardPaymentInstrument()
+                {
+                    CardExpirationDate = DateTime.UtcNow.AddYears(1),
+                    CardNumber = long.MaxValue,
+                    CardOwner = "John Smith SR",
+                    CardProvider = CreditCardProvider.Visa,
+                },
+                ServiceType = ServiceType.Entertainment,
+            };
+
+            // Act
+
+            try
+            {
+                Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+            }
+            catch (PurchaseFailureException)
+            {
+                // the Purchase is expected to fail since IBilling failed
+            }
         }
 
         private static void Record_ProvisioningFails_RefundIsMade(StreamWriter streamWriter)

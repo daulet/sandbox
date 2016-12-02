@@ -40,9 +40,10 @@ namespace Echo.Core
             }
             catch (NoEchoFoundException)
             {
-                // TODO This behaviour needs to be configurable: return null or throw
+                // TODO This behaviour needs to be configurable: return default or throw - should be parameter of the constructor
                 // TODO does null work for value types?
-                throw;
+                invocation.ReturnValue = Activator.CreateInstance(invocation.Method.ReturnType);
+
             }
         }
 

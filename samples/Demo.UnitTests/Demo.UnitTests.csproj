@@ -65,10 +65,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Echoes\ProvisioningFails.echo" />
+    <EmbeddedResource Include="Echoes\ProvisioningFails.echo" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Echoes\HappyCase.echo" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Echoes\BillingFails.echo" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

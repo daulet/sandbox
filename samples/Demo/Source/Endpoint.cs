@@ -26,6 +26,7 @@
             {
                 Service = request.ServiceType,
             });
+
             var paymentResponse = _billing.Charge(new PaymentRequest()
             {
                 Amount = quoteResponse.Price,
