@@ -4,21 +4,18 @@ using System.IO;
 
 namespace Samples.Demo.UnitTests
 {
-    internal class EchoReader : IEchoReader
+    public class EchoReader : IEchoReader
     {
-        private readonly StreamReader _streamReader;
+        private readonly IList<string> _echoes;
 
-        internal EchoReader(StreamReader streamReader)
+        internal EchoReader(IList<string> echoes)
         {
-            _streamReader = streamReader;
+            _echoes = echoes;
         }
 
         public IEnumerable<string> ReadAllEchoes()
         {
-            while (!_streamReader.EndOfStream)
-            {
-                yield return _streamReader.ReadLine();
-            }
+            return _echoes;
         }
     }
 }
