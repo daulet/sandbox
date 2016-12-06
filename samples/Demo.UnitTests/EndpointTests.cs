@@ -25,8 +25,8 @@ namespace Samples.Demo.UnitTests
 
                     // obtain replayable instances from the player
                     var billing = player.GetReplayingTarget<IBilling>();
-                    var serviceProvider = player.GetReplayingTarget<IProvider>();
-                    var endpointUnderTest = new Endpoint(billing, serviceProvider);
+                    var provider = player.GetReplayingTarget<IProvider>();
+                    var endpointUnderTest = new Endpoint(billing, provider);
                     var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
 
                     // Act
@@ -58,8 +58,8 @@ namespace Samples.Demo.UnitTests
 
                     // obtain replayable instances from the player
                     var billing = player.GetReplayingTarget<IBilling>();
-                    var serviceProvider = player.GetReplayingTarget<IProvider>();
-                    var endpointUnderTest = new Endpoint(billing, serviceProvider);
+                    var provider = player.GetReplayingTarget<IProvider>();
+                    var endpointUnderTest = new Endpoint(billing, provider);
                     var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
 
                     // Act
@@ -98,8 +98,8 @@ namespace Samples.Demo.UnitTests
 
                     // obtain replayable instances from the player
                     var billing = player.GetReplayingTarget<IBilling>();
-                    var serviceProvider = player.GetReplayingTarget<IProvider>();
-                    var endpointUnderTest = new Endpoint(billing, serviceProvider);
+                    var provider = player.GetReplayingTarget<IProvider>();
+                    var endpointUnderTest = new Endpoint(billing, provider);
                     var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
 
                     // Act
