@@ -1,4 +1,6 @@
 ﻿using Echo.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,7 @@ namespace Echo.UnitTesting
             _notVisitedInvocations = notVisitedInvocations;
         }
 
+        // TODO improve message so that users rarely have to debug to figure out the root cause
         public override string Message
         {
             get
@@ -37,11 +40,17 @@ namespace Echo.UnitTesting
                             x.Target == notMatchedInvocation.Target &&
                             x.Method == notMatchedInvocation.Method);
 
-                        // TODO match by method name
-
                         if (matchingVisit != null)
                         {
                             stringBuilder.AppendLine(InvocationForLogging(matchingVisit));
+                            var differences =
+                                CompareAsJsonObjects(matchingVisit.Arguments, notMatchedInvocation.Arguments);
+                            foreach (var difference in differences)
+                            {
+                                stringBuilder.AppendLine(
+                                    $"Property: {difference.Path}, Unexpected value: {difference.Value}");
+                            }
+
                             stringBuilder.AppendLine($"Expected: {serializer.Serialize(matchingVisit.Arguments)}; " +
                                                      $"Actual: {serializer.Serialize(notMatchedInvocation.Arguments)}");
 
@@ -78,6 +87,26 @@ namespace Echo.UnitTesting
         private static string InvocationForLogging(Invocation invocation)
         {
             return $"{invocation.Target.Name}.{invocation.Method}";
+        }
+
+        private static IEnumerable<JProperty> CompareAsJsonObjects(IReadOnlyList<object> expectedArguments, IReadOnlyList<object> actualArguments)
+        {
+            // convert to JSON object
+            // TODO compare more than just first argument
+            var expectedObj = JObject.Parse(JsonConvert.SerializeObject(expectedArguments[0]));
+            var actualObj = JObject.Parse(JsonConvert.SerializeObject(actualArguments[0]));
+
+            // read properties
+            var expectedProperties = expectedObj.Properties().ToList();
+            var actualProperties = actualObj.Properties().ToList();
+
+            // find missing properties
+            // TODO compare as trees, not as a flat list of properties
+            var missingProps = actualProperties
+                .Where(actual => expectedProperties
+                    .All(expected => expected.Value != actual.Value));
+
+            return missingProps;
         }
     }
 }

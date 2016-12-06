@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Echo.UnitTests
 {
+    // TODO move to xUnit - to use data driven tests
     [TestClass]
     public class RecorderTests
     {
