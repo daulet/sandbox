@@ -51,8 +51,8 @@ namespace Samples.Demo
                     Result = PaymentCode.Success,
                 });
 
-            var serviceProviderMock = new Mock<IProvider>();
-            serviceProviderMock
+            var providerMock = new Mock<IProvider>();
+            providerMock
                 .Setup(x => x.Provision(It.IsAny<ProvisioningRequest>()))
                 .Returns(new ProvisioningResponse()
                 {
@@ -78,7 +78,7 @@ namespace Samples.Demo
 
             // Act
 
-            Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+            Record(streamWriter, billingMock.Object, providerMock.Object, purchaseRequest);
         }
 
         private static void Record_BillingFails_ProvisioningIsNotCalled(StreamWriter streamWriter)
@@ -102,7 +102,7 @@ namespace Samples.Demo
                     Result = PaymentCode.Declined,
                 });
 
-            var serviceProviderMock = new Mock<IProvider>(MockBehavior.Strict);
+            var providerMock = new Mock<IProvider>(MockBehavior.Strict);
 
             var purchaseRequest = new PurchaseRequest()
             {
@@ -125,7 +125,7 @@ namespace Samples.Demo
 
             try
             {
-                Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+                Record(streamWriter, billingMock.Object, providerMock.Object, purchaseRequest);
             }
             catch (PurchaseFailureException)
             {
@@ -154,8 +154,8 @@ namespace Samples.Demo
                     Result = PaymentCode.Success,
                 });
 
-            var serviceProviderMock = new Mock<IProvider>();
-            serviceProviderMock
+            var providerMock = new Mock<IProvider>();
+            providerMock
                 .Setup(x => x.Provision(It.IsAny<ProvisioningRequest>()))
                 .Throws(new ProvisioningFailureException());
 
@@ -180,7 +180,7 @@ namespace Samples.Demo
 
             try
             {
-                Record(streamWriter, billingMock.Object, serviceProviderMock.Object, purchaseRequest);
+                Record(streamWriter, billingMock.Object, providerMock.Object, purchaseRequest);
             }
             catch (PurchaseFailureException)
             {
@@ -196,8 +196,8 @@ namespace Samples.Demo
             var recorder = new Recorder(writer);
 
             var recordedBilling = recorder.GetRecordingTarget<IBilling>(billing);
-            var recordedServiceProvider = recorder.GetRecordingTarget<IProvider>(provider);
-            var actualEndpoint = new Endpoint(recordedBilling, recordedServiceProvider);
+            var recordedProvider = recorder.GetRecordingTarget<IProvider>(provider);
+            var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
             var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
 
             // Act

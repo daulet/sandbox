@@ -11,7 +11,6 @@ namespace Echo.IntegrationTests
     {
         //[Fact]
         // TODO disabled for now - will fail deterministically due to differences in timestamp
-        // TODO rename serviceProviderMock to providerMock - same applies to Demo project
         public void Purchase_RecordOutput1_MatchesEmbeddedResource()
         {
             var echoFileName = "Echo.IntegrationTests.Echoes.output1.echo";
@@ -35,8 +34,8 @@ namespace Echo.IntegrationTests
                     Result = PaymentCode.Success,
                 });
 
-            var serviceProviderMock = new Mock<IProvider>();
-            serviceProviderMock
+            var providerMock = new Mock<IProvider>();
+            providerMock
                 .Setup(x => x.Provision(It.IsAny<ProvisioningRequest>()))
                 .Returns(new ProvisioningResponse()
                 {
@@ -52,8 +51,8 @@ namespace Echo.IntegrationTests
                 var recorder = new Recorder(writer);
 
                 var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
-                var recordedServiceProvider = recorder.GetRecordingTarget<IProvider>(serviceProviderMock.Object);
-                var actualEndpoint = new Endpoint(recordedBilling, recordedServiceProvider);
+                var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
+                var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
                 var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
 
                 // Act

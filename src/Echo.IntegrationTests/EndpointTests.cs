@@ -35,12 +35,12 @@ namespace Echo.IntegrationTests
 
             // obtain external dependencies from the player
             var billing = player.GetReplayingTarget<IBilling>();
-            var serviceProvider = player.GetReplayingTarget<IProvider>();
+            var provider = player.GetReplayingTarget<IProvider>();
             var testEntry = player.GetTestEntry();
 
             // this is the the instance that is getting tested
             // we inject external dependencies provided by the player
-            var endpointUnderTest = new Endpoint(billing, serviceProvider);
+            var endpointUnderTest = new Endpoint(billing, provider);
 
             // this is an instance wrapped around test subject
             // so we can intercept and verify return value of Purchase() call
@@ -74,12 +74,12 @@ namespace Echo.IntegrationTests
 
                     // obtain external dependencies from the player
                     var billing = player.GetReplayingTarget<IBilling>();
-                    var serviceProvider = player.GetReplayingTarget<IProvider>();
+                    var provider = player.GetReplayingTarget<IProvider>();
                     var testEntry = player.GetTestEntry();
 
                     // this is the the instance that is getting tested
                     // we inject external dependencies provided by the player
-                    var endpointUnderTest = new Endpoint_ChargesExtra(billing, serviceProvider);
+                    var endpointUnderTest = new Endpoint_ChargesExtra(billing, provider);
 
                     // this is an instance wrapped around test subject
                     // so we can intercept and verify return value of Purchase() call
