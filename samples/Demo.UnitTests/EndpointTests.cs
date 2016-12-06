@@ -1,17 +1,12 @@
 ﻿using Echo.UnitTesting;
 using Samples.Demo.Source;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using Xunit;
-using System;
-using System.Collections;
 
 namespace Samples.Demo.UnitTests
 {
     public class EndpointTests
     {
-        [Theory, ClassData(typeof(SuccessfulTestData))]
+        [Theory, ClassData(typeof(PurchaseSucceedsTestData))]
         public void Purchase_Succeeds_DoesNotThrow(EchoReader reader)
         {
             // Arrange
@@ -35,7 +30,7 @@ namespace Samples.Demo.UnitTests
             player.VerifyAll();
         }
 
-        [Theory, ClassData(typeof(FailingTestData))]
+        [Theory, ClassData(typeof(PurchaseFailsTestData))]
         public void Purchase_Fails_ThrowsPurchaseFailureException(EchoReader reader)
         {
             // Arrange
@@ -58,71 +53,6 @@ namespace Samples.Demo.UnitTests
             // Assert
 
             player.VerifyAll();
-        }
-
-        private class SuccessfulTestData : IEnumerable<object[]>
-        {
-            private readonly IList<string> _testCaseFilenames = new List<string>
-            {
-                "Samples.Demo.UnitTests.Echoes.HappyCase.echo",
-            };
-            
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                foreach(var testCaseFilename in _testCaseFilenames)
-                {
-                    using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(testCaseFilename))
-                    {
-                        using (var streamReader = new StreamReader(resourceStream))
-                        {
-                            var echoes = new List<string>();
-                            while(!streamReader.EndOfStream)
-                            {
-                                echoes.Add(streamReader.ReadLine());
-                            }
-                            yield return new object[] { new EchoReader(echoes) };
-                        }
-                    }
-                }
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-        }
-
-        private class FailingTestData : IEnumerable<object[]>
-        {
-            private readonly IList<string> _testCaseFilenames = new List<string>
-            {
-                "Samples.Demo.UnitTests.Echoes.BillingFails.echo",
-                "Samples.Demo.UnitTests.Echoes.ProvisioningFails.echo",
-            };
-
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                foreach (var testCaseFilename in _testCaseFilenames)
-                {
-                    using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(testCaseFilename))
-                    {
-                        using (var streamReader = new StreamReader(resourceStream))
-                        {
-                            var echoes = new List<string>();
-                            while (!streamReader.EndOfStream)
-                            {
-                                echoes.Add(streamReader.ReadLine());
-                            }
-                            yield return new object[] { new EchoReader(echoes) };
-                        }
-                    }
-                }
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
         }
     }
 }

@@ -38,6 +38,8 @@
     <Compile Include="EchoReader.cs" />
     <Compile Include="EndpointTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseFailsTestData.cs" />
+    <Compile Include="PurchaseSucceedsTestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Echo\Echo.csproj">
