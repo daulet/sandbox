@@ -1,16 +1,15 @@
 ﻿using Echo.IntegrationTests.Source;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.IO;
 using System.Reflection;
+using Xunit;
 
 namespace Echo.IntegrationTests
 {
-    [TestClass]
     public class RecordingTests
     {
-        //[TestMethod]
+        //[Fact]
         // TODO disabled for now - will fail deterministically due to differences in timestamp
         // TODO rename serviceProviderMock to providerMock - same applies to Demo project
         public void Purchase_RecordOutput1_MatchesEmbeddedResource()
@@ -95,7 +94,7 @@ namespace Echo.IntegrationTests
             }
 
             // TODO compare all but timestamps
-            Assert.AreEqual(expectedEcho, actualEcho);
+            Assert.Equal(expectedEcho, actualEcho);
         }
     }
 }

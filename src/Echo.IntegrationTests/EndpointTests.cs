@@ -1,17 +1,16 @@
 ﻿using Echo.IntegrationTests.Source;
 using Echo.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Reflection;
+using Xunit;
 
 namespace Echo.IntegrationTests
 {
-    [TestClass]
     public class EndpointTests
     {
         // TODO add intentionally broken implementations, and replay echoes on them
 
-        [TestMethod]
+        [Fact]
         public void Purchase_OriginalSource_Pass()
         {
             using (
@@ -57,7 +56,7 @@ namespace Echo.IntegrationTests
             player.VerifyAll();
         }
 
-        [TestMethod]
+        [Fact]
         public void Purchase_EndpointChargesExtra_FailsValidation()
         {
             using (
@@ -93,15 +92,7 @@ namespace Echo.IntegrationTests
 
                     // Assert
 
-                    try
-                    {
-                        player.VerifyAll();
-                        Assert.Fail("TestPlayer is expected to catch a bug in Endpoint_ChargesExtra");
-                    }
-                    catch (EchoVerificationException ex)
-                    {
-                        Assert.IsTrue(true, ex.Message);
-                    }
+                    Assert.Throws<EchoVerificationException>(() => player.VerifyAll());
                 }
             }
         }

@@ -1,15 +1,14 @@
 ﻿using Echo.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Samples.Demo.Source;
 using System.IO;
 using System.Reflection;
+using Xunit;
 
 namespace Samples.Demo.UnitTests
 {
-    [TestClass]
     public class EndpointTests
     {
-        [TestMethod]
+        [Fact]
         public void Purchase_DependenciesSucceed_PurchaseSucceeds()
         {
             using (var resourceStream =
@@ -42,7 +41,7 @@ namespace Samples.Demo.UnitTests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Purchase_BillingFails_ProvisioningIsNotCalled()
         {
             using (var resourceStream =
@@ -82,7 +81,7 @@ namespace Samples.Demo.UnitTests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Purchase_ProvisioningFails_RefundIsMade()
         {
             using (var resourceStream =
