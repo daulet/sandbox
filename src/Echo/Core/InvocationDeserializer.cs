@@ -8,6 +8,7 @@ namespace Echo.Core
     internal class InvocationDeserializer : IInvocationReader
     {
         // TODO share serializer instance
+        // TODO tried replacing with Json.NET implementation - doesn't go well with value types - assumes Int64, and fails to cast to Int32
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly IEchoReader _echoReader;
 
