@@ -1,3 +1,3 @@
 # Echo
 
-<img src="https://travis-ci.org/daulet/Echo.svg?branch=master" alt="Build status">
+<img src="https://ci.appveyor.com/api/projects/status/wicq680mpvnijims?svg=true" alt="Build status">
