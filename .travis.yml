@@ -1,2 +1,6 @@
 language: csharp
 solution: Echo.sln
+install:
+  - nuget # get version number
+  - nuget restore Echo.sln -Verbosity detailed
+  - nuget update Echo.sln -Verbosity detailed
