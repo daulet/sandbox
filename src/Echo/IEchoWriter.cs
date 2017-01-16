@@ -2,6 +2,6 @@
 {
     public interface IEchoWriter
     {
-        void WriteEcho(string echo);
+        void WriteLine(string echo);
     }
 }

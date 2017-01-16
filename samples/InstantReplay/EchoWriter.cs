@@ -12,7 +12,7 @@ namespace Samples.InstantReplay
             _records = records;
         }
 
-        public void WriteEcho(string echo)
+        public void WriteLine(string echo)
         {
             _records.Add(echo);
         }

@@ -37,10 +37,15 @@ namespace Echo.Core
             {
                 if (_echoes == null)
                 {
-                    var serializedEntries = _echoReader.ReadAllEchoes();
+                    var serializedEchoes = new List<string>();
+                    string echo;
+                    while ((echo = _echoReader.ReadLine()) != null)
+                    {
+                        serializedEchoes.Add(echo);
+                    }
                     // TODO should fail more graciously if deserialization fails
                     _echoes = new List<InvocationEntry>(
-                        serializedEntries.Select(x => _serializer.Deserialize<InvocationEntry>(x)));
+                        serializedEchoes.Select(x => _serializer.Deserialize<InvocationEntry>(x)));
                 }
                 return _echoes;
             }

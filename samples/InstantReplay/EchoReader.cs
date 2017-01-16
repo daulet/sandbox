@@ -6,15 +6,21 @@ namespace Samples.InstantReplay
     internal class EchoReader : IEchoReader
     {
         private readonly IList<string> _records;
+        private int _lastReadIndex;
 
         internal EchoReader(IList<string> records)
         {
             _records = records;
+            _lastReadIndex = 0;
         }
 
-        public IEnumerable<string> ReadAllEchoes()
+        public string ReadLine()
         {
-            return new List<string>(_records);
+            if (_lastReadIndex < _records.Count)
+            {
+                return _records[_lastReadIndex++];
+            }
+            return null;
         }
     }
 }

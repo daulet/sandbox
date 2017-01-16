@@ -4,6 +4,6 @@ namespace Echo
 {
     public interface IEchoReader
     {
-        IEnumerable<string> ReadAllEchoes();
+        string ReadLine();
     }
 }

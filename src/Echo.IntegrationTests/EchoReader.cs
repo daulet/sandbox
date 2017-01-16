@@ -12,12 +12,9 @@ namespace Echo.IntegrationTests
             _streamReader = streamReader;
         }
 
-        public IEnumerable<string> ReadAllEchoes()
+        public string ReadLine()
         {
-            while (!_streamReader.EndOfStream)
-            {
-                yield return _streamReader.ReadLine();
-            }
+            return _streamReader.ReadLine();
         }
     }
 }

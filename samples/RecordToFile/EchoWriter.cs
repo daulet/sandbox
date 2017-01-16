@@ -12,7 +12,7 @@ namespace Samples.RecordToFile
             _streamWriter = streamWriter;
         }
 
-        public void WriteEcho(string echo)
+        public void WriteLine(string echo)
         {
             _streamWriter.WriteLine(echo);
         }

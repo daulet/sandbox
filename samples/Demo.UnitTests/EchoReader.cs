@@ -7,15 +7,21 @@ namespace Samples.Demo.UnitTests
     public class EchoReader : IEchoReader
     {
         private readonly IList<string> _echoes;
+        private int _lastReadIndex;
 
         internal EchoReader(IList<string> echoes)
         {
             _echoes = echoes;
+            _lastReadIndex = 0;
         }
 
-        public IEnumerable<string> ReadAllEchoes()
+        public string ReadLine()
         {
-            return _echoes;
+            if (_lastReadIndex < _echoes.Count)
+            {
+                return _echoes[_lastReadIndex++];
+            }
+            return null;
         }
     }
 }
