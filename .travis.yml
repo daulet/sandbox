@@ -1,6 +1,8 @@
 language: csharp
 solution: Echo.sln
+before_install:
+  - mkdir -p .nuget
+  - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+  - mono .nuget/nuget.exe # Output NuGet's version number
 install:
-  - nuget # get version number
-  - nuget restore Echo.sln -Verbosity detailed
-  - nuget update Echo.sln -Verbosity detailed
+  - mono .nuget/nuget.exe restore Echo.sln -Verbosity detailed
