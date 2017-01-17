@@ -19,7 +19,7 @@
     <tags>echo recording moching mocks unittest unittesting</tags>
     <dependencies>
       <dependency id="Castle.Core" version="3.3.3" />
-      <dependency id="Newtonsoft.Json" version="9.0.1" />
+      <dependency id="Newtonsoft.Json" version="[6.0.4,9.0.1]" />
     </dependencies>
   </metadata>
 </package>
