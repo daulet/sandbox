@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://opensource.org/licenses/BSD-3-Clause</licenseUrl>
+    <projectUrl>https://github.com/daulet/Echo</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+      Version 0.1
+
+      * Initial release, minimum viable functionality
+    </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>echo recording moching mocks unittest unittesting</tags>
+    <dependencies>
+      <dependency id="Castle.Core" version="3.3.3" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
+    </dependencies>
+  </metadata>
+</package>
