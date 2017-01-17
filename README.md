@@ -1,3 +1,3 @@
 # Echo
 
-<img src="https://ci.appveyor.com/api/projects/status/wicq680mpvnijims?svg=true" alt="Build status">
+[![Build status](https://img.shields.io/appveyor/ci/daulet/echo/master.svg)]() [![NuGet](https://img.shields.io/nuget/v/Echo.svg)]()
