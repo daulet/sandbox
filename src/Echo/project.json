@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "Castle.Core": "3.3.3",
-    "Newtonsoft.Json": "9.0.1"
+    "Newtonsoft.Json": "6.0.4"
   },
   "frameworks": {
     "net45": {}
