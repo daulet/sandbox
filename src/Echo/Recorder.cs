@@ -31,9 +31,7 @@ namespace Echo
 
             var recordingInterceptor = new ListeningInterceptor<TTarget>(_invocationListener);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
-#if DEBUG
-                new ListeningInterceptor<TTarget>(new DebugListener()),
-#endif
+                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
                 recordingInterceptor);
         }
     }

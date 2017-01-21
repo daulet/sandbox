@@ -43,6 +43,9 @@
     <Compile Include="Fakes\IInternalFakeTarget.cs" />
     <Compile Include="RecorderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Restriction\FakeAttribute.cs" />
+    <Compile Include="Restriction\IFakeTarget.cs" />
+    <Compile Include="Restriction\RestrictingProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

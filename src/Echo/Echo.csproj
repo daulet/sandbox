@@ -36,10 +36,20 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CachingInterceptor.cs" />
+    <Compile Include="Caching\CachingProvider.cs" />
+    <Compile Include="Core\InstancePool.cs" />
     <Compile Include="Core\InvocationArgument.cs" />
     <Compile Include="Core\InvocationDeserializer.cs" />
     <Compile Include="Core\InvocationInputEqualityComparer.cs" />
     <Compile Include="Core\NoEchoFoundException.cs" />
+    <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\MultiLogger.cs" />
+    <Compile Include="Logging\ReleaseLogger.cs" />
+    <Compile Include="Restriction\RestrictedAttribute.cs" />
+    <Compile Include="Restriction\RestrictingInterceptor.cs" />
+    <Compile Include="Restriction\RestrictingProvider.cs" />
     <Compile Include="UnitTesting\TestEntry.cs" />
     <Compile Include="IEchoReader.cs" />
     <Compile Include="Serialization\InvocationEntry.cs" />
@@ -52,7 +62,7 @@
     <Compile Include="UnitTesting\EchoVerificationException.cs" />
     <Compile Include="UnitTesting\ValidatingListener.cs" />
     <Compile Include="Utilities\InvocationUtility.cs" />
-    <Compile Include="Core\DebugListener.cs" />
+    <Compile Include="Core\LoggingListener.cs" />
     <Compile Include="Core\ListeningInterceptor.cs" />
     <Compile Include="Core\ReplayingInterceptor.cs" />
     <Compile Include="Core\IInvocationReader.cs" />

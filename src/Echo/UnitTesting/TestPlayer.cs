@@ -21,9 +21,7 @@ namespace Echo.UnitTesting
             var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
             var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
-#if DEBUG
-                new ListeningInterceptor<TTarget>(new DebugListener()),
-#endif
+                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
                 validatingInterceptor,
                 replayingInterceptor);
         }
@@ -39,9 +37,7 @@ namespace Echo.UnitTesting
         {
             var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
-#if DEBUG
-                new ListeningInterceptor<TTarget>(new DebugListener()),
-#endif
+                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
                 validatingInterceptor);
         }
 

@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using Echo.Core;
+using Echo.Logging;
 
 namespace Echo
 {
@@ -26,9 +27,7 @@ namespace Echo
         {
             var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
             return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
-#if DEBUG
-                new ListeningInterceptor<TTarget>(new DebugListener()),
-#endif
+                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
                 replayingInterceptor);
         }
     }
