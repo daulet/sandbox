@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Echo.Logging;
+using Newtonsoft.Json;
 
 namespace Echo.Core
 {
@@ -12,16 +14,38 @@ namespace Echo.Core
             _logger = logger;
         }
 
-        // TODO improve logging of custom types => right now only printing type names
         public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
             where TTarget : class
         {
             _logger.Debug($"Intercepting {typeof(TTarget).Name}.{methodInfo.Name} method:");
-            foreach (var argument in arguments)
+            var parameters = methodInfo.GetParameters();
+            for (var paramIndex = 0; paramIndex < parameters.Length; paramIndex++)
             {
-                _logger.Debug($"\tArgument {argument?.GetType()}: {argument}");
+                var argument = arguments[paramIndex];
+                var serializedArgument = JsonConvert.SerializeObject(argument, Formatting.Indented);
+                _logger.Debug($"\tArgument '{parameters[paramIndex].Name}' ({parameters[paramIndex].ParameterType.Name}): " +
+                              $"{serializedArgument}");
             }
-            _logger.Debug($"\tReturn {invocationResult?.GetResultType()}: {invocationResult}");
+
+            if (invocationResult is ExceptionInvocationResult)
+            {
+                _logger.Debug($"\tThrew ({methodInfo.ReturnType.Name}): " +
+                              $"{(invocationResult as ExceptionInvocationResult).ThrownException.GetType()}");
+            }
+            else if (invocationResult is ValueInvocationResult)
+            {
+                var serializedResult = JsonConvert.SerializeObject((invocationResult as ValueInvocationResult).ReturnedValue, Formatting.Indented);
+                _logger.Debug($"\tReturned ({methodInfo.ReturnType.Name}): " +
+                              $"{serializedResult}");
+            }
+            else if (invocationResult is VoidInvocationResult)
+            {
+                _logger.Debug("\tReturned (void)");
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
