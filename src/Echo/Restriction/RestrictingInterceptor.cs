@@ -4,8 +4,7 @@ using Echo.Logging;
 
 namespace Echo.Restriction
 {
-    internal class RestrictingInterceptor<TTarget> : IInterceptor
-        where TTarget : class
+    internal class RestrictingInterceptor : IInterceptor
     {
         private readonly ILogger _logger;
 

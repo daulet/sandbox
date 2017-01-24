@@ -36,6 +36,10 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CachedAttribute.cs" />
+    <Compile Include="Caching\CachingInterceptor.cs" />
+    <Compile Include="Caching\CachingProvider.cs" />
+    <Compile Include="Caching\ICacheProvider.cs" />
     <Compile Include="Core\InstancePool.cs" />
     <Compile Include="Core\InvocationArgument.cs" />
     <Compile Include="Core\InvocationDeserializer.cs" />

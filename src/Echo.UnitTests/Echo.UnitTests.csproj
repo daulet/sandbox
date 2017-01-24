@@ -36,6 +36,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CachingProviderTests.cs" />
+    <Compile Include="Caching\FakeAttribute.cs" />
+    <Compile Include="Caching\IFakeTarget.cs" />
     <Compile Include="Fakes\FakeTarget.cs" />
     <Compile Include="Fakes\FakeTargetException.cs" />
     <Compile Include="Fakes\IFakeTarget.cs" />

@@ -1,21 +1,21 @@
 ﻿using System;
 using Castle.DynamicProxy;
 using Echo.Core;
-using Echo.Logging;
+using Echo.Restriction;
 
-namespace Echo.Restriction
+namespace Echo.Caching
 {
-    public class RestrictingProvider
+    public class CachingProvider
     {
+        private readonly ICacheProvider _cacheProvider;
         private readonly ProxyGenerator _generator = new ProxyGenerator();
-        private readonly ILogger _logger;
 
-        public RestrictingProvider(ILogger logger)
+        public CachingProvider(ICacheProvider cacheProvider)
         {
-            _logger = logger;
+            _cacheProvider = cacheProvider;
         }
 
-        public TTarget GetRestrictingTarget<TTarget>(TTarget target)
+        public TTarget GetCachingTarget<TTarget>(TTarget target)
             where TTarget : class
         {
             // only public interface restricting is supported
@@ -25,10 +25,10 @@ namespace Echo.Restriction
                 throw new NotSupportedException();
             }
 
-            var restrictingInterceptor = new RestrictingInterceptor(_logger);
+            var cachingInterceptor = new CachingInterceptor<TTarget>(_cacheProvider);
             return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
                 new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                restrictingInterceptor);
+                cachingInterceptor);
         }
     }
 }
