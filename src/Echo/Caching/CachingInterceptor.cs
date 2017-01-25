@@ -54,8 +54,9 @@ namespace Echo.Caching
         private static string GetCacheKey(Type targetType, MethodInfo methodInfo, object[] arguments)
         {
             int hash = 13;
-            hash = (hash * 7) + targetType.GetHashCode();
-            hash = (hash * 7) + methodInfo.GetHashCode();
+            hash = (hash * 7) + targetType.AssemblyQualifiedName.GetHashCode();
+            hash = (hash * 7) + methodInfo.Name.GetHashCode();
+            // TODO how do we differentiate empty array from null?
             foreach (var argument in arguments)
             {
                 if (argument == null)
