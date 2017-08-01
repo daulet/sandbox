@@ -1,13 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Echoes\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Echoes\*" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.5.28" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Echo\Echo.csproj" />
+    <ProjectReference Include="..\..\src\Echo\Echo.csproj" />
   </ItemGroup>
 </Project>
