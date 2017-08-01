@@ -9,8 +9,8 @@ namespace Samples.Demo.UnitTests
     {
         private readonly IList<string> _testCaseFilenames = new List<string>
         {
-            "Samples.Demo.UnitTests.Echoes.BillingFails.echo",
-            "Samples.Demo.UnitTests.Echoes.ProvisioningFails.echo",
+            "Echo.Sample.Demo.UnitTests.Echoes.BillingFails.echo",
+            "Echo.Sample.Demo.UnitTests.Echoes.ProvisioningFails.echo",
         };
 
         public IEnumerator<object[]> GetEnumerator()

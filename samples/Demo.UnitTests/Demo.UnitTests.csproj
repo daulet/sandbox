@@ -1,74 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D8B3C0B6-EAFD-4EAE-B8FC-DE724852D2C0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Samples.Demo.UnitTests</RootNamespace>
-    <AssemblyName>Demo.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <TestProjectType>UnitTest</TestProjectType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Echo.Sample.Demo.UnitTests</AssemblyName>
+    <RootNamespace>Echo.Sample.Demo.UnitTests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <None Remove="Echoes\*" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EchoReader.cs" />
-    <Compile Include="EndpointTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseFailsTestData.cs" />
-    <Compile Include="PurchaseSucceedsTestData.cs" />
+    <EmbeddedResource Include="Echoes\*" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Echo\Echo.csproj">
-      <Project>{8e46fe3b-5954-41e1-8d02-fe910c00327d}</Project>
-      <Name>Echo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Demo\Demo.csproj">
-      <Project>{d7651451-32f3-4157-8428-7e253d0c34b6}</Project>
-      <Name>Demo</Name>
-    </ProjectReference>
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Echoes\ProvisioningFails.echo" />
+    <ProjectReference Include="..\Demo\Demo.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Echoes\HappyCase.echo" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Echoes\BillingFails.echo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="project.json" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -9,7 +9,7 @@ namespace Samples.Demo.UnitTests
     {
         private readonly IList<string> _testCaseFilenames = new List<string>
         {
-            "Samples.Demo.UnitTests.Echoes.HappyCase.echo",
+            "Echo.Sample.Demo.UnitTests.Echoes.HappyCase.echo",
         };
 
         public IEnumerator<object[]> GetEnumerator()
