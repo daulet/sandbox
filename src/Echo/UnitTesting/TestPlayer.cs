@@ -50,9 +50,9 @@ namespace Echo.UnitTesting
                 // verify all targets were hit in prerecorded order, with the same values
                 _validatingListener.VerifyAll();
             }
-            catch (EchoVerificationException ex)
+            catch (EchoVerificationException)
             {
-                throw ex;
+                throw;
             }
         }
 
