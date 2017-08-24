@@ -3,22 +3,16 @@
     public interface ILogger
     {
         /// <summary>
-        /// Logs a debug message.
+        /// Logs a verbose message.
         /// </summary>
         /// <param name="message">The message to log</param>
-        void Debug(string message);
+        void Verbose(string message);
 
         /// <summary>
         /// Logs an error message.
         /// </summary>
         /// <param name="message">The message to log</param>
         void Error(string message);
-
-        /// <summary>
-        /// Logs a fatal message.
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        void Fatal(string message);
 
         /// <summary>
         /// Logs an info message.

@@ -1,2 +1,2 @@
-msbuild.exe .\Echo.sln /detailedSummary
+msbuild.exe .\Echo.sln '/consoleLoggerParameters:Summary;Verbosity=minimal' /m /nodeReuse:false /nologo /p:TreatWarningsAsErrors=true
 . .\test.ps1

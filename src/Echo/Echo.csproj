@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <DebugType>Full</DebugType>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <RunCodeAnalysis>True</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
   </PropertyGroup>

@@ -15,14 +15,6 @@ namespace Echo.Logging
             _loggers = loggers;
         }
 
-        public void Debug(string message)
-        {
-            foreach (var logger in _loggers)
-            {
-                logger.Debug(message);
-            }
-        }
-
         public void Error(string message)
         {
             foreach (var logger in _loggers)
@@ -31,19 +23,19 @@ namespace Echo.Logging
             }
         }
 
-        public void Fatal(string message)
-        {
-            foreach (var logger in _loggers)
-            {
-                logger.Fatal(message);
-            }
-        }
-
         public void Info(string message)
         {
             foreach (var logger in _loggers)
             {
                 logger.Info(message);
+            }
+        }
+
+        public void Verbose(string message)
+        {
+            foreach (var logger in _loggers)
+            {
+                logger.Verbose(message);
             }
         }
 
