@@ -6,9 +6,7 @@
     <RootNamespace>Echo.Sample.Demo</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Echo" Version="0.1.4" />
     <PackageReference Include="Moq" Version="4.5.28" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Echo\Echo.csproj" />
   </ItemGroup>
 </Project>
