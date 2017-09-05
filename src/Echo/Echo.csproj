@@ -6,15 +6,15 @@
     <RunCodeAnalysis>True</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Sign'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>../../Echo.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>../../../vault/assets/echo/Echo.Identity.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Echo: record, restrict or replay your dependencies</Title>
     <Description>Record your code's execution and replay it later</Description>
-    <Version>0.1.3</Version>
+    <Version>0.1.4</Version>
     <Product>Echo: record and replay</Product>
     <Authors>Daulet Zhanguzin</Authors>
     <Company>Daulet Zhanguzin</Company>
@@ -38,7 +38,7 @@ Version 0.1
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Sign'">
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <Compile Remove="Properties/AssemblyInfo.cs" />
   </ItemGroup>
 </Project>
