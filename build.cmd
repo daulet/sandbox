@@ -1,4 +1,4 @@
-powershell .\clean.ps1
-powershell .\restore.ps1
-powershell .\build.ps1
-powershell .\test.ps1
+powershell .\script\clean.ps1
+powershell .\script\restore.ps1
+powershell .\script\build.ps1
+powershell .\script\test.ps1 %cd%
