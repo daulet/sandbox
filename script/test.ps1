@@ -1,6 +1,10 @@
+param(
+    [string]$rootPath
+)
+
 $args = ""
 $uniqueTests = New-Object System.Collections.Generic.HashSet[string]
-$allTests = Get-ChildItem -Recurse -Filter "*Tests.dll"
+$allTests = Get-ChildItem "$rootPath" -Recurse -Filter "*Tests.dll"
 foreach ($assembly in $allTests) {
     if ($uniqueTests.Add($assembly.Name)) {
         $args += " $($assembly.FullName)"
@@ -9,7 +13,7 @@ foreach ($assembly in $allTests) {
 $args += " -parallel all"
 
 $startInfo = New-Object System.Diagnostics.ProcessStartInfo
-$startInfo.FileName = Join-Path $PsScriptRoot "\packages\xunit.runner.console\2.2.0\tools\xunit.console.exe"
+$startInfo.FileName = "$rootPath\packages\xunit.runner.console\2.2.0\tools\xunit.console.exe"
 $startInfo.Arguments = $args
 $startInfo.UseShellExecute = $false
 $startInfo.WorkingDirectory = Get-Location

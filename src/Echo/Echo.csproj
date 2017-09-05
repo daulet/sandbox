@@ -6,6 +6,11 @@
     <RunCodeAnalysis>True</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Sign'">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../Echo.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>Record your code's execution and replay it later</Description>
@@ -32,5 +37,8 @@ Version 0.1
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Sign'">
+    <Compile Remove="Properties/AssemblyInfo.cs" />
   </ItemGroup>
 </Project>
