@@ -1,0 +1,14 @@
+docker:
+  image: microsoft/dotnet-framework:4.6.2
+assets:
+  settings.xml: daulet/vault#assets/echo/Echo.Identity.xml
+install: |
+  sudo gem install --no-rdoc --no-ri pdd
+architect:
+- daulet
+merge:
+  script: |
+    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean site -Psite --errors --settings ../settings.xml
+    mvn clean
+    pdd --source=$(pwd) --verbose --file=/dev/null
