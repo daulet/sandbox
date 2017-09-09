@@ -4,7 +4,7 @@ param(
 
 $args = ""
 $uniqueTests = New-Object System.Collections.Generic.HashSet[string]
-$allTests = Get-ChildItem "$rootPath" -Recurse -Filter "*Tests.dll"
+$allTests = Get-ChildItem $rootPath -Recurse -Filter "*Tests.dll"
 foreach ($assembly in $allTests) {
     if ($uniqueTests.Add($assembly.Name)) {
         $args += " $($assembly.FullName)"

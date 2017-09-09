@@ -6,6 +6,6 @@
     <RootNamespace>Echo.Sample.RecordToFile</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Echo\Echo.csproj" />
+    <PackageReference Include="Echo" Version="0.1.4" />
   </ItemGroup>
 </Project>
