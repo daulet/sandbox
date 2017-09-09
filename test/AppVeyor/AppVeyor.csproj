@@ -3,6 +3,7 @@
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Codecov" Version="1.0.3" />
     <PackageReference Include="coveralls.io" Version="1.3.4" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />
