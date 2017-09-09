@@ -6,7 +6,7 @@ before_build:
 
 build:
     project: Echo.sln
-    verbosity: detailed
+    verbosity: minimal
 
 environment:
     CODECOV_REPO_TOKEN:
