@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Castle.DynamicProxy;
 using Echo.Logging;
 
@@ -18,6 +19,12 @@ namespace Echo.Restriction
             if (invocation.Method.CustomAttributes.Any(x => x.AttributeType == typeof(RestrictedAttribute)))
             {
                 _logger.Info($"Restricting call to {invocation.Method.Name} with {string.Join(", ", invocation.Arguments)}");
+
+                var returnType = invocation.Method.ReturnType;
+                if (returnType != typeof(void) && returnType.IsValueType)
+                {
+                    invocation.ReturnValue = Activator.CreateInstance(returnType);
+                }
             }
             else
             {

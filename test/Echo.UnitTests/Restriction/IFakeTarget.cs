@@ -15,5 +15,16 @@ namespace Echo.UnitTests.Restriction
         [Fake]
         [Restricted]
         void RestrictedMethodWithCustomAttribute();
+
+        [Restricted]
+        T RestrictedMethodWithObjectReturnValue<T>()
+            where T : class;
+
+        [Restricted]
+        void RestrictedMethodWithParameter<T>(T obj);
+
+        [Restricted]
+        T RestrictedMethodWithStructReturnValue<T>()
+            where T : struct;
     }
 }
