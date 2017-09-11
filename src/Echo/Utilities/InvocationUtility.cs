@@ -37,14 +37,5 @@ namespace Echo.Utilities
             // perhaps compare them in serialized version
             return argument.GetType() == otherArgument.GetType();
         }
-
-        public static bool IsMethodMatch(MethodInfo method, MethodInfo anotherMethod)
-        {
-            if (method == anotherMethod)
-            {
-                return method == anotherMethod;
-            }
-            return method.Equals(anotherMethod);
-        }
     }
 }

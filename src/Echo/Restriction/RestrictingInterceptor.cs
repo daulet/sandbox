@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 using Echo.Logging;
+using System;
+using System.Linq;
 
 namespace Echo.Restriction
 {

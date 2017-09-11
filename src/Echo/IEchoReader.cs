@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Echo
+﻿namespace Echo
 {
     public interface IEchoReader
     {
