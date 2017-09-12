@@ -1,4 +1,5 @@
 ﻿using Echo.Restriction;
+using System.Threading.Tasks;
 
 namespace Echo.UnitTests.Restriction
 {
@@ -26,5 +27,11 @@ namespace Echo.UnitTests.Restriction
         [Restricted]
         T RestrictedMethodWithStructReturnValue<T>()
             where T : struct;
+
+        [Restricted]
+        Task RestrictedMethodWithTaskReturnValue();
+
+        [Restricted]
+        Task<T> RestrictedMethodWithTaskWithValueReturnValue<T>();
     }
 }

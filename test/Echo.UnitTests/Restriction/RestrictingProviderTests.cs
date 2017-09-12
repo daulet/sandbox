@@ -2,6 +2,7 @@
 using Echo.Restriction;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Echo.UnitTests.Restriction
@@ -136,6 +137,45 @@ namespace Echo.UnitTests.Restriction
 
             // Assert
             Assert.Equal(Guid.Empty, returnValue);
+        }
+
+        [Fact]
+        public async Task GetRestrictedTarget_RestrictedMethod_TaskReturnValue_DefaultValueReturned()
+        {
+            // Arrange
+            var restrictingProvider = new RestrictingProvider(_logger);
+            var restrictedTarget = restrictingProvider.GetRestrictedTarget(Mock.Of<IFakeTarget>());
+
+            // Act
+            await restrictedTarget.RestrictedMethodWithTaskReturnValue();
+        }
+
+        [Fact]
+        public async Task GetRestrictedTarget_RestrictedMethod_TaskWithScalarValueReturnValue_DefaultValueReturned()
+        {
+            // Arrange
+            var restrictingProvider = new RestrictingProvider(_logger);
+            var restrictedTarget = restrictingProvider.GetRestrictedTarget(Mock.Of<IFakeTarget>());
+
+            // Act
+            var returnValue = await restrictedTarget.RestrictedMethodWithTaskWithValueReturnValue<int>();
+
+            // Assert
+            Assert.Equal(0, returnValue);
+        }
+
+        [Fact]
+        public async Task GetRestrictedTarget_RestrictedMethod_TaskWithObjectValueReturnValue_DefaultValueReturned()
+        {
+            // Arrange
+            var restrictingProvider = new RestrictingProvider(_logger);
+            var restrictedTarget = restrictingProvider.GetRestrictedTarget(Mock.Of<IFakeTarget>());
+
+            // Act
+            var returnValue = await restrictedTarget.RestrictedMethodWithTaskWithValueReturnValue<string>();
+
+            // Assert
+            Assert.Equal(null, returnValue);
         }
     }
 }
