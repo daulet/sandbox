@@ -13,6 +13,9 @@ namespace Echo.UnitTests.Restriction
         [Restricted]
         void RestrictedMethod();
 
+        [Restricted(typeof(object))]
+        int RestrictedMethodWithBadProvider();
+
         [Fake]
         [Restricted]
         void RestrictedMethodWithCustomAttribute();
@@ -20,6 +23,9 @@ namespace Echo.UnitTests.Restriction
         [Restricted]
         T RestrictedMethodWithObjectReturnValue<T>()
             where T : class;
+
+        [Restricted(typeof(FakeReturnValueProvider))]
+        int RestrictedMethodWithOverriddenReturnValue();
 
         [Restricted]
         void RestrictedMethodWithParameter<T>(T obj);

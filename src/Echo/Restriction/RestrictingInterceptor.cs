@@ -18,31 +18,52 @@ namespace Echo.Restriction
 
         public void Intercept(IInvocation invocation)
         {
-            if (invocation.Method.CustomAttributes.Any(x => x.AttributeType == typeof(RestrictedAttribute)))
+            var attribute = invocation.Method
+                .GetCustomAttributes(typeof(RestrictedAttribute), false)
+                .Cast<RestrictedAttribute>()
+                .FirstOrDefault();
+            if (attribute != null)
             {
                 _logger.Info($"Restricting call to {invocation.Method.Name} with {string.Join(", ", invocation.Arguments)}");
 
                 var returnType = invocation.Method.ReturnType;
-                if (returnType != typeof(void))
+
+                if (returnType == typeof(void))
                 {
-                    if (typeof(Task).IsAssignableFrom(returnType))
+                    return;
+                }
+
+                if (attribute.ProviderType != null)
+                {
+                    if (Activator.CreateInstance(attribute.ProviderType) is IReturnValueProvider valueProvider)
                     {
-                        if (returnType.IsGenericType) // Task<TResult>
-                        {
-                            invocation.ReturnValue = GetType()
-                                .GetMethod("GetDefaultCompletedTask", BindingFlags.Instance | BindingFlags.NonPublic)
-                                .MakeGenericMethod(returnType.GenericTypeArguments[0])
-                                .Invoke(this, null);
-                        }
-                        else // Task
-                        {
-                            invocation.ReturnValue = Task.FromResult(0);
-                        }
+                        invocation.ReturnValue = valueProvider.GetReturnValue(returnType);
+                        return;
                     }
-                    else if (returnType.IsValueType) // scalar
+                    else
                     {
-                        invocation.ReturnValue = Activator.CreateInstance(returnType);
+                        _logger.Info($"Provided {attribute.ProviderType} does not implement IReturnValueProvider");
                     }
+                }
+
+                if (typeof(Task).IsAssignableFrom(returnType))
+                {
+                    if (returnType.IsGenericType) // Task<TResult>
+                    {
+                        invocation.ReturnValue = GetType()
+                            .GetMethod("GetDefaultCompletedTask",
+                                BindingFlags.Instance | BindingFlags.NonPublic)
+                            .MakeGenericMethod(returnType.GenericTypeArguments[0])
+                            .Invoke(this, null);
+                    }
+                    else // Task
+                    {
+                        invocation.ReturnValue = Task.FromResult(0);
+                    }
+                }
+                else if (returnType.IsValueType) // scalar
+                {
+                    invocation.ReturnValue = Activator.CreateInstance(returnType);
                 }
             }
             else

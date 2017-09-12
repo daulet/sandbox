@@ -82,6 +82,20 @@ namespace Echo.UnitTests.Restriction
         }
 
         [Fact]
+        public void GetRestrictedTarget_RestrictedMethod_ReturnValueProvider_DoesNotImplementProviderInterface_DefaultValueReturned()
+        {
+            // Arrange
+            var restrictingProvider = new RestrictingProvider(_logger);
+            var restrictedTarget = restrictingProvider.GetRestrictedTarget(Mock.Of<IFakeTarget>());
+
+            // Act
+            var returnValue = restrictedTarget.RestrictedMethodWithBadProvider();
+
+            // Assert
+            Assert.Equal(0, returnValue);
+        }
+
+        [Fact]
         public void GetRestrictedTarget_RestrictedMethodWithCustomAttribute_Restricted()
         {
             // Arrange
@@ -109,6 +123,20 @@ namespace Echo.UnitTests.Restriction
 
             // Assert
             Assert.Equal(null, returnValue);
+        }
+
+        [Fact]
+        public void GetRestrictedTarget_RestrictedMethod_ReturnValueProvider_ProvidedValueReturned()
+        {
+            // Arrange
+            var restrictingProvider = new RestrictingProvider(_logger);
+            var restrictedTarget = restrictingProvider.GetRestrictedTarget(Mock.Of<IFakeTarget>());
+
+            // Act
+            var returnValue = restrictedTarget.RestrictedMethodWithOverriddenReturnValue();
+
+            // Assert
+            Assert.Equal(5, returnValue);
         }
 
         [Fact]
