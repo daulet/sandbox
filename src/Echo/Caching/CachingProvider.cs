@@ -1,7 +1,6 @@
-﻿using System;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 using Echo.Core;
-using Echo.Restriction;
+using System;
 
 namespace Echo.Caching
 {

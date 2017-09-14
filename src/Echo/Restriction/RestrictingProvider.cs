@@ -15,7 +15,7 @@ namespace Echo.Restriction
             _logger = logger;
         }
 
-        public TTarget GetRestrictingTarget<TTarget>(TTarget target)
+        public TTarget GetRestrictedTarget<TTarget>(TTarget target)
             where TTarget : class
         {
             // only public interface restricting is supported

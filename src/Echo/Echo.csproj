@@ -14,17 +14,17 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Echo: record, restrict or replay your dependencies</Title>
     <Description>Record your code's execution and replay it later</Description>
-    <Version>0.1.4</Version>
+    <Version>0.2.0</Version>
     <Product>Echo: record and replay</Product>
     <Authors>Daulet Zhanguzin</Authors>
     <Company>Daulet Zhanguzin</Company>
     <Copyright>Copyright (c) Daulet Zhanguzin</Copyright>
     <PackageLicenseUrl>https://opensource.org/licenses/BSD-3-Clause</PackageLicenseUrl>
-    <PackageTags>echo recording moching mocks unittest unittesting</PackageTags>
+    <PackageTags>echo recording mocking mocks unittest unittesting</PackageTags>
     <PackageReleaseNotes>
-Version 0.1
+Version 0.2
 
-* Initial release, minimum viable functionality
+* Restriction functionality, that enables sandboxed integration testing
     </PackageReleaseNotes>
     <RepositoryUrl>https://github.com/daulet/Echo</RepositoryUrl>
     <PackageProjectUrl>https://github.com/daulet/Echo</PackageProjectUrl>
