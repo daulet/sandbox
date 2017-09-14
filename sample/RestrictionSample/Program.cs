@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Echo.Restriction;
 
 namespace Echo.Sample.RestrictionSample
@@ -14,11 +15,13 @@ namespace Echo.Sample.RestrictionSample
             // get instance of the real dependency
             var resource = new CreditCardBilling(logger);
             // restrict methods that you don't want call in dry run
-            var restrictedResource = provider.GetRestrictingTarget<IBilling>(resource);
+            var restrictedResource = provider.GetRestrictedTarget<IBilling>(resource);
             // inject restricted dependency to the implementation under test
             var implementation = new SubscriptionImplementation(restrictedResource);
             // dry run your implementation
             implementation.Renew("cartman", RegionInfo.CurrentRegion);
+
+            Console.ReadKey();
         }
     }
 }

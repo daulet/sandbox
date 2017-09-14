@@ -48,7 +48,7 @@ var provider = new RestrictingProvider(logger);
 var resource = new CreditCardBilling(logger);
 
 // restrict methods that you don't want call in dry run
-var restrictedResource = provider.GetRestrictingTarget<IBilling>(resource);
+var restrictedResource = provider.GetRestrictedTarget<IBilling>(resource);
 
 // inject restricted dependency to the implementation under test
 var implementation = new SubscriptionImplementation(restrictedResource);
