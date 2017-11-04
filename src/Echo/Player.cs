@@ -1,12 +1,11 @@
-﻿using System.IO;
-using Castle.DynamicProxy;
-using Echo.Core;
+﻿using Echo.Core;
+using System;
+using System.IO;
 
 namespace Echo
 {
     public class Player
     {
-        private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
 
         public Player(TextReader reader)
@@ -19,13 +18,21 @@ namespace Echo
             _invocationReader = invocationReader;
         }
 
+        // This class is not generic since there could be multiple targets per recording
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {
-            var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
-            return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
-                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                replayingInterceptor);
+            // only public interface replaying is supported
+            var targetType = typeof(TTarget);
+            if (!targetType.IsInterface || !targetType.IsPublic)
+            {
+                throw new NotSupportedException();
+            }
+
+            return InstancePool.ProxyGenerator
+                .CreateInterfaceProxyWithoutTarget<TTarget>(
+                    new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
+                    new ReplayingInterceptor<TTarget>(_invocationReader));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Castle.DynamicProxy;
-using Echo.Core;
+﻿using Echo.Core;
 using System;
 using System.IO;
 
@@ -7,7 +6,6 @@ namespace Echo
 {
     public class Recorder
     {
-        private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationListener _invocationListener;
 
         public Recorder(TextWriter writer)
@@ -20,6 +18,7 @@ namespace Echo
             _invocationListener = invocationListener;
         }
 
+        // target is not injected in constructor since there could be multiple targets per recording
         public TTarget GetRecordingTarget<TTarget>(TTarget target)
             where TTarget : class
         {
@@ -30,10 +29,10 @@ namespace Echo
                 throw new NotSupportedException();
             }
 
-            var recordingInterceptor = new ListeningInterceptor<TTarget>(_invocationListener);
-            return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
-                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                recordingInterceptor);
+            return InstancePool.ProxyGenerator
+                .CreateInterfaceProxyWithTarget<TTarget>(target,
+                    new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
+                    new ListeningInterceptor<TTarget>(_invocationListener));
         }
     }
 }
