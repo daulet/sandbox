@@ -1,7 +1,6 @@
-﻿using Echo;
-using System.IO;
+﻿using System.IO;
 
-namespace Samples.RecordToFile
+namespace Echo.Sample.RecordToFile
 {
     internal class EchoWriter : IEchoWriter
     {

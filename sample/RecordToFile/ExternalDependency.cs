@@ -1,4 +1,4 @@
-﻿namespace Samples.RecordToFile
+﻿namespace Echo.Sample.RecordToFile
 {
     public interface IExternalDependency
     {

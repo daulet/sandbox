@@ -2,7 +2,7 @@
 
 namespace Echo.IntegrationTests
 {
-    public class EchoReader : IEchoReader
+    internal class EchoReader : IEchoReader
     {
         private readonly StreamReader _streamReader;
 
