@@ -41,8 +41,7 @@ namespace Echo.IntegrationTests.InstantReplay
                     // NOTE replay logic doesn't use ExternalDependency implementation
 
                     // setup replaying
-                    var reader = new EchoReader(streamReader);
-                    var player = new Player(reader);
+                    var player = new Player(streamReader);
                     var mockedPartner = player.GetReplayingTarget<IExternalDependency>();
 
                     // call mocked dependency
@@ -89,8 +88,7 @@ namespace Echo.IntegrationTests.InstantReplay
                     // NOTE replay logic doesn't use ExternalDependency implementation
 
                     // setup replaying
-                    var reader = new EchoReader(streamReader);
-                    var player = new Player(reader);
+                    var player = new Player(streamReader);
                     var mockedPartner = player.GetReplayingTarget<IExternalDependency>();
 
                     // call mocked dependency

@@ -1,4 +1,5 @@
-﻿using Castle.DynamicProxy;
+﻿using System.IO;
+using Castle.DynamicProxy;
 using Echo.Core;
 
 namespace Echo.UnitTesting
@@ -9,9 +10,9 @@ namespace Echo.UnitTesting
         private readonly IInvocationReader _invocationReader;
         private readonly ValidatingListener _validatingListener;
 
-        public TestPlayer(IEchoReader echoReader)
+        public TestPlayer(TextReader reader)
         {
-            _invocationReader = new InvocationDeserializer(echoReader);
+            _invocationReader = new InvocationDeserializer(reader);
             _validatingListener = new ValidatingListener(_invocationReader);
         }
 

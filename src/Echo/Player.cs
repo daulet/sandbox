@@ -1,4 +1,5 @@
-﻿using Castle.DynamicProxy;
+﻿using System.IO;
+using Castle.DynamicProxy;
 using Echo.Core;
 
 namespace Echo
@@ -8,8 +9,8 @@ namespace Echo
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
 
-        public Player(IEchoReader echoReader)
-            : this(new InvocationDeserializer(echoReader))
+        public Player(TextReader reader)
+            : this(new InvocationDeserializer(reader))
         {
         }
 

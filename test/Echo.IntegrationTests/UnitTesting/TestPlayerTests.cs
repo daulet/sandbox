@@ -19,8 +19,7 @@ namespace Echo.IntegrationTests.UnitTesting
                     // Arrange
 
                     // setup an echo player
-                    var reader = new EchoReader(streamReader);
-                    var player = new TestPlayer(reader);
+                    var player = new TestPlayer(streamReader);
 
                     // obtain replayable instances from the player
                     var billing = player.GetReplayingTarget<IBilling>();
@@ -52,8 +51,7 @@ namespace Echo.IntegrationTests.UnitTesting
                     // Arrange
 
                     // setup an echo player
-                    var reader = new EchoReader(streamReader);
-                    var player = new TestPlayer(reader);
+                    var player = new TestPlayer(streamReader);
 
                     // obtain replayable instances from the player
                     var billing = player.GetReplayingTarget<IBilling>();
@@ -95,8 +93,7 @@ namespace Echo.IntegrationTests.UnitTesting
                             // Arrange
 
                             // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
+                            var player = new TestPlayer(streamReader);
 
                             // obtain external dependencies from the player
                             var billing = player.GetReplayingTarget<IBilling>();
@@ -160,8 +157,7 @@ namespace Echo.IntegrationTests.UnitTesting
                             // Arrange
 
                             // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
+                            var player = new TestPlayer(streamReader);
 
                             // obtain external dependencies from the player
                             var billing = player.GetReplayingTarget<IBilling>();
@@ -225,8 +221,7 @@ namespace Echo.IntegrationTests.UnitTesting
                             // Arrange
 
                             // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
+                            var player = new TestPlayer(streamReader);
 
                             // obtain external dependencies from the player
                             var billing = player.GetReplayingTarget<IBilling>();
@@ -290,8 +285,7 @@ namespace Echo.IntegrationTests.UnitTesting
                             // Arrange
 
                             // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
+                            var player = new TestPlayer(streamReader);
 
                             // obtain external dependencies from the player
                             var billing = player.GetReplayingTarget<IBilling>();
