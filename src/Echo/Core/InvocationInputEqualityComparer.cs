@@ -1,13 +1,13 @@
 ﻿using Echo.Utilities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
 
 namespace Echo.Core
 {
     internal class InvocationInputEqualityComparer : IEqualityComparer<Invocation>
     {
-        private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
+        private readonly JTokenEqualityComparer _jsonEqualityComparer = new JTokenEqualityComparer();
 
         public bool Equals(Invocation x, Invocation y)
         {
@@ -22,7 +22,7 @@ namespace Echo.Core
             var argumentsHash = 33;
             foreach (var argument in obj.Arguments)
             {
-                argumentsHash *= _serializer.Serialize(argument).GetHashCode();
+                argumentsHash *= _jsonEqualityComparer.GetHashCode(JToken.FromObject(argument));
             }
 
             return argumentsHash
