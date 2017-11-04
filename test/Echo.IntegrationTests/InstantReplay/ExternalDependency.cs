@@ -1,4 +1,4 @@
-﻿namespace Samples.InstantReplay
+﻿namespace Echo.IntegrationTests.InstantReplay
 {
     public interface IExternalDependency
     {

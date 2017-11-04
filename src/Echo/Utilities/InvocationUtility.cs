@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
+using Newtonsoft.Json.Linq;
 
 namespace Echo.Utilities
 {
+    // @TODO remove static
+    // @TODO make internal and add more rigorous tests
     public static class InvocationUtility
     {
         public static bool IsArgumentListMatch(object[] arguments, object[] otherArguments)
@@ -33,9 +36,20 @@ namespace Echo.Utilities
             {
                 return argument == otherArgument;
             }
-            // TODO find a way to differentiate multiple calls to the same method - they'll obviously have matching list of argument types
-            // perhaps compare them in serialized version
-            return argument.GetType() == otherArgument.GetType();
+
+            if (argument.GetType() != otherArgument.GetType())
+            {
+                return false;
+            }
+
+            if (argument.GetType().IsValueType)
+            {
+                return argument.Equals(otherArgument);
+            }
+
+            return JToken.DeepEquals(
+                JObject.FromObject(argument),
+                JObject.FromObject(otherArgument));
         }
     }
 }
