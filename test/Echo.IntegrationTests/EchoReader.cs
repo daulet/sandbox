@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace Echo.IntegrationTests
 {
-    internal class EchoReader : IEchoReader
+    public class EchoReader : IEchoReader
     {
         private readonly StreamReader _streamReader;
 

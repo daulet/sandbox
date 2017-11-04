@@ -8,7 +8,11 @@ namespace Echo.IntegrationTests
 {
     public class EndpointTests
     {
-        // TODO add intentionally broken implementations, and replay echoes on them
+        // TODO add intentionally broken implementations, and replay echoes on them:
+        // Don't call IProvider
+        // Dupliacte charge call
+        // Overcharge
+        // No refund
 
         [Fact]
         public void Purchase_OriginalSource_Pass()

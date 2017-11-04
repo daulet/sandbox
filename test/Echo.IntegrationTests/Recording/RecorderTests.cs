@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Echo.IntegrationTests.Recording
 {
-    public class RecordingTests
+    public class RecorderTests
     {
         [Fact]
         public void Purchase_RecordHappyCase_MatchesEmbeddedResource()
