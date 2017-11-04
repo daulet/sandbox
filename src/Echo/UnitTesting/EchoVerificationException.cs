@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Web.Script.Serialization;
 
 namespace Echo.UnitTesting
 {
@@ -30,7 +29,6 @@ namespace Echo.UnitTesting
             {
                 if (_message == null)
                 {
-                    var serializer = new JavaScriptSerializer();
                     var stringBuilder = new StringBuilder();
 
                     var notMatchedInvocations = _notMatchedInvocations.ToList();
@@ -53,8 +51,8 @@ namespace Echo.UnitTesting
                                     $"Property: {difference.Path}, Unexpected value: {difference.Value}");
                             }
 
-                            stringBuilder.AppendLine($"Expected: {serializer.Serialize(matchingVisit.Arguments)}; " +
-                                                     $"Actual: {serializer.Serialize(notMatchedInvocation.Arguments)}");
+                            stringBuilder.AppendLine($"Expected: {JsonConvert.SerializeObject(matchingVisit.Arguments)}; " +
+                                                     $"Actual: {JsonConvert.SerializeObject(notMatchedInvocation.Arguments)}");
 
                             notMatchedInvocations.Remove(notMatchedInvocation);
                             notVisitedInvocations.Remove(matchingVisit);
