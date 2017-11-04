@@ -1,16 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Echo.Core;
 
 namespace Echo.UnitTesting
 {
-    public class TestPlayer
+    public class TestPlayer : IDisposable
     {
         private readonly IInvocationReader _invocationReader;
+        private TextReader _textReader;
         private readonly ValidatingListener _validatingListener;
 
-        public TestPlayer(TextReader reader)
+        public TestPlayer(TextReader textReader)
         {
-            _invocationReader = new InvocationDeserializer(reader);
+            _invocationReader = new InvocationDeserializer(textReader);
+            _textReader = textReader;
             _validatingListener = new ValidatingListener(_invocationReader);
         }
 
@@ -71,6 +74,25 @@ namespace Echo.UnitTesting
         public void VerifyInvocations()
         {
             // TODO verify all targets were hit
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _textReader?.Dispose();
+                _textReader = null;
+            }
         }
 
         #endregion

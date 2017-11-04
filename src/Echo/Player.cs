@@ -4,13 +4,15 @@ using System.IO;
 
 namespace Echo
 {
-    public class Player
+    public class Player : IDisposable
     {
         private readonly IInvocationReader _invocationReader;
+        private TextReader _textReader;
 
-        public Player(TextReader reader)
-            : this(new InvocationDeserializer(reader))
+        public Player(TextReader textReader)
+            : this(new InvocationDeserializer(textReader))
         {
+            _textReader = textReader;
         }
 
         internal Player(IInvocationReader invocationReader)
@@ -34,5 +36,24 @@ namespace Echo
                     new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
                     new ReplayingInterceptor<TTarget>(_invocationReader));
         }
+
+        #region IDisposable
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _textReader?.Dispose();
+                _textReader = null;
+            }
+        }
+
+        #endregion
     }
 }

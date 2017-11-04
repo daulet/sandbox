@@ -4,13 +4,15 @@ using System.IO;
 
 namespace Echo
 {
-    public class Recorder
+    public class Recorder : IDisposable
     {
         private readonly IInvocationListener _invocationListener;
+        private TextWriter _textWriter;
 
         public Recorder(TextWriter writer)
             : this(new InvocationSerializer(writer))
         {
+            _textWriter = writer;
         }
 
         internal Recorder(IInvocationListener invocationListener)
@@ -34,5 +36,24 @@ namespace Echo
                     new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
                     new ListeningInterceptor<TTarget>(_invocationListener));
         }
+
+        #region IDisposable
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _textWriter?.Dispose();
+                _textWriter = null;
+            }
+        }
+
+        #endregion
     }
 }
