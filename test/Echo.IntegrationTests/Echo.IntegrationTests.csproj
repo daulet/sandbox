@@ -3,10 +3,10 @@
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Echoes\*" />
+    <None Remove="Recording\*.echo" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Echoes\*" />
+    <EmbeddedResource Include="Recording\*.echo" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.5.28" />

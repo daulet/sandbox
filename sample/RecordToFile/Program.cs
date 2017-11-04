@@ -1,8 +1,7 @@
-﻿using Echo;
-using System;
+﻿using System;
 using System.IO;
 
-namespace Samples.RecordToFile
+namespace Echo.Sample.RecordToFile
 {
     internal class Program
     {
