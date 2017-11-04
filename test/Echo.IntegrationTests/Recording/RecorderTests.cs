@@ -42,12 +42,10 @@ namespace Echo.IntegrationTests.Recording
                 });
 
             // write all echoes to a file
-            using (var output = new StreamWriter(echoFileName))
+            using (var streamWriter = new StreamWriter(echoFileName))
             {
                 // setup recording
-
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
+                var recorder = new Recorder(streamWriter);
 
                 var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
                 var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
@@ -106,12 +104,10 @@ namespace Echo.IntegrationTests.Recording
             var providerMock = new Mock<IProvider>(MockBehavior.Strict);
 
             // write all echoes to a file
-            using (var output = new StreamWriter(echoFileName))
+            using (var streamWriter = new StreamWriter(echoFileName))
             {
                 // setup recording
-
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
+                var recorder = new Recorder(streamWriter);
 
                 var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
                 var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
@@ -180,12 +176,10 @@ namespace Echo.IntegrationTests.Recording
                 .Throws(new ProvisioningFailureException());
 
             // write all echoes to a file
-            using (var output = new StreamWriter(echoFileName))
+            using (var streamWriter = new StreamWriter(echoFileName))
             {
                 // setup recording
-
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
+                var recorder = new Recorder(streamWriter);
 
                 var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
                 var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);

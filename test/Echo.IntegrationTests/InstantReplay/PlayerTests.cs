@@ -21,8 +21,7 @@ namespace Echo.IntegrationTests.InstantReplay
                 using (var streamWriter = new StreamWriter(stream))
                 {
                     // setup recording
-                    var writer = new EchoWriter(streamWriter);
-                    var recorder = new Recorder(writer);
+                    var recorder = new Recorder(streamWriter);
                     var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 
                     // call external dependency
@@ -68,8 +67,7 @@ namespace Echo.IntegrationTests.InstantReplay
                 using (var streamWriter = new StreamWriter(stream))
                 {
                     // setup recording
-                    var writer = new EchoWriter(streamWriter);
-                    var recorder = new Recorder(writer);
+                    var recorder = new Recorder(streamWriter);
                     var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 
                     // call external dependency

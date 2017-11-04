@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Echo.Core;
 using System;
+using System.IO;
 
 namespace Echo
 {
@@ -9,8 +10,8 @@ namespace Echo
         private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationListener _invocationListener;
 
-        public Recorder(IEchoWriter echoWriter)
-            : this(new InvocationSerializer(echoWriter))
+        public Recorder(TextWriter writer)
+            : this(new InvocationSerializer(writer))
         {
         }
 
