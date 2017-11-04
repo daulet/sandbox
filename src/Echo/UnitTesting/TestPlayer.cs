@@ -1,12 +1,10 @@
 ﻿using System.IO;
-using Castle.DynamicProxy;
 using Echo.Core;
 
 namespace Echo.UnitTesting
 {
     public class TestPlayer
     {
-        private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
         private readonly ValidatingListener _validatingListener;
 
@@ -19,12 +17,11 @@ namespace Echo.UnitTesting
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {
-            var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
-            var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
-            return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
-                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                validatingInterceptor,
-                replayingInterceptor);
+            return InstancePool.ProxyGenerator
+                .CreateInterfaceProxyWithoutTarget<TTarget>(
+                    new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
+                    new ListeningInterceptor<TTarget>(_validatingListener),
+                    new ReplayingInterceptor<TTarget>(_invocationReader));
         }
 
         public TestEntry GetTestEntry()
@@ -36,10 +33,10 @@ namespace Echo.UnitTesting
         public TTarget GetTestEntryTarget<TTarget>(TTarget target)
             where TTarget : class
         {
-            var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
-            return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
-                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                validatingInterceptor);
+            return InstancePool.ProxyGenerator
+                .CreateInterfaceProxyWithTarget<TTarget>(target,
+                    new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
+                    new ListeningInterceptor<TTarget>(_validatingListener));
         }
 
         #region Validation
