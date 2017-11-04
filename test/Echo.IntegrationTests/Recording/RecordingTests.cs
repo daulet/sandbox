@@ -1,18 +1,18 @@
-﻿using Moq;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using Echo.IntegrationTests.Subject;
+using Moq;
 using Xunit;
 
-namespace Echo.IntegrationTests
+namespace Echo.IntegrationTests.Recording
 {
     public class RecordingTests
     {
         [Fact]
         public void Purchase_RecordOutput1_MatchesEmbeddedResource()
         {
-            var echoFileName = "Echo.IntegrationTests.Echoes.output1.echo";
+            var echoFileName = "Echo.IntegrationTests.Recording.output1.echo";
 
             // Arrange
 

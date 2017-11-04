@@ -16,7 +16,7 @@ namespace Echo.IntegrationTests
             using (
                 var resourceStream =
                     Assembly.GetExecutingAssembly()
-                        .GetManifestResourceStream("Echo.IntegrationTests.Echoes.output1.echo"))
+                        .GetManifestResourceStream("Echo.IntegrationTests.Recording.output1.echo"))
             {
                 using (var streamReader = new StreamReader(resourceStream))
                 {
@@ -62,7 +62,7 @@ namespace Echo.IntegrationTests
             using (
                 var resourceStream =
                     Assembly.GetExecutingAssembly()
-                        .GetManifestResourceStream("Echo.IntegrationTests.Echoes.output1.echo"))
+                        .GetManifestResourceStream("Echo.IntegrationTests.Recording.output1.echo"))
             {
                 using (var streamReader = new StreamReader(resourceStream))
                 {
