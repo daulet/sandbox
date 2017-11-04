@@ -6,67 +6,54 @@ Swiss knife for your .NET dependencies
 [![Codecov status](https://img.shields.io/codecov/c/github/daulet/echo.svg)](https://codecov.io/gh/daulet/Echo)
 [![Nuget](https://img.shields.io/nuget/v/Echo.svg)](https://www.nuget.org/packages/echo/)
 
-## Restrict sensitive operations
+## Restriction
 
-This demonstrates how you can run an integrated test with *real* dependencies in a semi-sandboxed manner: mark sensitive operations as restricted and test your code with confidence that it won't affect sensitive state.
-
-Say you'd like to test your code (below) with the real dependency (_billing):
+Given Execute() method that throws but which is marked with [Restricted] attriubute in the interface as below:
 
 ``` csharp
-var expirationDate = _billing.GetExpirationDate(username);
-
-if (expirationDate <= DateTimeOffset.UtcNow)
+public interface IDependency
 {
-    var price = _billing.GetPrice(region);
-    return _billing.Charge(username, price);
-}
+    void Acknowledge();
 
-return true;
-```
-
-The problem is that you don't really want to call Charge() during your test while you still want to be able to exercise your integration with other methods of _billing (instance of IBilling). You can mark such methods as [Restricted]:
-
-``` csharp
-public interface IBilling
-{
     [Restricted]
-    bool Charge(string username, int amount);
+    void Execute();
+}
 
-    DateTimeOffset GetExpirationDate(string username);
+public class ThrowingDependency : IDependency
+{
+    public void Acknowledge()
+    {
+        Console.WriteLine($"Hello, I'm implementation of {GetType().Name}");
+    }
 
-    int GetPrice(RegionInfo region);
+    public void Execute()
+    {
+        throw new IOException();
+    }
 }
 ```
 
-Then you can use RestrictingProvider to wrap your real dependency and mock out restricted methods:
+Using RestrictingProvider you can avoid calling undesired methods:
 
 ``` csharp
-var provider = new RestrictingProvider(logger);
+var restrictedObj = new RestrictingProvider(logger)
+    .GetRestrictedTarget<IDependency>(
+        new ThrowingDependency());
 
-// get instance of the real dependency
-var resource = new CreditCardBilling(logger);
+restrictedObj.Acknowledge();
+restrictedObj.Execute();
 
-// restrict methods that you don't want call in dry run
-var restrictedResource = provider.GetRestrictedTarget<IBilling>(resource);
-
-// inject restricted dependency to the implementation under test
-var implementation = new SubscriptionImplementation(restrictedResource);
-
-// dry run your implementation
-implementation.Renew("cartman", RegionInfo.CurrentRegion);
+Console.WriteLine("Reached end of execution");
 ```
 
-Now you don't have to worry about your code accidentally calling real implementation of Charge(). Here is output for this example:
+The above will produce the following output: 
 
 ``` text
-Getting expiration for cartman
-Obtaining price for United States
-Restricting call to Charge with cartman, 100
+Hello, I'm implementation of ThrowingDependency
+Reached end of execution
 ```
 
-See [RestrictionSample](/sample/RestrictionSample) for the full example.
-
-A common use case for this feature is testing your state changing logic. Imagine that you'd like to update a subset of records in storage. If you mark write operations as restricted, while using real (production) storage adapter, you'd be able to dry run, in other words test, your implementation and confirm, for example, number of records that will be updated. The beauty of this approach is that you don't have to modify your code to enable test functionality, and when the time comes to run the script for real, simply inject the full (not restricted) implementation of your storage adapter.
+Note implementation of Acknowledge() is invoked, but not of Execute(). For more detailed example and interesting use cases [visit documentation](./docs/Restriction.md).
 
 ## License
 
