@@ -11,7 +11,7 @@ namespace Echo.UnitTests
         public void GetReplayingTarget_TTargetIsNotInterface_ThrowsNotSupportedException()
         {
             // Arrange
-            using (var recorder = new Player(StreamReader.Null))
+            using (var recorder = new Player(invocationReader: null))
             {
                 // Assert
                 Assert.Throws<NotSupportedException>(() =>
@@ -24,7 +24,7 @@ namespace Echo.UnitTests
         public void GetReplayingTarget_TTargetIsNotPublicInterface_ThrowsNotSupportedException()
         {
             // Arrange
-            using (var recorder = new Player(StreamReader.Null))
+            using (var recorder = new Player(invocationReader: null))
             {
                 Assert.False(typeof(IInternalFakeTarget).IsPublic, "Interface can't be public for test to be valid");
 
