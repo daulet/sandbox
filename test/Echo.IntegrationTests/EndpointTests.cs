@@ -24,40 +24,35 @@ namespace Echo.IntegrationTests
             {
                 using (var streamReader = new StreamReader(resourceStream))
                 {
-                    VerifyAll_OriginalSource(streamReader);
+                    // Arrange
+
+                    // setup an echo player
+                    var reader = new EchoReader(streamReader);
+                    var player = new TestPlayer(reader);
+
+                    // obtain external dependencies from the player
+                    var billing = player.GetReplayingTarget<IBilling>();
+                    var provider = player.GetReplayingTarget<IProvider>();
+                    var testEntry = player.GetTestEntry();
+
+                    // this is the the instance that is getting tested
+                    // we inject external dependencies provided by the player
+                    var endpointUnderTest = new Endpoint(billing, provider);
+
+                    // this is an instance wrapped around test subject
+                    // so we can intercept and verify return value of Purchase() call
+                    var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                    // Act
+
+                    // call method you'd like to test with values provided by the player
+                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+
+                    // Assert
+
+                    player.VerifyAll();
                 }
             }
-        }
-
-        private void VerifyAll_OriginalSource(StreamReader streamReader)
-        {
-            // Arrange
-
-            // setup an echo player
-            var reader = new EchoReader(streamReader);
-            var player = new TestPlayer(reader);
-
-            // obtain external dependencies from the player
-            var billing = player.GetReplayingTarget<IBilling>();
-            var provider = player.GetReplayingTarget<IProvider>();
-            var testEntry = player.GetTestEntry();
-
-            // this is the the instance that is getting tested
-            // we inject external dependencies provided by the player
-            var endpointUnderTest = new Endpoint(billing, provider);
-
-            // this is an instance wrapped around test subject
-            // so we can intercept and verify return value of Purchase() call
-            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
-
-            // Act
-
-            // call method you'd like to test with values provided by the player
-            testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
-
-            // Assert
-
-            player.VerifyAll();
         }
 
         [Fact]
