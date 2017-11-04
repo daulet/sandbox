@@ -1,8 +1,8 @@
-﻿using Echo.IntegrationTests.Source;
-using Moq;
+﻿using Moq;
 using System;
 using System.IO;
 using System.Reflection;
+using Echo.IntegrationTests.Subject;
 using Xunit;
 
 namespace Echo.IntegrationTests

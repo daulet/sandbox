@@ -1,4 +1,4 @@
-﻿namespace Echo.IntegrationTests.Source
+﻿namespace Echo.IntegrationTests.Subject
 {
     public interface IEndpoint
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Echo.IntegrationTests.Source
+namespace Echo.IntegrationTests.Subject
 {
     public abstract class PaymentInstrument
     {
