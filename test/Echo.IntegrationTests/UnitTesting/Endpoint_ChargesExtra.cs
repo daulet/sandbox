@@ -1,4 +1,6 @@
-﻿namespace Echo.IntegrationTests.Subject
+﻿using Echo.IntegrationTests.Subject;
+
+namespace Echo.IntegrationTests.UnitTesting
 {
     internal class Endpoint_ChargesExtra : IEndpoint
     {
@@ -19,7 +21,7 @@
             });
             var paymentResponse = _billing.Charge(new PaymentRequest()
             {
-                Amount = quoteResponse.Price + 1,
+                Amount = quoteResponse.Price + 1, // THIS IS THE BUG - Charges Extra
                 Instrument = request.Payment,
                 Payee = request.Customer,
             });

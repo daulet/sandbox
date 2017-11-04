@@ -73,5 +73,265 @@ namespace Echo.IntegrationTests.UnitTesting
                 }
             }
         }
+
+        [Theory]
+        [InlineData(
+            "Echo.IntegrationTests.Recording.HappyCase.echo",
+            "Echo.IntegrationTests.Recording.BillingFails.echo",
+            "Echo.IntegrationTests.Recording.ProvisioningFails.echo")]
+        public void Purchase_EndpointChargesExtra_FailsValidation(params string[] recordings)
+        {
+            try
+            {
+                foreach (var recording in recordings)
+                {
+                    using (
+                        var resourceStream =
+                            Assembly.GetExecutingAssembly()
+                                .GetManifestResourceStream(recording))
+                    {
+                        using (var streamReader = new StreamReader(resourceStream))
+                        {
+                            // Arrange
+
+                            // setup an echo player
+                            var reader = new EchoReader(streamReader);
+                            var player = new TestPlayer(reader);
+
+                            // obtain external dependencies from the player
+                            var billing = player.GetReplayingTarget<IBilling>();
+                            var provider = player.GetReplayingTarget<IProvider>();
+                            var testEntry = player.GetTestEntry();
+
+                            // this is the the instance that is getting tested
+                            // we inject external dependencies provided by the player
+                            var endpointUnderTest = new Endpoint_ChargesExtra(billing, provider);
+
+                            // this is an instance wrapped around test subject
+                            // so we can intercept and verify return value of Purchase() call
+                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                            // Act
+
+                            try
+                            {
+                                // call method you'd like to test with values provided by the player
+                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                            }
+                            catch (PurchaseFailureException)
+                            {
+                                // Some tests expect the target to throw
+                            }
+
+                            player.VerifyAll();
+                        }
+                    }
+                }
+            }
+            catch (EchoVerificationException)
+            {
+                // Assert
+
+                Assert.True(true, "At least one recording must catch fail validation");
+                return;
+            }
+
+            Assert.False(true, "Should be unreachable since at least one recording should fail validation");
+        }
+
+        [Theory]
+        [InlineData(
+            "Echo.IntegrationTests.Recording.HappyCase.echo",
+            "Echo.IntegrationTests.Recording.BillingFails.echo",
+            "Echo.IntegrationTests.Recording.ProvisioningFails.echo")]
+        public void Purchase_EndpointChargesTwice_FailsValidation(params string[] recordings)
+        {
+            try
+            {
+                foreach (var recording in recordings)
+                {
+                    using (
+                        var resourceStream =
+                            Assembly.GetExecutingAssembly()
+                                .GetManifestResourceStream(recording))
+                    {
+                        using (var streamReader = new StreamReader(resourceStream))
+                        {
+                            // Arrange
+
+                            // setup an echo player
+                            var reader = new EchoReader(streamReader);
+                            var player = new TestPlayer(reader);
+
+                            // obtain external dependencies from the player
+                            var billing = player.GetReplayingTarget<IBilling>();
+                            var provider = player.GetReplayingTarget<IProvider>();
+                            var testEntry = player.GetTestEntry();
+
+                            // this is the the instance that is getting tested
+                            // we inject external dependencies provided by the player
+                            var endpointUnderTest = new Endpoint_DuplicateCharge(billing, provider);
+
+                            // this is an instance wrapped around test subject
+                            // so we can intercept and verify return value of Purchase() call
+                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                            // Act
+
+                            try
+                            {
+                                // call method you'd like to test with values provided by the player
+                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                            }
+                            catch (PurchaseFailureException)
+                            {
+                                // Some tests expect the target to throw
+                            }
+
+                            player.VerifyAll();
+                        }
+                    }
+                }
+            }
+            catch (EchoVerificationException)
+            {
+                // Assert
+
+                Assert.True(true, "At least one recording must catch fail validation");
+                return;
+            }
+
+            Assert.False(true, "Should be unreachable since at least one recording should fail validation");
+        }
+
+        [Theory]
+        [InlineData(
+            "Echo.IntegrationTests.Recording.HappyCase.echo",
+            "Echo.IntegrationTests.Recording.BillingFails.echo",
+            "Echo.IntegrationTests.Recording.ProvisioningFails.echo")]
+        public void Purchase_EndpointDoesNotProvision_FailsValidation(params string[] recordings)
+        {
+            try
+            {
+                foreach (var recording in recordings)
+                {
+                    using (
+                        var resourceStream =
+                            Assembly.GetExecutingAssembly()
+                                .GetManifestResourceStream(recording))
+                    {
+                        using (var streamReader = new StreamReader(resourceStream))
+                        {
+                            // Arrange
+
+                            // setup an echo player
+                            var reader = new EchoReader(streamReader);
+                            var player = new TestPlayer(reader);
+
+                            // obtain external dependencies from the player
+                            var billing = player.GetReplayingTarget<IBilling>();
+                            var provider = player.GetReplayingTarget<IProvider>();
+                            var testEntry = player.GetTestEntry();
+
+                            // this is the the instance that is getting tested
+                            // we inject external dependencies provided by the player
+                            var endpointUnderTest = new Endpoint_NoProvision(billing, provider);
+
+                            // this is an instance wrapped around test subject
+                            // so we can intercept and verify return value of Purchase() call
+                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                            // Act
+
+                            try
+                            {
+                                // call method you'd like to test with values provided by the player
+                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                            }
+                            catch (PurchaseFailureException)
+                            {
+                                // Some tests expect the target to throw
+                            }
+
+                            player.VerifyAll();
+                        }
+                    }
+                }
+            }
+            catch (EchoVerificationException)
+            {
+                // Assert
+
+                Assert.True(true, "At least one recording must catch fail validation");
+                return;
+            }
+
+            Assert.False(true, "Should be unreachable since at least one recording should fail validation");
+        }
+
+        [Theory]
+        [InlineData(
+            "Echo.IntegrationTests.Recording.HappyCase.echo",
+            "Echo.IntegrationTests.Recording.BillingFails.echo",
+            "Echo.IntegrationTests.Recording.ProvisioningFails.echo")]
+        public void Purchase_EndpointDoesNotRefund_FailsValidation(params string[] recordings)
+        {
+            try
+            {
+                foreach (var recording in recordings)
+                {
+                    using (
+                        var resourceStream =
+                            Assembly.GetExecutingAssembly()
+                                .GetManifestResourceStream(recording))
+                    {
+                        using (var streamReader = new StreamReader(resourceStream))
+                        {
+                            // Arrange
+
+                            // setup an echo player
+                            var reader = new EchoReader(streamReader);
+                            var player = new TestPlayer(reader);
+
+                            // obtain external dependencies from the player
+                            var billing = player.GetReplayingTarget<IBilling>();
+                            var provider = player.GetReplayingTarget<IProvider>();
+                            var testEntry = player.GetTestEntry();
+
+                            // this is the the instance that is getting tested
+                            // we inject external dependencies provided by the player
+                            var endpointUnderTest = new Endpoint_NoRefund(billing, provider);
+
+                            // this is an instance wrapped around test subject
+                            // so we can intercept and verify return value of Purchase() call
+                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                            // Act
+
+                            try
+                            {
+                                // call method you'd like to test with values provided by the player
+                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                            }
+                            catch (PurchaseFailureException)
+                            {
+                                // Some tests expect the target to throw
+                            }
+
+                            player.VerifyAll();
+                        }
+                    }
+                }
+            }
+            catch (EchoVerificationException)
+            {
+                // Assert
+
+                Assert.True(true, "At least one recording must catch fail validation");
+                return;
+            }
+
+            Assert.False(true, "Should be unreachable since at least one recording should fail validation");
+        }
     }
 }
