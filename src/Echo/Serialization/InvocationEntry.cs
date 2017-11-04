@@ -20,20 +20,17 @@ namespace Echo.Serialization
 
         public string Target { get; set; }
 
-        public DateTimeOffset Timestamp { get; set; }
-
         // TODO test for parameterless constructor
         public InvocationEntry()
         {
         }
 
-        public InvocationEntry(Type targetType, MethodInfo methodInfo, object[] arguments, InvocationResult invocationResult, DateTimeOffset timestamp)
+        public InvocationEntry(Type targetType, MethodInfo methodInfo, object[] arguments, InvocationResult invocationResult)
         {
             Arguments = arguments;
             InvocationResult = invocationResult;
             Method = methodInfo.Name;
             TargetType = targetType;
-            Timestamp = timestamp;
         }
 
         #region Internal
