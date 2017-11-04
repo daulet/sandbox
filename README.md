@@ -67,3 +67,7 @@ Restricting call to Charge with cartman, 100
 See [RestrictionSample](/sample/RestrictionSample) for the full example.
 
 A common use case for this feature is testing your state changing logic. Imagine that you'd like to update a subset of records in storage. If you mark write operations as restricted, while using real (production) storage adapter, you'd be able to dry run, in other words test, your implementation and confirm, for example, number of records that will be updated. The beauty of this approach is that you don't have to modify your code to enable test functionality, and when the time comes to run the script for real, simply inject the full (not restricted) implementation of your storage adapter.
+
+## License
+
+[MIT](./LICENSE.md)
