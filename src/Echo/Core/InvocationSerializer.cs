@@ -18,7 +18,7 @@ namespace Echo.Core
         public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
             where TTarget : class
         {
-            var invocationRecord = new InvocationEntry(typeof(TTarget), methodInfo, arguments, invocationResult, DateTimeOffset.UtcNow);
+            var invocationRecord = new InvocationEntry(typeof(TTarget), methodInfo, arguments, invocationResult);
             var serializedRecord = _serializer.Serialize(invocationRecord);
             _echoWriter.WriteLine(serializedRecord);
         }

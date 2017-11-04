@@ -9,8 +9,7 @@ namespace Echo.IntegrationTests
 {
     public class RecordingTests
     {
-        //[Fact]
-        // TODO disabled for now - will fail deterministically due to differences in timestamp
+        [Fact]
         public void Purchase_RecordOutput1_MatchesEmbeddedResource()
         {
             var echoFileName = "Echo.IntegrationTests.Echoes.output1.echo";
@@ -62,11 +61,11 @@ namespace Echo.IntegrationTests
                     Customer = new User()
                     {
                         FullName = "John Smith",
-                        Identifier = Guid.NewGuid(),
+                        Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
                     },
                     Payment = new CreditCardPaymentInstrument()
                     {
-                        CardExpirationDate = DateTime.UtcNow.AddYears(1),
+                        CardExpirationDate = DateTime.MaxValue,
                         CardNumber = long.MaxValue,
                         CardOwner = "John Smith SR",
                         CardProvider = CreditCardProvider.Visa,
@@ -92,7 +91,6 @@ namespace Echo.IntegrationTests
                 }
             }
 
-            // TODO compare all but timestamps
             Assert.Equal(expectedEcho, actualEcho);
         }
     }
