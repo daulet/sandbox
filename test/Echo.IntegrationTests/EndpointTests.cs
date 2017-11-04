@@ -1,7 +1,7 @@
-﻿using Echo.IntegrationTests.Source;
-using Echo.UnitTesting;
+﻿using Echo.UnitTesting;
 using System.IO;
 using System.Reflection;
+using Echo.IntegrationTests.Subject;
 using Xunit;
 
 namespace Echo.IntegrationTests

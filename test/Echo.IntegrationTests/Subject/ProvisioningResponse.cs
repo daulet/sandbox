@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Echo.IntegrationTests.Source
+namespace Echo.IntegrationTests.Subject
 {
     public class ProvisioningResponse
     {

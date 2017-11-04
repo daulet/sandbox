@@ -1,11 +1,11 @@
-﻿namespace Echo.IntegrationTests.Source
+﻿namespace Echo.IntegrationTests.Subject
 {
-    internal class Endpoint_ChargesExtra : IEndpoint
+    internal class Endpoint : IEndpoint
     {
         private readonly IBilling _billing;
         private readonly IProvider _provider;
 
-        public Endpoint_ChargesExtra(IBilling billing, IProvider provider)
+        public Endpoint(IBilling billing, IProvider provider)
         {
             _billing = billing;
             _provider = provider;
@@ -19,7 +19,7 @@
             });
             var paymentResponse = _billing.Charge(new PaymentRequest()
             {
-                Amount = quoteResponse.Price + 1,
+                Amount = quoteResponse.Price,
                 Instrument = request.Payment,
                 Payee = request.Customer,
             });
