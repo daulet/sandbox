@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}"
 EndProject
@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "sample\Demo\Demo.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.UnitTests", "sample\Demo.UnitTests\Demo.UnitTests.csproj", "{0ACF643D-3104-4ED3-9337-12CF2186E147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstantReplay", "sample\InstantReplay\InstantReplay.csproj", "{CFEE91F1-FB29-4433-943F-CF109C7B37B1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordToFile", "sample\RecordToFile\RecordToFile.csproj", "{1710C9BD-CF77-4D2A-A22D-C35598AA0086}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Echo.IntegrationTests", "test\Echo.IntegrationTests\Echo.IntegrationTests.csproj", "{8E21E7EE-ABDA-4229-ACF2-DCD263763201}"
@@ -25,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Echo.UnitTests", "test\Echo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppVeyor", "test\AppVeyor\AppVeyor.csproj", "{E604BED5-B720-4669-BC9B-338239928167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestrictionSample", "sample\RestrictionSample\RestrictionSample.csproj", "{AE3CBBCB-4A93-4F90-948D-AF270C209F95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestrictionSample", "sample\RestrictionSample\RestrictionSample.csproj", "{AE3CBBCB-4A93-4F90-948D-AF270C209F95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +43,6 @@ Global
 		{0ACF643D-3104-4ED3-9337-12CF2186E147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ACF643D-3104-4ED3-9337-12CF2186E147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ACF643D-3104-4ED3-9337-12CF2186E147}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFEE91F1-FB29-4433-943F-CF109C7B37B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFEE91F1-FB29-4433-943F-CF109C7B37B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFEE91F1-FB29-4433-943F-CF109C7B37B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFEE91F1-FB29-4433-943F-CF109C7B37B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1710C9BD-CF77-4D2A-A22D-C35598AA0086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1710C9BD-CF77-4D2A-A22D-C35598AA0086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1710C9BD-CF77-4D2A-A22D-C35598AA0086}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,7 +71,6 @@ Global
 		{8E46FE3B-5954-41E1-8D02-FE910C00327D} = {E5541415-2342-4C84-8A5C-6BA820A9EC0A}
 		{421BCB80-308C-4C82-BEB0-EB9FDD4B5519} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
 		{0ACF643D-3104-4ED3-9337-12CF2186E147} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
-		{CFEE91F1-FB29-4433-943F-CF109C7B37B1} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
 		{1710C9BD-CF77-4D2A-A22D-C35598AA0086} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
 		{8E21E7EE-ABDA-4229-ACF2-DCD263763201} = {E7BC54F2-811C-474F-BA55-A13623C079E2}
 		{01DB051C-28CC-4DE2-99C6-2E48E0E2F772} = {E7BC54F2-811C-474F-BA55-A13623C079E2}
