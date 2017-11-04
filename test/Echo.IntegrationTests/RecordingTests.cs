@@ -79,7 +79,8 @@ namespace Echo.IntegrationTests
             string expectedEcho;
             using (var expectedStreamReader = new StreamReader(echoFileName))
             {
-                expectedEcho = expectedStreamReader.ReadToEnd();
+                expectedEcho = expectedStreamReader.ReadToEnd()
+                    .Replace(Environment.NewLine, "\n");
             }
 
             string actualEcho;
@@ -87,7 +88,8 @@ namespace Echo.IntegrationTests
             {
                 using (var actualStreamReader = new StreamReader(resourceStream))
                 {
-                    actualEcho = actualStreamReader.ReadToEnd();
+                    actualEcho = actualStreamReader.ReadToEnd()
+                        .Replace(Environment.NewLine, "\n");
                 }
             }
 
