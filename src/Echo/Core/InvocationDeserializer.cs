@@ -1,5 +1,6 @@
 ﻿using Echo.Serialization;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Script.Serialization;
 
@@ -10,11 +11,11 @@ namespace Echo.Core
         // TODO share serializer instance
         // TODO tried replacing with Json.NET implementation - doesn't go well with value types - assumes Int64, and fails to cast to Int32
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
-        private readonly IEchoReader _echoReader;
+        private readonly TextReader _reader;
 
-        internal InvocationDeserializer(IEchoReader echoReader)
+        internal InvocationDeserializer(TextReader reader)
         {
-            _echoReader = echoReader;
+            _reader = reader;
         }
 
         public object[] FindEntryArguments()
@@ -39,7 +40,7 @@ namespace Echo.Core
                 {
                     var serializedEchoes = new List<string>();
                     string echo;
-                    while ((echo = _echoReader.ReadLine()) != null)
+                    while ((echo = _reader.ReadLine()) != null)
                     {
                         serializedEchoes.Add(echo);
                     }

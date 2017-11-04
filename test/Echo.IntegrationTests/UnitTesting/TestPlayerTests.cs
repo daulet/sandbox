@@ -16,26 +16,25 @@ namespace Echo.IntegrationTests.UnitTesting
             {
                 using (var streamReader =new StreamReader(stream))
                 {
-                    // Arrange
+                    using (var player = new TestPlayer(streamReader))
+                    {
+                        // Arrange
 
-                    // setup an echo player
-                    var reader = new EchoReader(streamReader);
-                    var player = new TestPlayer(reader);
+                        // obtain replayable instances from the player
+                        var billing = player.GetReplayingTarget<IBilling>();
+                        var provider = player.GetReplayingTarget<IProvider>();
+                        var endpointUnderTest = new Endpoint(billing, provider);
+                        var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
 
-                    // obtain replayable instances from the player
-                    var billing = player.GetReplayingTarget<IBilling>();
-                    var provider = player.GetReplayingTarget<IProvider>();
-                    var endpointUnderTest = new Endpoint(billing, provider);
-                    var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+                        // Act
 
-                    // Act
+                        var testEntry = player.GetTestEntry();
+                        testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
 
-                    var testEntry = player.GetTestEntry();
-                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                        // Assert
 
-                    // Assert
-
-                    player.VerifyAll();
+                        player.VerifyAll();
+                    }
                 }
             }
         }
@@ -49,27 +48,26 @@ namespace Echo.IntegrationTests.UnitTesting
             {
                 using (var streamReader = new StreamReader(stream))
                 {
-                    // Arrange
+                    using (var player = new TestPlayer(streamReader))
+                    {
+                        // Arrange
 
-                    // setup an echo player
-                    var reader = new EchoReader(streamReader);
-                    var player = new TestPlayer(reader);
+                        // obtain replayable instances from the player
+                        var billing = player.GetReplayingTarget<IBilling>();
+                        var provider = player.GetReplayingTarget<IProvider>();
+                        var endpointUnderTest = new Endpoint(billing, provider);
+                        var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
 
-                    // obtain replayable instances from the player
-                    var billing = player.GetReplayingTarget<IBilling>();
-                    var provider = player.GetReplayingTarget<IProvider>();
-                    var endpointUnderTest = new Endpoint(billing, provider);
-                    var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+                        // Act
 
-                    // Act
+                        var testEntry = player.GetTestEntry();
+                        Assert.Throws<PurchaseFailureException>(() =>
+                            testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>()));
 
-                    var testEntry = player.GetTestEntry();
-                    Assert.Throws<PurchaseFailureException>(() =>
-                        testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>()));
+                        // Assert
 
-                    // Assert
-
-                    player.VerifyAll();
+                        player.VerifyAll();
+                    }
                 }
             }
         }
@@ -92,38 +90,37 @@ namespace Echo.IntegrationTests.UnitTesting
                     {
                         using (var streamReader = new StreamReader(resourceStream))
                         {
-                            // Arrange
-
-                            // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
-
-                            // obtain external dependencies from the player
-                            var billing = player.GetReplayingTarget<IBilling>();
-                            var provider = player.GetReplayingTarget<IProvider>();
-                            var testEntry = player.GetTestEntry();
-
-                            // this is the the instance that is getting tested
-                            // we inject external dependencies provided by the player
-                            var endpointUnderTest = new Endpoint_ChargesExtra(billing, provider);
-
-                            // this is an instance wrapped around test subject
-                            // so we can intercept and verify return value of Purchase() call
-                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
-
-                            // Act
-
-                            try
+                            using (var player = new TestPlayer(streamReader))
                             {
-                                // call method you'd like to test with values provided by the player
-                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
-                            }
-                            catch (PurchaseFailureException)
-                            {
-                                // Some tests expect the target to throw
-                            }
+                                // Arrange
 
-                            player.VerifyAll();
+                                // obtain external dependencies from the player
+                                var billing = player.GetReplayingTarget<IBilling>();
+                                var provider = player.GetReplayingTarget<IProvider>();
+                                var testEntry = player.GetTestEntry();
+
+                                // this is the the instance that is getting tested
+                                // we inject external dependencies provided by the player
+                                var endpointUnderTest = new Endpoint_ChargesExtra(billing, provider);
+
+                                // this is an instance wrapped around test subject
+                                // so we can intercept and verify return value of Purchase() call
+                                var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                                // Act
+
+                                try
+                                {
+                                    // call method you'd like to test with values provided by the player
+                                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                                }
+                                catch (PurchaseFailureException)
+                                {
+                                    // Some tests expect the target to throw
+                                }
+
+                                player.VerifyAll();
+                            }
                         }
                     }
                 }
@@ -157,38 +154,37 @@ namespace Echo.IntegrationTests.UnitTesting
                     {
                         using (var streamReader = new StreamReader(resourceStream))
                         {
-                            // Arrange
-
-                            // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
-
-                            // obtain external dependencies from the player
-                            var billing = player.GetReplayingTarget<IBilling>();
-                            var provider = player.GetReplayingTarget<IProvider>();
-                            var testEntry = player.GetTestEntry();
-
-                            // this is the the instance that is getting tested
-                            // we inject external dependencies provided by the player
-                            var endpointUnderTest = new Endpoint_DuplicateCharge(billing, provider);
-
-                            // this is an instance wrapped around test subject
-                            // so we can intercept and verify return value of Purchase() call
-                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
-
-                            // Act
-
-                            try
+                            using (var player = new TestPlayer(streamReader))
                             {
-                                // call method you'd like to test with values provided by the player
-                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
-                            }
-                            catch (PurchaseFailureException)
-                            {
-                                // Some tests expect the target to throw
-                            }
+                                // Arrange
 
-                            player.VerifyAll();
+                                // obtain external dependencies from the player
+                                var billing = player.GetReplayingTarget<IBilling>();
+                                var provider = player.GetReplayingTarget<IProvider>();
+                                var testEntry = player.GetTestEntry();
+
+                                // this is the the instance that is getting tested
+                                // we inject external dependencies provided by the player
+                                var endpointUnderTest = new Endpoint_DuplicateCharge(billing, provider);
+
+                                // this is an instance wrapped around test subject
+                                // so we can intercept and verify return value of Purchase() call
+                                var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                                // Act
+
+                                try
+                                {
+                                    // call method you'd like to test with values provided by the player
+                                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                                }
+                                catch (PurchaseFailureException)
+                                {
+                                    // Some tests expect the target to throw
+                                }
+
+                                player.VerifyAll();
+                            }
                         }
                     }
                 }
@@ -222,38 +218,37 @@ namespace Echo.IntegrationTests.UnitTesting
                     {
                         using (var streamReader = new StreamReader(resourceStream))
                         {
-                            // Arrange
-
-                            // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
-
-                            // obtain external dependencies from the player
-                            var billing = player.GetReplayingTarget<IBilling>();
-                            var provider = player.GetReplayingTarget<IProvider>();
-                            var testEntry = player.GetTestEntry();
-
-                            // this is the the instance that is getting tested
-                            // we inject external dependencies provided by the player
-                            var endpointUnderTest = new Endpoint_NoProvision(billing, provider);
-
-                            // this is an instance wrapped around test subject
-                            // so we can intercept and verify return value of Purchase() call
-                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
-
-                            // Act
-
-                            try
+                            using (var player = new TestPlayer(streamReader))
                             {
-                                // call method you'd like to test with values provided by the player
-                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
-                            }
-                            catch (PurchaseFailureException)
-                            {
-                                // Some tests expect the target to throw
-                            }
+                                // Arrange
 
-                            player.VerifyAll();
+                                // obtain external dependencies from the player
+                                var billing = player.GetReplayingTarget<IBilling>();
+                                var provider = player.GetReplayingTarget<IProvider>();
+                                var testEntry = player.GetTestEntry();
+
+                                // this is the the instance that is getting tested
+                                // we inject external dependencies provided by the player
+                                var endpointUnderTest = new Endpoint_NoProvision(billing, provider);
+
+                                // this is an instance wrapped around test subject
+                                // so we can intercept and verify return value of Purchase() call
+                                var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                                // Act
+
+                                try
+                                {
+                                    // call method you'd like to test with values provided by the player
+                                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                                }
+                                catch (PurchaseFailureException)
+                                {
+                                    // Some tests expect the target to throw
+                                }
+
+                                player.VerifyAll();
+                            }
                         }
                     }
                 }
@@ -287,38 +282,37 @@ namespace Echo.IntegrationTests.UnitTesting
                     {
                         using (var streamReader = new StreamReader(resourceStream))
                         {
-                            // Arrange
-
-                            // setup an echo player
-                            var reader = new EchoReader(streamReader);
-                            var player = new TestPlayer(reader);
-
-                            // obtain external dependencies from the player
-                            var billing = player.GetReplayingTarget<IBilling>();
-                            var provider = player.GetReplayingTarget<IProvider>();
-                            var testEntry = player.GetTestEntry();
-
-                            // this is the the instance that is getting tested
-                            // we inject external dependencies provided by the player
-                            var endpointUnderTest = new Endpoint_NoRefund(billing, provider);
-
-                            // this is an instance wrapped around test subject
-                            // so we can intercept and verify return value of Purchase() call
-                            var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
-
-                            // Act
-
-                            try
+                            using (var player = new TestPlayer(streamReader))
                             {
-                                // call method you'd like to test with values provided by the player
-                                testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
-                            }
-                            catch (PurchaseFailureException)
-                            {
-                                // Some tests expect the target to throw
-                            }
+                                // Arrange
 
-                            player.VerifyAll();
+                                // obtain external dependencies from the player
+                                var billing = player.GetReplayingTarget<IBilling>();
+                                var provider = player.GetReplayingTarget<IProvider>();
+                                var testEntry = player.GetTestEntry();
+
+                                // this is the the instance that is getting tested
+                                // we inject external dependencies provided by the player
+                                var endpointUnderTest = new Endpoint_NoRefund(billing, provider);
+
+                                // this is an instance wrapped around test subject
+                                // so we can intercept and verify return value of Purchase() call
+                                var testEntryTarget = player.GetTestEntryTarget<IEndpoint>(endpointUnderTest);
+
+                                // Act
+
+                                try
+                                {
+                                    // call method you'd like to test with values provided by the player
+                                    testEntryTarget.Purchase(testEntry.GetValue<PurchaseRequest>());
+                                }
+                                catch (PurchaseFailureException)
+                                {
+                                    // Some tests expect the target to throw
+                                }
+
+                                player.VerifyAll();
+                            }
                         }
                     }
                 }

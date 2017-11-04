@@ -1,4 +1,5 @@
-﻿using Echo.Logging;
+﻿using Castle.DynamicProxy;
+using Echo.Logging;
 
 namespace Echo.Core
 {
@@ -8,5 +9,7 @@ namespace Echo.Core
             new ReleaseLogger();
 
         public static IInvocationListener LoggingListener { get; } = new LoggingListener(Logger);
+
+        public static ProxyGenerator ProxyGenerator { get; } = new ProxyGenerator();
     }
 }

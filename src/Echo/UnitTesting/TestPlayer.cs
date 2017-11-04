@@ -1,29 +1,30 @@
-﻿using Castle.DynamicProxy;
+﻿using System;
+using System.IO;
 using Echo.Core;
 
 namespace Echo.UnitTesting
 {
-    public class TestPlayer
+    public class TestPlayer : IDisposable
     {
-        private readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly IInvocationReader _invocationReader;
+        private TextReader _textReader;
         private readonly ValidatingListener _validatingListener;
 
-        public TestPlayer(IEchoReader echoReader)
+        public TestPlayer(TextReader textReader)
         {
-            _invocationReader = new InvocationDeserializer(echoReader);
+            _invocationReader = new InvocationDeserializer(textReader);
+            _textReader = textReader;
             _validatingListener = new ValidatingListener(_invocationReader);
         }
 
         public TTarget GetReplayingTarget<TTarget>()
             where TTarget : class
         {
-            var replayingInterceptor = new ReplayingInterceptor<TTarget>(_invocationReader);
-            var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
-            return _generator.CreateInterfaceProxyWithoutTarget<TTarget>(
-                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                validatingInterceptor,
-                replayingInterceptor);
+            return InstancePool.ProxyGenerator
+                .CreateInterfaceProxyWithoutTarget<TTarget>(
+                    new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
+                    new ListeningInterceptor<TTarget>(_validatingListener),
+                    new ReplayingInterceptor<TTarget>(_invocationReader));
         }
 
         public TestEntry GetTestEntry()
@@ -35,10 +36,10 @@ namespace Echo.UnitTesting
         public TTarget GetTestEntryTarget<TTarget>(TTarget target)
             where TTarget : class
         {
-            var validatingInterceptor = new ListeningInterceptor<TTarget>(_validatingListener);
-            return _generator.CreateInterfaceProxyWithTarget<TTarget>(target,
-                new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
-                validatingInterceptor);
+            return InstancePool.ProxyGenerator
+                .CreateInterfaceProxyWithTarget<TTarget>(target,
+                    new ListeningInterceptor<TTarget>(InstancePool.LoggingListener),
+                    new ListeningInterceptor<TTarget>(_validatingListener));
         }
 
         #region Validation
@@ -73,6 +74,25 @@ namespace Echo.UnitTesting
         public void VerifyInvocations()
         {
             // TODO verify all targets were hit
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _textReader?.Dispose();
+                _textReader = null;
+            }
         }
 
         #endregion

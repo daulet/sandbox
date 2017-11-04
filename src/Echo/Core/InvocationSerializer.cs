@@ -1,5 +1,5 @@
 ﻿using Echo.Serialization;
-using System;
+using System.IO;
 using System.Reflection;
 using System.Web.Script.Serialization;
 
@@ -8,11 +8,11 @@ namespace Echo.Core
     internal class InvocationSerializer : IInvocationListener
     {
         private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
-        private readonly IEchoWriter _echoWriter;
+        private readonly TextWriter _writer;
 
-        internal InvocationSerializer(IEchoWriter echoWriter)
+        internal InvocationSerializer(TextWriter writer)
         {
-            _echoWriter = echoWriter;
+            _writer = writer;
         }
 
         public void WriteInvocation<TTarget>(MethodInfo methodInfo, InvocationResult invocationResult, object[] arguments)
@@ -20,7 +20,7 @@ namespace Echo.Core
         {
             var invocationRecord = new InvocationEntry(typeof(TTarget), methodInfo, arguments, invocationResult);
             var serializedRecord = _serializer.Serialize(invocationRecord);
-            _echoWriter.WriteLine(serializedRecord);
+            _writer.WriteLine(serializedRecord);
         }
     }
 }

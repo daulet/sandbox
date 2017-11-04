@@ -42,36 +42,35 @@ namespace Echo.IntegrationTests.Recording
                 });
 
             // write all echoes to a file
-            using (var output = new StreamWriter(echoFileName))
+            using (var streamWriter = new StreamWriter(echoFileName))
             {
                 // setup recording
-
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
-
-                var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
-                var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
-                var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
-                var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
-
-                // Act
-
-                recordedEndpoint.Purchase(new PurchaseRequest()
+                using (var recorder = new Recorder(streamWriter))
                 {
-                    Customer = new User()
+                    var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
+                    var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
+                    var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
+                    var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
+
+                    // Act
+
+                    recordedEndpoint.Purchase(new PurchaseRequest()
                     {
-                        FullName = "John Smith",
-                        Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
-                    },
-                    Payment = new CreditCardPaymentInstrument()
-                    {
-                        CardExpirationDate = DateTime.MaxValue,
-                        CardNumber = long.MaxValue,
-                        CardOwner = "John Smith SR",
-                        CardProvider = CreditCardProvider.Visa,
-                    },
-                    ServiceType = ServiceType.Entertainment,
-                });
+                        Customer = new User()
+                        {
+                            FullName = "John Smith",
+                            Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
+                        },
+                        Payment = new CreditCardPaymentInstrument()
+                        {
+                            CardExpirationDate = DateTime.MaxValue,
+                            CardNumber = long.MaxValue,
+                            CardOwner = "John Smith SR",
+                            CardProvider = CreditCardProvider.Visa,
+                        },
+                        ServiceType = ServiceType.Entertainment,
+                    });
+                }
             }
 
             // Assert
@@ -106,42 +105,41 @@ namespace Echo.IntegrationTests.Recording
             var providerMock = new Mock<IProvider>(MockBehavior.Strict);
 
             // write all echoes to a file
-            using (var output = new StreamWriter(echoFileName))
+            using (var streamWriter = new StreamWriter(echoFileName))
             {
                 // setup recording
-
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
-
-                var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
-                var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
-                var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
-                var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
-
-                // Act
-
-                try
+                using (var recorder = new Recorder(streamWriter))
                 {
-                    recordedEndpoint.Purchase(new PurchaseRequest()
+                    var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
+                    var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
+                    var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
+                    var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
+
+                    // Act
+
+                    try
                     {
-                        Customer = new User()
+                        recordedEndpoint.Purchase(new PurchaseRequest()
                         {
-                            FullName = "John Smith",
-                            Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
-                        },
-                        Payment = new CreditCardPaymentInstrument()
-                        {
-                            CardExpirationDate = DateTime.MaxValue,
-                            CardNumber = long.MaxValue,
-                            CardOwner = "John Smith SR",
-                            CardProvider = CreditCardProvider.Visa,
-                        },
-                        ServiceType = ServiceType.Entertainment,
-                    });
-                }
-                catch (PurchaseFailureException)
-                {
-                    // the Purchase is expected to fail since IBilling failed
+                            Customer = new User()
+                            {
+                                FullName = "John Smith",
+                                Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
+                            },
+                            Payment = new CreditCardPaymentInstrument()
+                            {
+                                CardExpirationDate = DateTime.MaxValue,
+                                CardNumber = long.MaxValue,
+                                CardOwner = "John Smith SR",
+                                CardProvider = CreditCardProvider.Visa,
+                            },
+                            ServiceType = ServiceType.Entertainment,
+                        });
+                    }
+                    catch (PurchaseFailureException)
+                    {
+                        // the Purchase is expected to fail since IBilling failed
+                    }
                 }
             }
 
@@ -180,42 +178,41 @@ namespace Echo.IntegrationTests.Recording
                 .Throws(new ProvisioningFailureException());
 
             // write all echoes to a file
-            using (var output = new StreamWriter(echoFileName))
+            using (var streamWriter = new StreamWriter(echoFileName))
             {
                 // setup recording
-
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
-
-                var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
-                var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
-                var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
-                var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
-
-                // Act
-
-                try
+                using (var recorder = new Recorder(streamWriter))
                 {
-                    recordedEndpoint.Purchase(new PurchaseRequest()
+                    var recordedBilling = recorder.GetRecordingTarget<IBilling>(billingMock.Object);
+                    var recordedProvider = recorder.GetRecordingTarget<IProvider>(providerMock.Object);
+                    var actualEndpoint = new Endpoint(recordedBilling, recordedProvider);
+                    var recordedEndpoint = recorder.GetRecordingTarget<IEndpoint>(actualEndpoint);
+
+                    // Act
+
+                    try
                     {
-                        Customer = new User()
+                        recordedEndpoint.Purchase(new PurchaseRequest()
                         {
-                            FullName = "John Smith",
-                            Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
-                        },
-                        Payment = new CreditCardPaymentInstrument()
-                        {
-                            CardExpirationDate = DateTime.MaxValue,
-                            CardNumber = long.MaxValue,
-                            CardOwner = "John Smith SR",
-                            CardProvider = CreditCardProvider.Visa,
-                        },
-                        ServiceType = ServiceType.Entertainment,
-                    });
-                }
-                catch (PurchaseFailureException)
-                {
-                    // the Purchase is expected to fail since IProvider failed
+                            Customer = new User()
+                            {
+                                FullName = "John Smith",
+                                Identifier = new Guid("43fe7aaa-7be9-46e0-87e7-63c9a6f3a2ad"),
+                            },
+                            Payment = new CreditCardPaymentInstrument()
+                            {
+                                CardExpirationDate = DateTime.MaxValue,
+                                CardNumber = long.MaxValue,
+                                CardOwner = "John Smith SR",
+                                CardProvider = CreditCardProvider.Visa,
+                            },
+                            ServiceType = ServiceType.Entertainment,
+                        });
+                    }
+                    catch (PurchaseFailureException)
+                    {
+                        // the Purchase is expected to fail since IProvider failed
+                    }
                 }
             }
 
