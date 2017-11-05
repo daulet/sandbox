@@ -34,11 +34,10 @@ Version 0.2
     <PackageReference Include="Microsoft.CodeAnalysis" Version="1.3.2">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <Compile Remove="Properties/AssemblyInfo.cs" />
