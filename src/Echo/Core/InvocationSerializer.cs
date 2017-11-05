@@ -17,7 +17,7 @@ namespace Echo.Core
             {
                 Converters = { new PrimitiveJsonConverter() },
                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = TypeNameHandling.Auto
             };
             _writer = writer;
         }

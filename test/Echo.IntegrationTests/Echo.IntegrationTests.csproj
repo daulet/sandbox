@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Recording\*.echo" />
@@ -12,6 +12,7 @@
     <PackageReference Include="Moq" Version="4.7.142" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Echo\Echo.csproj" />

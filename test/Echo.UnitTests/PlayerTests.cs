@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Echo.UnitTests.Fakes;
 using Xunit;
 
@@ -26,7 +27,7 @@ namespace Echo.UnitTests
             // Arrange
             using (var recorder = new Player(invocationReader: null))
             {
-                Assert.False(typeof(IInternalFakeTarget).IsPublic, "Interface can't be public for test to be valid");
+                Assert.False(typeof(IInternalFakeTarget).GetTypeInfo().IsPublic, "Interface can't be public for test to be valid");
 
                 // Assert
                 Assert.Throws<NotSupportedException>(() =>

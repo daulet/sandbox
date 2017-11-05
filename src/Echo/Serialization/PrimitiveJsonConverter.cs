@@ -22,23 +22,15 @@ namespace Echo.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            switch (serializer.TypeNameHandling)
-            {
-                case TypeNameHandling.All:
-                    writer.WriteStartObject();
+            writer.WriteStartObject();
 
-                    writer.WritePropertyName("$type", false);
-                    writer.WriteValue(value.GetType().FullName);
-                    
-                    writer.WritePropertyName("$value", false);
-                    writer.WriteValue(value);
+            writer.WritePropertyName("$type", false);
+            writer.WriteValue(value.GetType().FullName);
 
-                    writer.WriteEndObject();
-                    break;
-                default:
-                    writer.WriteValue(value);
-                    break;
-            }
+            writer.WritePropertyName("$value", false);
+            writer.WriteValue(value);
+
+            writer.WriteEndObject();
         }
     }
 }
