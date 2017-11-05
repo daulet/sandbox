@@ -1,21 +1,25 @@
 ﻿using Echo.Serialization;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Script.Serialization;
+using System.Runtime.Serialization.Formatters;
 
 namespace Echo.Core
 {
     internal class InvocationDeserializer : IInvocationReader
     {
-        // TODO share serializer instance
-        // TODO tried replacing with Json.NET implementation - doesn't go well with value types - assumes Int64, and fails to cast to Int32
-        private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
         private readonly TextReader _reader;
+        private readonly JsonSerializerSettings _serializerSettings;
 
         internal InvocationDeserializer(TextReader reader)
         {
             _reader = reader;
+            _serializerSettings = new JsonSerializerSettings()
+            {
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                TypeNameHandling = TypeNameHandling.Auto
+            };
         }
 
         public object[] FindEntryArguments()
@@ -46,7 +50,8 @@ namespace Echo.Core
                     }
                     // TODO should fail more graciously if deserialization fails
                     _echoes = new List<InvocationEntry>(
-                        serializedEchoes.Select(x => _serializer.Deserialize<InvocationEntry>(x)));
+                        serializedEchoes.Select(x =>
+                            JsonConvert.DeserializeObject<InvocationEntry>(x, _serializerSettings)));
                 }
                 return _echoes;
             }

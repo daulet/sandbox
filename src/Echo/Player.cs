@@ -1,6 +1,7 @@
 ﻿using Echo.Core;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Echo
 {
@@ -26,7 +27,7 @@ namespace Echo
         {
             // only public interface replaying is supported
             var targetType = typeof(TTarget);
-            if (!targetType.IsInterface || !targetType.IsPublic)
+            if (!targetType.GetTypeInfo().IsInterface || !targetType.GetTypeInfo().IsPublic)
             {
                 throw new NotSupportedException();
             }

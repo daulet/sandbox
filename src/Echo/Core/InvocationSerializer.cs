@@ -1,17 +1,24 @@
 ﻿using Echo.Serialization;
+using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
-using System.Web.Script.Serialization;
+using System.Runtime.Serialization.Formatters;
 
 namespace Echo.Core
 {
     internal class InvocationSerializer : IInvocationListener
     {
-        private readonly JavaScriptSerializer _serializer = new JavaScriptSerializer(new SimpleTypeResolver());
+        private readonly JsonSerializerSettings _serializerSettings;
         private readonly TextWriter _writer;
 
         internal InvocationSerializer(TextWriter writer)
         {
+            _serializerSettings = new JsonSerializerSettings()
+            {
+                Converters = { new PrimitiveJsonConverter() },
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                TypeNameHandling = TypeNameHandling.All
+            };
             _writer = writer;
         }
 
@@ -19,7 +26,7 @@ namespace Echo.Core
             where TTarget : class
         {
             var invocationRecord = new InvocationEntry(typeof(TTarget), methodInfo, arguments, invocationResult);
-            var serializedRecord = _serializer.Serialize(invocationRecord);
+            var serializedRecord = JsonConvert.SerializeObject(invocationRecord, _serializerSettings);
             _writer.WriteLine(serializedRecord);
         }
     }

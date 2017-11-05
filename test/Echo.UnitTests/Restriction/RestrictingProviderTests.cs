@@ -122,7 +122,7 @@ namespace Echo.UnitTests.Restriction
             var returnValue = restrictedTarget.RestrictedMethodWithObjectReturnValue<object>();
 
             // Assert
-            Assert.Equal(null, returnValue);
+            Assert.Null(returnValue);
         }
 
         [Fact]
@@ -203,7 +203,7 @@ namespace Echo.UnitTests.Restriction
             var returnValue = await restrictedTarget.RestrictedMethodWithTaskWithValueReturnValue<string>();
 
             // Assert
-            Assert.Equal(null, returnValue);
+            Assert.Null(returnValue);
         }
     }
 }

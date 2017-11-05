@@ -37,12 +37,12 @@ namespace Echo.Utilities
                 return argument == otherArgument;
             }
 
-            if (argument.GetType() != otherArgument.GetType())
+            if (argument.GetType().GetTypeInfo() != otherArgument.GetType().GetTypeInfo())
             {
                 return false;
             }
 
-            if (argument.GetType().IsValueType)
+            if (argument.GetType().GetTypeInfo().IsValueType)
             {
                 return argument.Equals(otherArgument);
             }

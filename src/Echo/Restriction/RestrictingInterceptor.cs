@@ -48,7 +48,7 @@ namespace Echo.Restriction
 
                 if (typeof(Task).IsAssignableFrom(returnType))
                 {
-                    if (returnType.IsGenericType) // Task<TResult>
+                    if (returnType.GetTypeInfo().IsGenericType) // Task<TResult>
                     {
                         invocation.ReturnValue = GetType()
                             .GetMethod("GetDefaultCompletedTask",
@@ -61,7 +61,7 @@ namespace Echo.Restriction
                         invocation.ReturnValue = Task.FromResult(0);
                     }
                 }
-                else if (returnType.IsValueType) // scalar
+                else if (returnType.GetTypeInfo().IsValueType) // scalar
                 {
                     invocation.ReturnValue = Activator.CreateInstance(returnType);
                 }

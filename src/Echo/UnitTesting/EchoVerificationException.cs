@@ -3,15 +3,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Web.Script.Serialization;
 
 namespace Echo.UnitTesting
 {
     // TODO should be two types of exceptions: external dependencies failed, or entry point result is different
-    [Serializable]
+    [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable")]
     public class EchoVerificationException : Exception
     {
         private readonly IList<Invocation> _notMatchedInvocations;
@@ -30,7 +29,6 @@ namespace Echo.UnitTesting
             {
                 if (_message == null)
                 {
-                    var serializer = new JavaScriptSerializer();
                     var stringBuilder = new StringBuilder();
 
                     var notMatchedInvocations = _notMatchedInvocations.ToList();
@@ -53,8 +51,8 @@ namespace Echo.UnitTesting
                                     $"Property: {difference.Path}, Unexpected value: {difference.Value}");
                             }
 
-                            stringBuilder.AppendLine($"Expected: {serializer.Serialize(matchingVisit.Arguments)}; " +
-                                                     $"Actual: {serializer.Serialize(notMatchedInvocation.Arguments)}");
+                            stringBuilder.AppendLine($"Expected: {JsonConvert.SerializeObject(matchingVisit.Arguments)}; " +
+                                                     $"Actual: {JsonConvert.SerializeObject(notMatchedInvocation.Arguments)}");
 
                             notMatchedInvocations.Remove(notMatchedInvocation);
                             notVisitedInvocations.Remove(matchingVisit);
@@ -85,18 +83,6 @@ namespace Echo.UnitTesting
             }
         }
         private string _message;
-
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
-
-            info.AddValue("Message", Message);
-        }
 
         private static string InvocationForLogging(Invocation invocation)
         {

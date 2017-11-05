@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Castle.DynamicProxy;
 using Echo.Core;
 using Echo.Logging;
@@ -20,7 +21,7 @@ namespace Echo.Restriction
         {
             // only public interface restricting is supported
             var targetType = typeof(TTarget);
-            if (!targetType.IsInterface || !targetType.IsPublic)
+            if (!targetType.GetTypeInfo().IsInterface || !targetType.GetTypeInfo().IsPublic)
             {
                 throw new NotSupportedException();
             }
