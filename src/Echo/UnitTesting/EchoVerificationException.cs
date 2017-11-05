@@ -3,14 +3,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Echo.UnitTesting
 {
     // TODO should be two types of exceptions: external dependencies failed, or entry point result is different
-    [Serializable]
+    [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable")]
     public class EchoVerificationException : Exception
     {
         private readonly IList<Invocation> _notMatchedInvocations;
@@ -83,18 +83,6 @@ namespace Echo.UnitTesting
             }
         }
         private string _message;
-
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
-
-            info.AddValue("Message", Message);
-        }
 
         private static string InvocationForLogging(Invocation invocation)
         {

@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Echo.Core;
 using System;
+using System.Reflection;
 
 namespace Echo.Caching
 {
@@ -19,7 +20,7 @@ namespace Echo.Caching
         {
             // only public interface restricting is supported
             var targetType = typeof(TTarget);
-            if (!targetType.IsInterface || !targetType.IsPublic)
+            if (!targetType.GetTypeInfo().IsInterface || !targetType.GetTypeInfo().IsPublic)
             {
                 throw new NotSupportedException();
             }

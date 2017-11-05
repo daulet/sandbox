@@ -15,7 +15,7 @@ namespace Echo.Core
         {
             _serializerSettings = new JsonSerializerSettings()
             {
-                Converters = {new PrimitiveJsonConverter()},
+                Converters = { new PrimitiveJsonConverter() },
                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
                 TypeNameHandling = TypeNameHandling.All
             };

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Echo.Serialization
@@ -11,7 +12,7 @@ namespace Echo.Serialization
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType.IsPrimitive;
+            return objectType.GetTypeInfo().IsPrimitive;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
