@@ -125,11 +125,11 @@ namespace Echo.IntegrationTests.UnitTesting
                     }
                 }
             }
-            catch (EchoVerificationException)
+            catch (EchoVerificationException ex)
             {
                 // Assert
 
-                Assert.True(true, "At least one recording must catch fail validation");
+                Assert.True(true, ex.Message);
                 return;
             }
 
@@ -189,11 +189,11 @@ namespace Echo.IntegrationTests.UnitTesting
                     }
                 }
             }
-            catch (EchoVerificationException)
+            catch (EchoVerificationException ex)
             {
                 // Assert
 
-                Assert.True(true, "At least one recording must catch fail validation");
+                Assert.True(true, ex.Message);
                 return;
             }
 
@@ -253,11 +253,11 @@ namespace Echo.IntegrationTests.UnitTesting
                     }
                 }
             }
-            catch (EchoVerificationException)
+            catch (EchoVerificationException ex)
             {
                 // Assert
 
-                Assert.True(true, "At least one recording must catch fail validation");
+                Assert.True(true, ex.Message);
                 return;
             }
 
@@ -317,11 +317,11 @@ namespace Echo.IntegrationTests.UnitTesting
                     }
                 }
             }
-            catch (EchoVerificationException)
+            catch (EchoVerificationException ex)
             {
                 // Assert
 
-                Assert.True(true, "At least one recording must catch fail validation");
+                Assert.True(true, ex.Message);
                 return;
             }
 
