@@ -54,7 +54,7 @@ namespace Echo.Core
 
                     if (isTask)
                     {
-                        invocation.ReturnValue = Task.FromResult(returnValue);
+                        invocation.ReturnValue = Task.FromResult((dynamic)returnValue);
                     }
                     else
                     {

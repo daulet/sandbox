@@ -55,6 +55,7 @@ namespace Echo.UnitTests
                             InvocationResult.Void,
                             typeof(IFakeTarget<object>)), 
                     });
+
             using (var recorder = new Player(readerMock.Object))
             {
                 var targetUnderRecording = recorder.GetReplayingTarget<IFakeTarget<object>>();
@@ -84,6 +85,7 @@ namespace Echo.UnitTests
                             new ExceptionInvocationResult(expectedException),
                             typeof(IFakeTarget<object>)),
                     });
+
             using (var recorder = new Player(readerMock.Object))
             {
                 var targetUnderRecording = recorder.GetReplayingTarget<IFakeTarget<object>>();
@@ -118,6 +120,7 @@ namespace Echo.UnitTests
                             new ValueInvocationResult(expectedResource), 
                             typeof(IFakeTarget<object>)),
                     });
+
             using (var recorder = new Player(readerMock.Object))
             {
                 var targetUnderRecording = recorder.GetReplayingTarget<IFakeTarget<object>>();
@@ -147,6 +150,7 @@ namespace Echo.UnitTests
                             new ValueInvocationResult(3L),
                             typeof(IFakeTarget<int>)),
                     });
+
             using (var recorder = new Player(readerMock.Object))
             {
                 var targetUnderRecording = recorder.GetReplayingTarget<IFakeTarget<int>>();
@@ -176,6 +180,7 @@ namespace Echo.UnitTests
                             new ValueInvocationResult(0.3D),
                             typeof(IFakeTarget<float>)),
                     });
+
             using (var recorder = new Player(readerMock.Object))
             {
                 var targetUnderRecording = recorder.GetReplayingTarget<IFakeTarget<float>>();
@@ -204,6 +209,7 @@ namespace Echo.UnitTests
                             InvocationResult.Void,
                             typeof(IFakeTargetAsync<object>)),
                     });
+
             using (var recorder = new Player(readerMock.Object))
             {
                 var targetUnderRecording = recorder.GetReplayingTarget<IFakeTargetAsync<object>>();
@@ -213,6 +219,131 @@ namespace Echo.UnitTests
 
                 // Assert
                 readerMock.VerifyAll();
+            }
+        }
+
+        [Fact]
+        public async Task GetReplayingTarget_RecordingIsTaskAndThrows_Throw()
+        {
+            // Arrange
+            var expectedException = new FakeTargetException();
+            var readerMock = new Mock<IInvocationReader>();
+            readerMock
+                .Setup(x => x.GetAllInvocations())
+                .Returns(
+                    new[]
+                    {
+                        new Invocation(
+                            new object[0],
+                            "CallRemoteResourceAsync",
+                            new ExceptionInvocationResult(expectedException), 
+                            typeof(IFakeTargetAsync<object>)),
+                    });
+
+            using (var recorder = new Player(readerMock.Object))
+            {
+                var targetUnderRecording = recorder.GetReplayingTarget<IFakeTargetAsync<object>>();
+
+                try
+                {
+                    // Act
+                    await targetUnderRecording.CallRemoteResourceAsync();
+                }
+                catch (FakeTargetException e)
+                {
+                    // Assert
+                    Assert.Equal(expectedException, e);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task GetReplayingTarget_RecordingIsTaskWithResult_ResultIsReturned()
+        {
+            // Arrange
+            var expectedResource = new object();
+            var readerMock = new Mock<IInvocationReader>();
+            readerMock
+                .Setup(x => x.GetAllInvocations())
+                .Returns(
+                    new[]
+                    {
+                        new Invocation(
+                            new object[0],
+                            "GetRemoteResourceAsync",
+                            new ValueInvocationResult(expectedResource), 
+                            typeof(IFakeTargetAsync<object>)),
+                    });
+
+            using (var recorder = new Player(readerMock.Object))
+            {
+                var targetUnderRecording = recorder.GetReplayingTarget<IFakeTargetAsync<object>>();
+
+                // Act
+                var actualResource = await targetUnderRecording.GetRemoteResourceAsync();
+                
+                // Assert
+                Assert.Equal(expectedResource, actualResource);
+            }
+        }
+
+        [Fact]
+        public async Task GetReplayingTarget_RecordingIsTaskWithShortResult_ResultIsReturned()
+        {
+            // Arrange
+            short expectedResource = 5;
+            var readerMock = new Mock<IInvocationReader>();
+            readerMock
+                .Setup(x => x.GetAllInvocations())
+                .Returns(
+                    new[]
+                    {
+                        new Invocation(
+                            new object[0],
+                            "GetRemoteResourceAsync",
+                            new ValueInvocationResult(5L),
+                            typeof(IFakeTargetAsync<short>)),
+                    });
+
+            using (var recorder = new Player(readerMock.Object))
+            {
+                var targetUnderRecording = recorder.GetReplayingTarget<IFakeTargetAsync<short>>();
+
+                // Act
+                var actualResource = await targetUnderRecording.GetRemoteResourceAsync();
+
+                // Assert
+                Assert.Equal(expectedResource, actualResource);
+            }
+        }
+
+        [Fact]
+        public async Task GetReplayingTarget_RecordingIsTaskWithCharResult_ResultIsReturned()
+        {
+            // Arrange
+            var expectedResource = 'D';
+            var readerMock = new Mock<IInvocationReader>();
+            readerMock
+                .Setup(x => x.GetAllInvocations())
+                .Returns(
+                    new[]
+                    {
+                        new Invocation(
+                            new object[0],
+                            "GetRemoteResourceAsync",
+                            new ValueInvocationResult((long)'D'),
+                            typeof(IFakeTargetAsync<char>)),
+                    });
+
+            using (var recorder = new Player(readerMock.Object))
+            {
+                var targetUnderRecording = recorder.GetReplayingTarget<IFakeTargetAsync<char>>();
+
+                // Act
+                var actualResource = await targetUnderRecording.GetRemoteResourceAsync();
+
+                // Assert
+                Assert.Equal(expectedResource, actualResource);
             }
         }
     }
