@@ -13,7 +13,7 @@ foreach ($assembly in $allTests) {
 $args += " -parallel all"
 
 $startInfo = New-Object System.Diagnostics.ProcessStartInfo
-$startInfo.FileName = "$rootPath\packages\xunit.runner.console\2.2.0\tools\xunit.console.exe"
+$startInfo.FileName = "$rootPath\packages\xunit.runner.console\2.3.1\tools\xunit.console.exe"
 $startInfo.Arguments = $args
 $startInfo.UseShellExecute = $false
 $startInfo.WorkingDirectory = Get-Location
