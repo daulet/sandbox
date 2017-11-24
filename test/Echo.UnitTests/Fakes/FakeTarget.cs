@@ -1,6 +1,6 @@
 ﻿namespace Echo.UnitTests.Fakes
 {
-    internal class FakeTarget : IFakeTarget
+    internal class FakeTarget : IFakeTarget<object>
     {
         public void CallRemoteResource()
         {

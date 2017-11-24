@@ -2,7 +2,7 @@
 
 namespace Echo.Core
 {
-    internal interface IInvocationReader
+    public interface IInvocationReader
     {
         object[] FindEntryArguments();
 

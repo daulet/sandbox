@@ -1,9 +1,9 @@
 ﻿namespace Echo.UnitTests.Fakes
 {
-    public interface IFakeTarget
+    public interface IFakeTarget<T>
     {
         void CallRemoteResource();
 
-        object GetRemoteResource();
+        T GetRemoteResource();
     }
 }
