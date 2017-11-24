@@ -2,6 +2,7 @@
 using Echo.Utilities;
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Echo.Core
 {
@@ -18,9 +19,19 @@ namespace Echo.Core
         // TODO doesn't handle async results
         public void Intercept(IInvocation invocation)
         {
+            var returnType = invocation.Method.ReturnType;
+            if (typeof(Task).IsAssignableFrom(returnType))
+            {
+                if (returnType.IsConstructedGenericType)
+                {
+                    returnType = returnType.GenericTypeArguments[0];
+                }
+            }
+
             try
             {
                 var returnValue = FindInvocationResult(invocation.Method, invocation.Arguments);
+
                 if (returnValue is ExceptionInvocationResult)
                 {
                     throw (returnValue as ExceptionInvocationResult).ThrownException;
@@ -28,7 +39,7 @@ namespace Echo.Core
                 else if (returnValue is ValueInvocationResult)
                 {
                     // @TODO add tests for all value types
-                    if (invocation.Method.ReturnType == typeof(int))
+                    if (returnType == typeof(int))
                     {
                         invocation.ReturnValue = Convert.ToInt32((returnValue as ValueInvocationResult).ReturnedValue);
                     }
@@ -50,8 +61,7 @@ namespace Echo.Core
             {
                 // TODO This behaviour needs to be configurable: return default or throw - should be parameter of the constructor
                 // TODO does null work for value types?
-                invocation.ReturnValue = Activator.CreateInstance(invocation.Method.ReturnType);
-
+                invocation.ReturnValue = Activator.CreateInstance(returnType);
             }
         }
 

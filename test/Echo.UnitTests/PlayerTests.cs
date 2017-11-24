@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Echo.Core;
 using Echo.UnitTests.Fakes;
+using Moq;
 using Xunit;
 
 namespace Echo.UnitTests
@@ -33,6 +35,34 @@ namespace Echo.UnitTests
                 Assert.Throws<NotSupportedException>(() =>
                     // Act
                     recorder.GetReplayingTarget<IInternalFakeTarget>());
+            }
+        }
+
+        [Fact]
+        public void GetReplayingTarget_ReturnTypeIsVoid_InvocationWriterCalled()
+        {
+            // Arrange
+            var readerMock = new Mock<IInvocationReader>();
+            readerMock
+                .Setup(x => x.GetAllInvocations())
+                .Returns(
+                    new[]
+                    {
+                        new Invocation(
+                            new object[0],
+                            "CallRemoteResource",
+                            InvocationResult.Void,
+                            typeof(IFakeTarget)), 
+                    });
+            using (var recorder = new Player(readerMock.Object))
+            {
+                var targetUnderRecording = recorder.GetReplayingTarget<IFakeTarget>();
+
+                // Act
+                targetUnderRecording.CallRemoteResource();
+
+                // Assert
+                readerMock.VerifyAll();
             }
         }
     }

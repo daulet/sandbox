@@ -2,7 +2,7 @@
 
 namespace Echo.Core
 {
-    internal class Invocation
+    public class Invocation
     {
         public object[] Arguments { get; }
 
