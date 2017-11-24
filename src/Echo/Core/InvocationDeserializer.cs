@@ -18,7 +18,7 @@ namespace Echo.Core
             _serializerSettings = new JsonSerializerSettings()
             {
                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.Auto
+                TypeNameHandling = TypeNameHandling.Auto,
             };
         }
 

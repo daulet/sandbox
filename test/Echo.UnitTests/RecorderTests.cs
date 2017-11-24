@@ -29,7 +29,7 @@ namespace Echo.UnitTests
             // Arrange
             using (var recorder = new Recorder(invocationListener: null))
             {
-                Assert.False(typeof(IInternalFakeTarget).IsPublic, "Interface can't be public for test to be valid");
+                Assert.False(typeof(IInternalFakeTarget).GetTypeInfo().IsPublic, "Interface can't be public for test to be valid");
 
                 // Assert
                 Assert.Throws<NotSupportedException>(() =>
