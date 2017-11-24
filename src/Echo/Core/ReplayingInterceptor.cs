@@ -27,7 +27,15 @@ namespace Echo.Core
                 }
                 else if (returnValue is ValueInvocationResult)
                 {
-                    invocation.ReturnValue = (returnValue as ValueInvocationResult).ReturnedValue;
+                    // @TODO add tests for all value types
+                    if (invocation.Method.ReturnType == typeof(int))
+                    {
+                        invocation.ReturnValue = Convert.ToInt32((returnValue as ValueInvocationResult).ReturnedValue);
+                    }
+                    else
+                    {
+                        invocation.ReturnValue = (returnValue as ValueInvocationResult).ReturnedValue;
+                    }
                 }
                 else if (returnValue is VoidInvocationResult)
                 {

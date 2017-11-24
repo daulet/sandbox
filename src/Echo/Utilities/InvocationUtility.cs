@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Newtonsoft.Json.Linq;
 
 namespace Echo.Utilities
@@ -37,14 +38,10 @@ namespace Echo.Utilities
                 return argument == otherArgument;
             }
 
-            if (argument.GetType().GetTypeInfo() != otherArgument.GetType().GetTypeInfo())
-            {
-                return false;
-            }
-
             if (argument.GetType().GetTypeInfo().IsValueType)
             {
-                return argument.Equals(otherArgument);
+                // @TODO add tests for all value types
+                return Convert.ToDecimal(argument) == Convert.ToDecimal(otherArgument);
             }
 
             return JToken.DeepEquals(
