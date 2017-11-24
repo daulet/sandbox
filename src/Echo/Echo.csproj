@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.3</TargetFrameworks>
+    <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
     <DebugType>Full</DebugType>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <RunCodeAnalysis>True</RunCodeAnalysis>
@@ -32,7 +32,7 @@ Version 0.2
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.2.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net452'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
     <PackageReference Include="Microsoft.CodeAnalysis" Version="1.3.2">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>

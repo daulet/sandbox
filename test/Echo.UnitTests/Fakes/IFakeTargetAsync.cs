@@ -2,10 +2,10 @@
 
 namespace Echo.UnitTests.Fakes
 {
-    public interface IFakeTargetAsync
+    public interface IFakeTargetAsync<T>
     {
         Task CallRemoteResourceAsync();
 
-        Task<object> GetRemoteResourceAsync();
+        Task<T> GetRemoteResourceAsync();
     }
 }

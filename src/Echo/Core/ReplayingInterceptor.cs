@@ -16,12 +16,13 @@ namespace Echo.Core
             _invocationReader = invocationReader;
         }
 
-        // TODO doesn't handle async results
         public void Intercept(IInvocation invocation)
         {
+            var isTask = false;
             var returnType = invocation.Method.ReturnType;
             if (typeof(Task).IsAssignableFrom(returnType))
             {
+                isTask = true;
                 if (returnType.IsConstructedGenericType)
                 {
                     returnType = returnType.GenericTypeArguments[0];
@@ -30,27 +31,43 @@ namespace Echo.Core
 
             try
             {
-                var returnValue = FindInvocationResult(invocation.Method, invocation.Arguments);
+                var recordedResult = FindInvocationResult(invocation.Method, invocation.Arguments);
 
-                if (returnValue is ExceptionInvocationResult)
+                if (recordedResult is ExceptionInvocationResult)
                 {
-                    throw (returnValue as ExceptionInvocationResult).ThrownException;
+                    throw (recordedResult as ExceptionInvocationResult).ThrownException;
                 }
-                else if (returnValue is ValueInvocationResult)
+                else if (recordedResult is ValueInvocationResult)
                 {
-                    // @TODO add tests for all value types
-                    if (returnType == typeof(int))
+                    object returnValue;
+                    if (returnType.GetTypeInfo().IsValueType)
                     {
-                        invocation.ReturnValue = Convert.ToInt32((returnValue as ValueInvocationResult).ReturnedValue);
+                        // due to a loss of type for value types in Newtonsoft.JSON serialization,
+                        // e.g. int will be deserialized as long, hence this "casting down"
+                        returnValue = Convert.ChangeType(
+                            (recordedResult as ValueInvocationResult).ReturnedValue, returnType);
                     }
                     else
                     {
-                        invocation.ReturnValue = (returnValue as ValueInvocationResult).ReturnedValue;
+                        returnValue = (recordedResult as ValueInvocationResult).ReturnedValue;
+                    }
+
+                    if (isTask)
+                    {
+                        invocation.ReturnValue = Task.FromResult(returnValue);
+                    }
+                    else
+                    {
+                        invocation.ReturnValue = returnValue;
                     }
                 }
-                else if (returnValue is VoidInvocationResult)
+                else if (recordedResult is VoidInvocationResult)
                 {
                     // no ReturnValue in this case
+                    if (isTask)
+                    {
+                        invocation.ReturnValue = Task.CompletedTask;
+                    }
                 }
                 else
                 {
