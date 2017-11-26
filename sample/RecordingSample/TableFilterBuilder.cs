@@ -49,10 +49,19 @@ namespace Echo.Sample.RecordingSample
 
     /// <summary>Use this light-weight struct to help you create a table query filter string.</summary>
     /// <typeparam name="TEntity">The whose properties you want to include in the filter string.</typeparam>
-    public struct TableFilterBuilder<TEntity>
+    public class TableFilterBuilder<TEntity>
     {
+        public TableFilterBuilder()
+        { }
+
+        public string FilterString
+        {
+            get { return m_filter; }
+            set { m_filter = value; }
+        }
+
         private static PropertyName<TEntity> s_propName = new PropertyName<TEntity>();
-        private readonly String m_filter;
+        private String m_filter;
         private TableFilterBuilder(String filter) { m_filter = filter; }
         /// <summary>The string to be assigned to TableQuery's FilterString property.</summary>
         public override String ToString() { return m_filter; }

@@ -19,7 +19,7 @@ namespace Echo.Sample.RecordingSample
             var table = tableClient.GetTableReference("people");
             table.CreateIfNotExists();
 
-            using (var writer = new StreamWriter(@"recording.echo"))
+            using (var writer = new StreamWriter("98f2556d-dfd4-4935-97a2-54921f278347.echo"))
             {
                 using (var recorder = new Recorder(writer))
                 {
@@ -37,7 +37,7 @@ namespace Echo.Sample.RecordingSample
                     // run your application
 
                     // Create a new customer entity with random first name
-                    var customer = new CustomerEntity("Harp", Guid.NewGuid().ToString())
+                    var customer = new CustomerEntity("Harp", "Walter")
                     {
                         Email = "Walter@contoso.com",
                         PhoneNumber = "425-555-0101"

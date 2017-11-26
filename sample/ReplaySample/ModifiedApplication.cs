@@ -1,15 +1,18 @@
-﻿using System.Linq;
-using System.Net;
-using Microsoft.WindowsAzure.Storage;
+﻿using Echo.Sample.RecordingSample;
 using Microsoft.WindowsAzure.Storage.Table;
+using System.Linq;
 
-namespace Echo.Sample.RecordingSample
+namespace Echo.Sample.ReplaySample
 {
-    public class Application
+    /// <summary>
+    /// Slightly modified version of Application from RecordingSample.
+    /// Note: no exception handling on Execute() call.
+    /// </summary>
+    public class ModifiedApplication
     {
         private readonly ICloudTable _table;
 
-        public Application(ICloudTable table)
+        public ModifiedApplication(ICloudTable table)
         {
             _table = table;
         }
@@ -24,15 +27,7 @@ namespace Echo.Sample.RecordingSample
         public int AddCustomer(CustomerEntity customer)
         {
             // Add new customer to the table
-            try
-            {
-                _table.Insert(customer);
-            }
-            catch (StorageException ex)
-                when (ex.RequestInformation.HttpStatusCode == (int)HttpStatusCode.Conflict)
-            {
-                // customer record already exists
-            }
+            _table.Insert(customer);
 
             // query the table
             var query = new TableFilterBuilder<CustomerEntity>()

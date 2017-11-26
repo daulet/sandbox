@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.WindowsAzure.Storage.Table;
+﻿using Microsoft.WindowsAzure.Storage.Table;
+using System.Linq;
 
 namespace Echo.Sample.RecordingSample
 {
@@ -15,12 +15,13 @@ namespace Echo.Sample.RecordingSample
             _table = table;
         }
 
-        public TableResult Execute(TableOperation operation)
+        public TableResult Insert<TElement>(TElement element)
+            where TElement : ITableEntity, new()
         {
-            return _table.Execute(operation);
+            return _table.Execute(TableOperation.Insert(element));
         }
 
-        public IEnumerable<TElement> ExecuteQuery<TElement>(TableFilterBuilder<TElement> filterBuilder)
+        public TElement[] ExecuteQuery<TElement>(TableFilterBuilder<TElement> filterBuilder)
             where TElement : ITableEntity, new()
         {
             var query = new TableQuery<TElement>()
@@ -28,7 +29,7 @@ namespace Echo.Sample.RecordingSample
                 FilterString = filterBuilder.ToString(),
             };
 
-            return _table.ExecuteQuery(query);
+            return _table.ExecuteQuery(query).ToArray();
         }
     }
 }

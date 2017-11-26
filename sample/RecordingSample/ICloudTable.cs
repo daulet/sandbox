@@ -12,9 +12,10 @@ namespace Echo.Sample.RecordingSample
     /// </summary>
     public interface ICloudTable
     {
-        TableResult Execute(TableOperation operation);
+        TableResult Insert<TElement>(TElement element)
+            where TElement : ITableEntity, new();
 
-        IEnumerable<TElement> ExecuteQuery<TElement>(TableFilterBuilder<TElement> filterBuilder)
+        TElement[] ExecuteQuery<TElement>(TableFilterBuilder<TElement> filterBuilder)
             where TElement : ITableEntity, new();
     }
 }

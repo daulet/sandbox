@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppVeyor", "test\AppVeyor\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestrictionSample", "sample\RestrictionSample\RestrictionSample.csproj", "{AE3CBBCB-4A93-4F90-948D-AF270C209F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordingSample", "sample\RecordingSample\RecordingSample.csproj", "{A3CB2184-5178-4A46-8B0B-AEAEEC0AB9BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordingSample", "sample\RecordingSample\RecordingSample.csproj", "{A3CB2184-5178-4A46-8B0B-AEAEEC0AB9BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaySample", "sample\ReplaySample\ReplaySample.csproj", "{4FB3CCF2-61AB-4869-8CB3-B8298DB94CD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{A3CB2184-5178-4A46-8B0B-AEAEEC0AB9BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3CB2184-5178-4A46-8B0B-AEAEEC0AB9BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3CB2184-5178-4A46-8B0B-AEAEEC0AB9BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB3CCF2-61AB-4869-8CB3-B8298DB94CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB3CCF2-61AB-4869-8CB3-B8298DB94CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB3CCF2-61AB-4869-8CB3-B8298DB94CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB3CCF2-61AB-4869-8CB3-B8298DB94CD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{E604BED5-B720-4669-BC9B-338239928167} = {E7BC54F2-811C-474F-BA55-A13623C079E2}
 		{AE3CBBCB-4A93-4F90-948D-AF270C209F95} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
 		{A3CB2184-5178-4A46-8B0B-AEAEEC0AB9BE} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
+		{4FB3CCF2-61AB-4869-8CB3-B8298DB94CD5} = {4F80741E-2BF9-4EC7-B0BD-22503C96E1F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17230483-89F5-4E41-B8EF-7B0ED17E20BC}
