@@ -12,7 +12,7 @@ Swiss knife for your .NET dependencies
 // specify where to store recordings with instance of TextWriter
 using (var recorder = new Recorder(textWriter))
 {
-    // get a wrapper instance for all your external dependencies
+    // for each of your external dependency get recordable instance
     var storage = recorder.GetRecordingTarget(new RealStorage());
 
     // setup your code and run it
@@ -37,7 +37,7 @@ using (var player = new Player(textReader))
 }
 ```
 
-This ability is useful when you want to ensure that your changes won't make changes in behavior.
+This ability is useful when you want to ensure that your changes won't change interactions with your dependencies. For more realistic example see [Recording sample](./sample/RecordingSample) and its complement [Replay sample](./sample/ReplaySample).
 
 ## Restriction
 
