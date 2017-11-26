@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 
 namespace Echo.Core
 {
+    // @TODO this logging could cause confusing error messages if fails,
+    // e.g. null reference thrown out of WriteInvocation.
+    // Hence disable in Release version
     internal class LoggingListener : IInvocationListener
     {
         private readonly ILogger _logger;

@@ -36,8 +36,8 @@ namespace Echo.Sample.RecordingSample
 
                     // run your application
 
-                    // Create a new customer entity.
-                    var customer = new CustomerEntity("Harp", "Walter")
+                    // Create a new customer entity with random first name
+                    var customer = new CustomerEntity("Harp", Guid.NewGuid().ToString())
                     {
                         Email = "Walter@contoso.com",
                         PhoneNumber = "425-555-0101"

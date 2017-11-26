@@ -26,8 +26,8 @@ namespace Echo.Sample.RecordingSample
             _table.Execute(insertOperation);
 
             // query the table
-            var query = new TableQuery<CustomerEntity>()
-                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, customer.PartitionKey));
+            var query = new TableFilterBuilder<CustomerEntity>()
+                .And(x => x.PartitionKey, CompareOp.EQ, customer.PartitionKey);
 
             var userCount = _table.ExecuteQuery(query).Count();
 

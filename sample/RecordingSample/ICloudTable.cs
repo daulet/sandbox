@@ -14,7 +14,7 @@ namespace Echo.Sample.RecordingSample
     {
         TableResult Execute(TableOperation operation);
 
-        IEnumerable<TElement> ExecuteQuery<TElement>(TableQuery<TElement> query)
+        IEnumerable<TElement> ExecuteQuery<TElement>(TableFilterBuilder<TElement> filterBuilder)
             where TElement : ITableEntity, new();
     }
 }

@@ -20,9 +20,14 @@ namespace Echo.Sample.RecordingSample
             return _table.Execute(operation);
         }
 
-        public IEnumerable<TElement> ExecuteQuery<TElement>(TableQuery<TElement> query)
+        public IEnumerable<TElement> ExecuteQuery<TElement>(TableFilterBuilder<TElement> filterBuilder)
             where TElement : ITableEntity, new()
         {
+            var query = new TableQuery<TElement>()
+            {
+                FilterString = filterBuilder.ToString(),
+            };
+
             return _table.ExecuteQuery(query);
         }
     }
