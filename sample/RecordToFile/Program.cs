@@ -13,16 +13,17 @@ namespace Echo.Sample.RecordToFile
             var externalPartner = new ExternalDependency();
 
             // setup recording
-            using (var output = new StreamWriter(@"output.echo"))
+            using (var writer = new StreamWriter(@"output.echo"))
             {
-                var writer = new EchoWriter(output);
-                var recorder = new Recorder(writer);
-                var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
+                using (var recorder = new Recorder(writer))
+                {
+                    var interceptedPartner = recorder.GetRecordingTarget<IExternalDependency>(externalPartner);
 
-                // call external dependency
-                interceptedPartner.Concat("Hello", " ", "World");
-                interceptedPartner.Concat("This is", " a proof ", "of concept...");
-                interceptedPartner.Concat("... that", " writing to a file ", "works!");
+                    // call external dependency
+                    interceptedPartner.Concat("Hello", " ", "World");
+                    interceptedPartner.Concat("This is", " a proof ", "of concept...");
+                    interceptedPartner.Concat("... that", " writing to a file ", "works!");
+                }
             }
 
             Console.ReadKey();

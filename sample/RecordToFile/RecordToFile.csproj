@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net46</TargetFramework>
     <AssemblyName>Echo.Sample.RecordToFile</AssemblyName>
     <RootNamespace>Echo.Sample.RecordToFile</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Echo" Version="0.1.4" />
+    <PackageReference Include="Echo" Version="0.3.0" />
   </ItemGroup>
 </Project>
