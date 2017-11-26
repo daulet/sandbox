@@ -5,7 +5,7 @@ param(
 
 Write-Host "Running build" -ForegroundColor Blue
 
-msbuild.exe $rootPath\src\echo\Echo.csproj '/consoleLoggerParameters:Summary;Verbosity=minimal' /m /nodeReuse:false /nologo /p:TreatWarningsAsErrors=true /p:Configuration=Release
+dotnet msbuild $rootPath\src\echo\Echo.csproj '/consoleLoggerParameters:Summary;Verbosity=minimal' /m /t:Rebuild /nologo /p:TreatWarningsAsErrors=true /p:Configuration=Release
 
 Write-Host "Publishing to Nuget" -ForegroundColor Blue
 

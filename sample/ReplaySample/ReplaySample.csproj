@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>Echo.Sample.ReplaySample</AssemblyName>
+    <RootNamespace>Echo.Sample.ReplaySample</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="98f2556d-dfd4-4935-97a2-54921f278347.echo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="98f2556d-dfd4-4935-97a2-54921f278347.echo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Echo" Version="0.3.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.6.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RecordingSample\RecordingSample.csproj" />
+  </ItemGroup>
+</Project>

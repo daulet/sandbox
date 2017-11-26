@@ -6,6 +6,39 @@ Swiss knife for your .NET dependencies
 [![Codecov status](https://img.shields.io/codecov/c/github/daulet/echo.svg)](https://codecov.io/gh/daulet/Echo)
 [![Nuget](https://img.shields.io/nuget/v/Echo.svg)](https://www.nuget.org/packages/echo/)
 
+## Record & Replay
+
+``` csharp
+// specify where to store recordings with instance of TextWriter
+using (var recorder = new Recorder(textWriter))
+{
+    // for each of your external dependency get recordable instance
+    var storage = recorder.GetRecordingTarget(new RealStorage());
+
+    // setup your code and run it
+    var myImplementation = new MyCode(storage);
+    myImplementation.Execute();
+}
+```
+
+Later you can replay all interactions with external dependencies and replay them:
+
+``` csharp
+// specify the same source that you used to write recordings
+using (var player = new Player(textReader))
+{
+    // get an instance of dependency you'd like to replay:
+    // note: you don't need to provide its implementation!
+    var storage = player.GetReplayingTarget<IStorage>();
+
+    // setup your code and run it
+    var myImplementation = new MyCode(storage);
+    myImplementation.Execute();
+}
+```
+
+This ability is useful when you want to ensure that your changes won't change interactions with your dependencies. For more realistic example see [Recording sample](./sample/RecordingSample) and its complement [Replay sample](./sample/ReplaySample).
+
 ## Restriction
 
 Given Execute() method that throws but which is marked with [Restricted] attriubute in the interface as below:
