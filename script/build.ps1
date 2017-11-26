@@ -20,7 +20,7 @@ if ($LastExitCode -ne 0) {
 
 Write-Host "Running build" -ForegroundColor Blue
 
-msbuild.exe .\Echo.sln '/consoleLoggerParameters:Summary;Verbosity=minimal' /m /nodeReuse:false /nologo /p:TreatWarningsAsErrors=true
+dotnet msbuild .\Echo.sln '/consoleLoggerParameters:Summary;Verbosity=minimal' /m /t:Rebuild /nologo /p:TreatWarningsAsErrors=true
 
 if ($LastExitCode -ne 0) {
     return $LastExitCode
